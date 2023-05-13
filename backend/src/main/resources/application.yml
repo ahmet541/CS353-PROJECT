@@ -1,0 +1,20 @@
+    app:
+        datasource:
+            main:
+                driver-class-name: org.postgresql.Driver
+                jdbc-url: jdbc:postgresql://localhost:5432/cs353db
+                username: postgres
+                password: "password"
+                pool-size: 30
+    server:
+        error:
+            include-binding-errors: always
+            include-message: always
+
+    spring:
+      flyway:
+        baselineOnMigrate: true
+        validateOnMigrate: false
+    #    spring:
+#      autoconfigure:
+#        exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
