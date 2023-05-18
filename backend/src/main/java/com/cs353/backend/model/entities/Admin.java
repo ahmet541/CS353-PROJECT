@@ -1,4 +1,4 @@
-package com.cs353.backend.model;
+package com.cs353.backend.model.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends Account {
-    private String profile_description;
+public class Admin extends Account {
+    private String admin_name;
 }

@@ -1,4 +1,4 @@
-package com.cs353.backend.model;
+package com.cs353.backend.model.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
