@@ -1,6 +1,6 @@
 package com.cs353.backend.controller;
 
-import com.cs353.backend.model.Account;
+import com.cs353.backend.model.entities.Account;
 import com.cs353.backend.service.AccountService;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;

@@ -1,7 +1,9 @@
 package com.cs353.backend.service;
 
 import com.cs353.backend.dao.AccountDao;
-import com.cs353.backend.model.Account;
+import com.cs353.backend.model.dto.LoginDTO;
+import com.cs353.backend.model.dto.LoginResponseDTO;
+import com.cs353.backend.model.entities.Account;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,4 +34,6 @@ public class AccountService {
     public List<Account> getAllAccounts() {
         return accountDao.getAllAccounts();
     }
+
+    public LoginResponseDTO authenticate(LoginDTO loginDTO){return accountDao.authenticate(loginDTO);};
 }

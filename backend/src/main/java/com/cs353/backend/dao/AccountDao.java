@@ -1,6 +1,8 @@
 package com.cs353.backend.dao;
 
-import com.cs353.backend.model.Account;
+import com.cs353.backend.model.dto.LoginDTO;
+import com.cs353.backend.model.dto.LoginResponseDTO;
+import com.cs353.backend.model.entities.Account;
 import java.util.List;
 
 public interface AccountDao {
@@ -9,5 +11,6 @@ public interface AccountDao {
     int createAccount(Account account);
     void updateAccount(Account account);
     void deleteAccount(int id);
+    LoginResponseDTO authenticate(LoginDTO loginDTO);
 }
 
