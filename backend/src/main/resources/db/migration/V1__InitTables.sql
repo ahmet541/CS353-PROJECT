@@ -1,29 +1,41 @@
-DROP TABLE IF EXISTS User CASCADE;
+DROP TABLE IF EXISTS "User" CASCADE;
 DROP TABLE IF EXISTS Admin;
 DROP TABLE IF EXISTS Account CASCADE;
-DROP TABLE IF EXISTS "Regular User";
+DROP TABLE IF EXISTS RegularUser;
+DROP TABLE IF EXISTS Recruiter;
+DROP TABLE IF EXISTS Career_Expert;
 
 CREATE TABLE Account (
     id SERIAL PRIMARY KEY,
-    email VARCHAR(255 ) NOT NULL,
+    email VARCHAR(255 ) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE Admin (
-    admin_name VARCHAR(255) NOT NULL,
-    user_id INT NOT NULL,
-    PRIMARY KEY (user_id),
-    FOREIGN KEY (user_id) REFERENCES "user" (id) ON DELETE CASCADE
+CREATE TABLE "User"(
+    id INT NOT NULL UNIQUE,
+    profile_description VARCHAR(255),
+    PRIMARY KEY (id),
+    FOREIGN KEY(id) REFERENCES Account(id) ON DELETE CASCADE
 );
 
-CREATE TABLE User(
-     id SERIAL PRIMARY KEY,
-     profile_description VARCHAR(255),
-     FOREIGN KEY(id) REFERENCES Account(id) ON DELETE CASCADE
+CREATE TABLE Admin (
+    id INT NOT NULL UNIQUE,
+    admin_name VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (id) REFERENCES "User" (id) ON DELETE CASCADE
 );
+
+CREATE TABLE Company(
+    id INT NOT NULL UNIQUE,
+    companyName VARCHAR(255) NOT NULL,
+    type VARCHAR(255),
+    economicScale INT,
+    PRIMARY KEY (id),
+    FOREIGN KEY(id) REFERENCES "User"(id) ON DELETE CASCADE
+ );
 
 CREATE TABLE Regular_User (
-    id int NOT NULL,
+    id int NOT NULL UNIQUE,
     first_name varchar(255) NOT NULL,
     last_name varchar(255) NOT NULL,
     gender varchar(255),
@@ -31,8 +43,24 @@ CREATE TABLE Regular_User (
     birthdate timestamp,
     address varchar(255),
     PRIMARY KEY (id),
-    FOREIGN KEY (id) REFERENCES User (id) ON DELETE CASCADE
+    FOREIGN KEY (id) REFERENCES "User" (id) ON DELETE CASCADE
 );
+
+CREATE TABLE Recruiter (
+    id INT NOT NULL UNIQUE,
+    recruiting_start_date DATE NOT NULL DEFAULT CURRENT_DATE,
+    PRIMARY KEY (id),
+    FOREIGN KEY (id) REFERENCES Regular_User (id) ON DELETE CASCADE
+);
+
+CREATE TABLE Career_Expert (
+    id INT NOT NULL UNIQUE,
+    rank INT,
+    last_year_score INT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (id) REFERENCES Regular_User (id) ON DELETE CASCADE
+);
+
 
 CREATE TABLE Certificate_Skill (
    certificate_name VARCHAR(255),
@@ -41,7 +69,7 @@ CREATE TABLE Certificate_Skill (
    FOREIGN KEY(user_id) REFERENCES Regular_User(id) ON DELETE CASCADE
 );
 
-CREATE TABLE connection (
+CREATE TABLE Connection (
     connected_1_id int NOT NULL,
     connected_2_id int NOT NULL,
     accepted int DEFAULT 0,
@@ -49,3 +77,4 @@ CREATE TABLE connection (
     FOREIGN KEY (connected_1_id) REFERENCES Regular_User(id) ON DELETE CASCADE,
     FOREIGN KEY (connected_2_id) REFERENCES Regular_User(id) ON DELETE CASCADE
 );
+
