@@ -14,5 +14,7 @@ public interface AccountDao {
     LoginResponseDTO authenticate(LoginDTO loginDTO);
 
     int getIdByUsername(String username);
+
+    boolean isEmailUsed(String email);
 }
 

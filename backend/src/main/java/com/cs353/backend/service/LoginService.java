@@ -5,7 +5,6 @@ import com.cs353.backend.Enum.UserRole;
 import com.cs353.backend.mapper.GeneralMapper;
 import com.cs353.backend.model.dto.LoginDTO;
 import com.cs353.backend.model.dto.LoginResponseDTO;
-import com.cs353.backend.model.entities.Account;
 import com.cs353.backend.model.entities.Company;
 import com.cs353.backend.model.entities.RegularUser;
 import lombok.AllArgsConstructor;
@@ -30,7 +29,7 @@ public class LoginService {
         else{
             LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
             int id = companyService.createCompany(company);
-            loginResponseDTO.setUserId(id);
+            loginResponseDTO.setId(id);
             loginResponseDTO.setRole(UserRole.COMPANY);
 
             return loginResponseDTO;
@@ -43,7 +42,7 @@ public class LoginService {
         else{
             LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
             int id = regularUserService.createRegularUser(regularUser);
-            loginResponseDTO.setUserId(id);
+            loginResponseDTO.setId(id);
             loginResponseDTO.setRole(UserRole.REGULAR_USER);
 
             return loginResponseDTO;

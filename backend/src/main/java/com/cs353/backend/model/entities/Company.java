@@ -1,5 +1,6 @@
 package com.cs353.backend.model.entities;
 
+import com.cs353.backend.Enum.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 
 public class LoginResponseDTO {
     private UserRole role;
-    private int userId;
+    private int id;
 }

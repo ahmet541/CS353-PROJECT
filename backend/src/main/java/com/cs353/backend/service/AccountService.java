@@ -43,6 +43,6 @@ public class AccountService {
     }
 
     public boolean isEmailUsed(String email){
-        return false; //TODO
+        return accountDao.isEmailUsed(email);
     }
 }

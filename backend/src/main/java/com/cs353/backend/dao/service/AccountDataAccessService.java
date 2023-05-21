@@ -7,6 +7,7 @@ import com.cs353.backend.model.dto.LoginDTO;
 import com.cs353.backend.model.dto.LoginResponseDTO;
 import com.cs353.backend.model.entities.Account;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -35,6 +36,10 @@ public class AccountDataAccessService implements AccountDao {
     public int getIdByUsername(String email) {
         String sql = "SELECT id FROM account WHERE email = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, email);
+    }@Override
+    public boolean isEmailUsed(String email) {
+        String sql = "SELECT EXISTS(SELECT 1 FROM account WHERE email = ?)";
+        return jdbcTemplate.queryForObject(sql, Boolean.class, email);
     }
     @Override
     public int createAccount(Account account) {
@@ -55,20 +60,25 @@ public class AccountDataAccessService implements AccountDao {
     @Override
     public LoginResponseDTO authenticate(LoginDTO loginDTO) {
         String sql = "SELECT id FROM Account WHERE email = ? AND password = ?";
-        Integer accountId = jdbcTemplate.queryForObject(sql, Integer.class, loginDTO.getEmail(), loginDTO.getPassword());
 
-        if(accountId != null){
-            LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
-            loginResponseDTO.setUserId(accountId);
-            loginResponseDTO.setRole(null);
-            UserRole role = getRole(accountId);
-            loginResponseDTO.setRole(role);
+        try {
+            Integer accountId = jdbcTemplate.queryForObject(sql, Integer.class, loginDTO.getEmail(), loginDTO.getPassword());
 
-            return loginResponseDTO;
-        }
-        else {
+            if (accountId != null) {
+                LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
+                loginResponseDTO.setId(accountId);
+                loginResponseDTO.setRole(null);
+                UserRole role = getRole(accountId);
+                loginResponseDTO.setRole(role);
+
+                return loginResponseDTO;
+            } else {
+                throw new IllegalArgumentException("Invalid username or password");
+            }
+        } catch (EmptyResultDataAccessException e) {
             throw new IllegalArgumentException("Invalid username or password");
         }
+
     }
     private UserRole getRole(Integer accountId) {
         String adminSql = "SELECT EXISTS(SELECT 1 FROM Admin WHERE id = ?)";
