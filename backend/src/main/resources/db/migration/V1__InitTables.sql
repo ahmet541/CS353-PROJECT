@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS "User" CASCADE;
 DROP TABLE IF EXISTS Admin;
 DROP TABLE IF EXISTS Account CASCADE;
-DROP TABLE IF EXISTS RegularUser;
+DROP TABLE IF EXISTS RegularUser CASCADE;
 DROP TABLE IF EXISTS Recruiter;
 DROP TABLE IF EXISTS Career_Expert;
 
@@ -35,7 +35,7 @@ CREATE TABLE Company(
  );
 
 CREATE TABLE Regular_User (
-    id int NOT NULL UNIQUE,
+    id INT NOT NULL UNIQUE,
     first_name varchar(255) NOT NULL,
     last_name varchar(255) NOT NULL,
     gender varchar(255),

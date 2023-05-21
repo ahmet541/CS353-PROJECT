@@ -12,5 +12,7 @@ public interface AccountDao {
     void updateAccount(Account account);
     void deleteAccount(int id);
     LoginResponseDTO authenticate(LoginDTO loginDTO);
+
+    int getIdByUsername(String username);
 }
 

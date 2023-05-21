@@ -1,5 +1,6 @@
 package com.cs353.backend.dao.service;
 
+import com.cs353.backend.Enum.UserRole;
 import com.cs353.backend.dao.AccountDao;
 import com.cs353.backend.mapper.AccountMapper;
 import com.cs353.backend.model.dto.LoginDTO;
@@ -31,23 +32,26 @@ public class AccountDataAccessService implements AccountDao {
         return jdbcTemplate.queryForObject(sql, new AccountMapper(), id);
     }
     @Override
+    public int getIdByUsername(String email) {
+        String sql = "SELECT id FROM account WHERE email = ?";
+        return jdbcTemplate.queryForObject(sql, Integer.class, email);
+    }
+    @Override
     public int createAccount(Account account) {
         String sql = "INSERT INTO account (email, password) VALUES (?, ?);";
-        return jdbcTemplate.update(sql, account.getEmail(), account.getPassword());
+        jdbcTemplate.update(sql, account.getEmail(), account.getPassword());
+        return getIdByUsername(account.getEmail());
     }
-
     @Override
     public void updateAccount(Account account) {
         String sql = "UPDATE account SET email = ?, password = ? WHERE id = ?";
         jdbcTemplate.update(sql, account.getEmail(), account.getPassword(), account.getId());
     }
-
     @Override
     public void deleteAccount(int id) {
         String sql = "DELETE FROM account WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
-
     @Override
     public LoginResponseDTO authenticate(LoginDTO loginDTO) {
         String sql = "SELECT id FROM Account WHERE email = ? AND password = ?";
@@ -57,7 +61,7 @@ public class AccountDataAccessService implements AccountDao {
             LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
             loginResponseDTO.setUserId(accountId);
             loginResponseDTO.setRole(null);
-            String role = getRole(accountId);
+            UserRole role = getRole(accountId);
             loginResponseDTO.setRole(role);
 
             return loginResponseDTO;
@@ -66,46 +70,45 @@ public class AccountDataAccessService implements AccountDao {
             throw new IllegalArgumentException("Invalid username or password");
         }
     }
-
-    private String getRole(Integer accountId) {
+    private UserRole getRole(Integer accountId) {
         String adminSql = "SELECT EXISTS(SELECT 1 FROM Admin WHERE id = ?)";
         boolean isAdmin = jdbcTemplate.queryForObject(adminSql, Boolean.class, accountId);
         if (isAdmin) {
-            return "Admin";
+            return UserRole.ADMIN;
         }
 
         // Check if the user is a company
         String companySql = "SELECT EXISTS(SELECT 1 FROM Company WHERE id = ?)";
         boolean isCompany = jdbcTemplate.queryForObject(companySql, Boolean.class, accountId);
         if (isCompany) {
-            return "Company";
+            return UserRole.COMPANY;
         }
 
         String careerExpertSql = "SELECT EXISTS(SELECT 1 FROM Career_Expert WHERE id = ?)";
         boolean isCareerExpert = jdbcTemplate.queryForObject(careerExpertSql, Boolean.class, accountId);
         if (isCareerExpert) {
-            return "CareerExpert";
+            return UserRole.CAREER_EXPERT;
         }
 
         // Check if the user is a recruiter
         String recruiterSql = "SELECT EXISTS(SELECT 1 FROM Recruiter WHERE id = ?)";
         boolean isRecruiter = jdbcTemplate.queryForObject(recruiterSql, Boolean.class, accountId);
         if (isRecruiter) {
-            return "Recruiter";
+            return UserRole.RECRUITER;
         }
 
         // Check if the user is a regular user
         String regularUserSql = "SELECT EXISTS(SELECT 1 FROM Regular_User WHERE id = ?)";
         boolean isRegularUser = jdbcTemplate.queryForObject(regularUserSql, Boolean.class, accountId);
         if (isRegularUser) {
-            return "RegularUser";
+            return UserRole.REGULAR_USER;
         }
 
         // Check if the user is a regular user
         String accountSql = "SELECT EXISTS(SELECT 1 FROM Account WHERE id = ?)";
         boolean isAccount = jdbcTemplate.queryForObject(accountSql, Boolean.class, accountId);
         if (isAccount) {
-            return "Account";
+            return UserRole.ACCOUNT;
         }
 
         // Handle case when the user ID is not found in any of the tables

@@ -23,6 +23,9 @@ public class AccountService {
         return accountDao.getAccountById(id);
     }
 
+    public int getIdByUsername(String username) {
+        return accountDao.getIdByUsername(username);
+    }
     public void updateAccount(Account account) {
         accountDao.updateAccount(account);
     }
@@ -35,5 +38,11 @@ public class AccountService {
         return accountDao.getAllAccounts();
     }
 
-    public LoginResponseDTO authenticate(LoginDTO loginDTO){return accountDao.authenticate(loginDTO);};
+    public LoginResponseDTO authenticate(LoginDTO loginDTO){
+        return accountDao.authenticate(loginDTO);
+    }
+
+    public boolean isEmailUsed(String email){
+        return false; //TODO
+    }
 }
