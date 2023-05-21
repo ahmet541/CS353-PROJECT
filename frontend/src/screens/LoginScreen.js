@@ -25,7 +25,7 @@ const LoginScreen = () => {
             // Redirect to home page
             navigate('/home');
         } catch (error) {
-            setError('Invalid email or password. Please try again.');
+            setError(error.response.data + ' Please try again.');
         }
     };
 

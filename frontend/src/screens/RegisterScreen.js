@@ -27,14 +27,14 @@ const RegisterScreen = () => {
         if (!requestData.password) {
             updatedErrors = { ...updatedErrors, password: 'Please enter a password' };
         }
-        if (!requestData.userType) {
+        if (!userType) {
             updatedErrors = { ...updatedErrors, userType: 'Please select a user type' };
         }
-        if (requestData.userType === UserRole.COMPANY) {
+        if (userType === UserRole.COMPANY) {
             if (!requestData.companyName) {
                 updatedErrors = { ...updatedErrors, companyName: 'Company Name is required' };
             }
-        } else if (requestData.userType === UserRole.REGULAR_USER) {
+        } else if (userType === UserRole.REGULAR_USER) {
             if (!requestData.firstName) {
                 updatedErrors = { ...updatedErrors, firstName: 'First name is required for Regular User' };
             }
@@ -44,12 +44,15 @@ const RegisterScreen = () => {
         return updatedErrors;
     };
 
+
+
     const handleRegister = async () => {
+
+        let response;
         try {
             let requestData = {
                 email: email,
                 password: password,
-                userType: userType,
             };
             if (userType === UserRole.COMPANY) {
                 requestData.companyName = companyName;
@@ -70,7 +73,7 @@ const RegisterScreen = () => {
                 return;
             }
             console.log(requestData);
-            let response;
+
             if (userType === UserRole.COMPANY) {
                 response = await axios.post('http://localhost:8080/auth/registerCompany', requestData);
             }
@@ -85,7 +88,7 @@ const RegisterScreen = () => {
             // Registration success, redirect to login page
             navigate('/home');
         } catch (error) {
-            setErrorMessage('Registration failed. Please try again.\n Error Reason: ${error.message}');
+            setErrorMessage('Registration failed. Please try again.\n' + error.response.data);
         }
     };
 
