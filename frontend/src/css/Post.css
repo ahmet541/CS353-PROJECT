@@ -1,0 +1,45 @@
+
+.author-avatar {
+    width: 40px; /* Adjust the width to your desired size */
+    height: 40px; /* Adjust the height to your desired size */
+    border-radius: 50%; /* Make the image circular */
+}
+
+.post {
+    border: 1px solid #ddd; /* Add border */
+    padding: 10px; /* Add padding */
+    margin-bottom: 20px; /* Add margin between posts */
+    width: 600px;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.comment-button {
+    margin-right: 10px;
+}
+
+.post-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    gap: 10px; /* Added to create some spacing between badges */
+    bottom: 10px; /* Added to position the badges at the bottom of the post */
+}
+
+
+.meta-item {
+    display: flex;
+    align-items: center;
+}
+
+.comment-count {
+    margin-right: 10px;
+}
+.like-button.liked {
+    background-color: green; /* Change the background color to green when liked */
+    color: white; /* Change the text color to white when liked */
+}
