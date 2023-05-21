@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Admin extends Account{
-    private String admin_name;
+public class Company extends User {
+    private String companyName;
+    private String type;
+    private int economicScale;
 }
