@@ -13,9 +13,6 @@ const LoginScreen = () => {
             const response = await axios.post('http://localhost:8080/auth/login', {
                 email: email,
                 password: password,
-            },
-            {
-                withCredentials: false,
             }
             );
 
