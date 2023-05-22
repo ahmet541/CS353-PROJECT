@@ -54,4 +54,17 @@ public class LoginController {
             return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @PostMapping("init")
+    public void initialBuild() {
+        try {
+            loginService.initialBuild();
+        } catch (IllegalArgumentException e) {
+            String errorMessage = e.getMessage();
+        } catch (Exception e) {
+            // Handle other exceptions if needed
+            String errorMessage = "Initial build failed.";
+        }
+    }
 }

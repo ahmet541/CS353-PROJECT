@@ -37,7 +37,7 @@ public class GeneralMapper {
         User user = new User();
         user.setEmail(regularUser.getEmail());
         user.setPassword(regularUser.getPassword());
-        user.setProfile_description(regularUser.getProfile_description());
+        user.setProfileDescription(regularUser.getProfileDescription());
 
         return user;
     }

@@ -18,7 +18,7 @@ public class UserDataAccessService implements UserDao {
         String sql = """
             INSERT INTO "User" (id, profile_description) VALUES (?, ?);
             """;
-        jdbcTemplate.update(sql, user.getId(), user.getProfile_description());
+        jdbcTemplate.update(sql, user.getId(), user.getProfileDescription());
     }
 
     @Override
@@ -26,6 +26,6 @@ public class UserDataAccessService implements UserDao {
         String sql = """
             UPDATE "User" SET profile_description = ? WHERE id = ?
             """;
-        jdbcTemplate.update(sql, user.getProfile_description(), user.getId());
+        jdbcTemplate.update(sql, user.getProfileDescription(), user.getId());
     }
 }

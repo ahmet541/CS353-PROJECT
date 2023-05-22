@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User extends Account{
-    private String profile_description = "";
+    private String profileDescription = "";
 }

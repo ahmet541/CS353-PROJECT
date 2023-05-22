@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const HomeScreen = () => {
     const [posts, setPosts] = useState([]);
-    const [newPostTitle, setNewPostTitle] = useState('');
+    const [newPostHeading, setNewPostHeading] = useState('');
     const [newPostContent, setNewPostContent] = useState('');
 
     useEffect(() => {
@@ -28,13 +28,13 @@ const HomeScreen = () => {
 
         try {
             const response = await axios.post('/api/posts', {
-                title: newPostTitle,
+                heading: newPostHeading,
                 content: newPostContent,
             });
 
             setPosts((prevPosts) => [...prevPosts, response.data]);
 
-            setNewPostTitle('');
+            setNewPostHeading('');
             setNewPostContent('');
         } catch (error) {
             // Handle any error that occurs during the request
@@ -48,7 +48,7 @@ const HomeScreen = () => {
         setPosts([
             {
                 postId: '1',
-                title: 'Post 1',
+                heading: 'Post 1',
                 content: 'This is the content of Post 111\n11111111111111111111111111111111111111111111111',
                 author: {
                     name: 'John Doe',
@@ -57,7 +57,7 @@ const HomeScreen = () => {
             },
             {
                 postId: '2',
-                title: 'Post 2',
+                heading: 'Post 2',
                 sharedTime: currentDate.toLocaleString(),
                 content: 'This is the content of Post 2',
                 author: {
@@ -65,6 +65,70 @@ const HomeScreen = () => {
                     authorId: 'author2',
                 },
             },
+            {
+                postId: '1',
+                heading: 'Post 1',
+                content: 'This is the content of Post 111\n11111111111111111111111111111111111111111111111',
+                author: {
+                    name: 'John Doe',
+                    authorId: 'author1',
+                },
+            },
+            {
+                postId: '1',
+                heading: 'Post 1',
+                content: 'This is the content of Post 111\n11111111111111111111111111111111111111111111111',
+                author: {
+                    name: 'John Doe',
+                    authorId: 'author1',
+                },
+            },
+            {
+                postId: '1',
+                heading: 'Post 1',
+                content: 'This is the content of Post 111\n11111111111111111111111111111111111111111111111',
+                author: {
+                    name: 'John Doe',
+                    authorId: 'author1',
+                },
+            },
+            {
+                postId: '1',
+                heading: 'Post 1',
+                content: 'This is the content of Post 111\n11111111111111111111111111111111111111111111111',
+                author: {
+                    name: 'John Doe',
+                    authorId: 'author1',
+                },
+            },
+            {
+                postId: '1',
+                heading: 'Post 1',
+                content: 'This is the content of Post 111\n11111111111111111111111111111111111111111111111',
+                author: {
+                    name: 'John Doe',
+                    authorId: 'author1',
+                },
+            },
+            {
+                postId: '1',
+                heading: 'Post 1',
+                content: 'This is the content of Post 111\n11111111111111111111111111111111111111111111111',
+                author: {
+                    name: 'John Doe',
+                    authorId: 'author1',
+                },
+            },
+            {
+                postId: '1',
+                heading: 'Post 1',
+                content: 'This is the content of Post 111\n11111111111111111111111111111111111111111111111',
+                author: {
+                    name: 'John Doe',
+                    authorId: 'author1',
+                },
+            },
+
         ]);
     }, []);
 
@@ -77,14 +141,14 @@ const HomeScreen = () => {
                 <div className="create-post">
                     <h3>Create a New Post</h3>
                     <form onSubmit={handlePostCreate}>
-                        <label>Title:</label>
+                        <label>Heading:</label>
                         <div className="form-group">
                             <textarea
                                 type="text"
                                 className="form-control custom-input no-resize"
                                 style={{ width: "600px", height: "60px" }}
-                                value={newPostTitle}
-                                onChange={(e) => setNewPostTitle(e.target.value)}
+                                value={newPostHeading}
+                                onChange={(e) => setNewPostHeading(e.target.value)}
                             />
                         </div>
                         <label>Content:</label>
@@ -106,7 +170,7 @@ const HomeScreen = () => {
                     {posts.map((post) => (
                         <div key={post.postId} className="post-item">
                             <Post
-                                title={post.title}
+                                heading={post.heading}
                                 content={post.content}
                                 sharedTime={post.sharedTime}
                                 author={{

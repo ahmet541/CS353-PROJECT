@@ -9,7 +9,7 @@ import CommentForm from "./CommentForm";
 import axios from "axios";
 
 
-const Post = ({ title, content, author, postId, sharedTime }) => {
+const Post = ({ heading, content, author, postId, sharedTime }) => {
     const [showComments, setShowComments] = useState(false);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
@@ -114,7 +114,7 @@ const Post = ({ title, content, author, postId, sharedTime }) => {
                 <div className="post-meta">
                     <span className="shared-time">{sharedTime}</span>
                 </div>
-                <Card.Title>{title}</Card.Title>
+                <Card.Title>{heading}</Card.Title>
                 <Card.Text>{content}</Card.Text>
                 <div className="post-meta">
                     <div className="meta-item">

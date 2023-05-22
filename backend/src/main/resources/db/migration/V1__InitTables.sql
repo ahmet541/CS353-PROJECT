@@ -18,6 +18,16 @@ CREATE TABLE "User"(
     FOREIGN KEY(id) REFERENCES Account(id) ON DELETE CASCADE
 );
 
+CREATE TABLE Post (
+    post_id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    photo_link VARCHAR(255),
+    explanation VARCHAR(255) NOT NULL,
+    heading VARCHAR(255) NOT NULL,
+    date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES "User" (id)
+);
+
 CREATE TABLE Admin (
     id INT NOT NULL UNIQUE,
     admin_name VARCHAR(255) NOT NULL,

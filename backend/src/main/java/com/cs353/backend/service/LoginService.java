@@ -50,4 +50,8 @@ public class LoginService {
 
     }
 
+    public void initialBuild() {
+        regularUserService.initialBuild();
+        //TODO for others
+    }
 }
