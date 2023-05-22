@@ -4,6 +4,8 @@ DROP TABLE IF EXISTS Account CASCADE;
 DROP TABLE IF EXISTS RegularUser CASCADE;
 DROP TABLE IF EXISTS Recruiter;
 DROP TABLE IF EXISTS Career_Expert;
+-- TODO
+
 
 CREATE TABLE Account (
     id SERIAL PRIMARY KEY,
@@ -26,6 +28,22 @@ CREATE TABLE Post (
     heading VARCHAR(255) NOT NULL,
     date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES "User" (id)
+);
+
+CREATE TABLE follow(
+   follower_id INT NOT NULL,
+   followed_id INT NOT NULL,
+   PRIMARY KEY(followed_id, follower_id),
+   FOREIGN KEY(followed_id) REFERENCES "User"(id) ON DELETE CASCADE,
+   FOREIGN KEY(follower_id) REFERENCES "User"(id) ON DELETE CASCADE
+);
+CREATE TABLE connection (
+    connected_1_id INT NOT NULL,
+    connected_2_id INT NOT NULL,
+    accepted BOOLEAN DEFAULT FALSE,
+    PRIMARY KEY (connected_1_id, connected_2_id),
+    FOREIGN KEY (connected_1_id) REFERENCES Regular_User (id) ON DELETE CASCADE,
+    FOREIGN KEY (connected_2_id) REFERENCES Regular_User (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Admin (
@@ -82,7 +100,7 @@ CREATE TABLE Certificate_Skill (
 CREATE TABLE Connection (
     connected_1_id int NOT NULL,
     connected_2_id int NOT NULL,
-    accepted int DEFAULT 0,
+    accepted BOOLEAN DEFAULT FALSE,
     PRIMARY KEY (connected_1_id, connected_2_id),
     FOREIGN KEY (connected_1_id) REFERENCES Regular_User(id) ON DELETE CASCADE,
     FOREIGN KEY (connected_2_id) REFERENCES Regular_User(id) ON DELETE CASCADE
