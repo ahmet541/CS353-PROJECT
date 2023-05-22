@@ -15,7 +15,7 @@ const LoginScreen = () => {
                 password: password,
             }
             );
-
+            console.log(response);
             const { id, role } = response.data;
 
             // Store user information in session storage
@@ -25,6 +25,7 @@ const LoginScreen = () => {
             // Redirect to home page
             navigate('/home');
         } catch (error) {
+            console.log(error);
             setError(error.response.data + ' Please try again.');
         }
     };

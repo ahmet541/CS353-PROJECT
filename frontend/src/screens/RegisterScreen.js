@@ -81,6 +81,7 @@ const RegisterScreen = () => {
                 response = await axios.post('http://localhost:8080/auth/registerRegularUser', requestData);
             }
 
+            console.log(response);
             const { id, role } = response.data;
             sessionStorage.setItem('userId', id);
             sessionStorage.setItem('userRole', role);
@@ -88,6 +89,7 @@ const RegisterScreen = () => {
             // Registration success, redirect to login page
             navigate('/home');
         } catch (error) {
+            console.log(error);
             setErrorMessage('Registration failed. Please try again.\n' + error.response.data);
         }
     };
