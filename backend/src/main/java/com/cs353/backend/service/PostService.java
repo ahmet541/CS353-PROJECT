@@ -15,4 +15,8 @@ public class PostService {
     public List<Post> getAllPostOfConnectionsAndFollows(int id) {
         return postDao.getAllPostOfConnectionsAndFollows(id);
     }
+
+    public Post createPost(Post post, int userId) {
+        return postDao.createPost(post,userId);
+    }
 }

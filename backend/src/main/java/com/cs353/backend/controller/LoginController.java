@@ -5,6 +5,7 @@ import com.cs353.backend.model.dto.LoginResponseDTO;
 import com.cs353.backend.model.entities.Company;
 import com.cs353.backend.model.entities.RegularUser;
 import com.cs353.backend.service.LoginService;
+import com.cs353.backend.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class LoginController {
 
 
     @PostMapping("registerCompany")
-    public ResponseEntity<Object> registerCompany(@Valid @RequestBody Company company) {
+    public ResponseEntity<LoginResponseDTO> registerCompany(@Valid @RequestBody Company company) {
         LoginResponseDTO loginResponseDTO = loginService.registerCompany(company);
         return new ResponseEntity<>(loginResponseDTO, HttpStatus.OK);
         //        try {
@@ -45,7 +46,7 @@ public class LoginController {
 //        }
     }
     @PostMapping("registerRegularUser")
-    public ResponseEntity<Object> registerRegularUser(@Valid @RequestBody RegularUser regularUser) {
+    public ResponseEntity<LoginResponseDTO> registerRegularUser(@Valid @RequestBody RegularUser regularUser) {
         LoginResponseDTO loginResponseDTO = loginService.registerRegularUser(regularUser);
         return new ResponseEntity<>(loginResponseDTO, HttpStatus.OK);
 //        try {
@@ -65,13 +66,5 @@ public class LoginController {
     @PostMapping("init")
     public void initialBuild() {
         loginService.initialBuild();
-//        try {
-//            loginService.initialBuild();
-//        } catch (IllegalArgumentException e) {
-//            String errorMessage = e.getMessage();
-//        } catch (Exception e) {
-//            // Handle other exceptions if needed
-//            String errorMessage = "Initial build failed.";
-//        }
     }
 }

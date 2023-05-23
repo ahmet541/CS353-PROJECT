@@ -18,9 +18,4 @@ import java.util.List;
 public class PostController {
     private PostService postService;
 
-    @GetMapping("{id}/getAllPostOfConnectionsAndFollows")
-    public ResponseEntity<Object> getAllPostOfConnectionsAndFollows(@PathVariable int id) {
-        List<Post> posts = postService.getAllPostOfConnectionsAndFollows(id);
-        return new ResponseEntity<>(posts, HttpStatus.OK);
-    }
 }

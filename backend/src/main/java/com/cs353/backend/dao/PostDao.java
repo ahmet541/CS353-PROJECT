@@ -7,4 +7,6 @@ import java.util.List;
 public interface PostDao {
 
     List<Post> getAllPostOfConnectionsAndFollows(int id);
+
+    Post createPost(Post post, int userId);
 }

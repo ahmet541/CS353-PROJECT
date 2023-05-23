@@ -3,14 +3,16 @@ package com.cs353.backend.service;
 import com.cs353.backend.dao.RegularUserDao;
 import com.cs353.backend.mapper.GeneralMapper;
 import com.cs353.backend.model.entities.Account;
+import com.cs353.backend.model.entities.Post;
 import com.cs353.backend.model.entities.RegularUser;
 import com.cs353.backend.model.entities.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -52,7 +54,26 @@ public class RegularUserService {
             user.setPhoneNumber("");
             user.setProfileDescription("");
 
-            this.createRegularUser(user);
+            // Create the regular user and get the user ID
+            int userId = this.createRegularUser(user);
+
+            // Create a post for the user
+            Post post = new Post();
+            post.setUserId(userId);
+            post.setPhotoLink("https://example.com/photo.jpg");
+            post.setExplanation("This is a post created by " + user.getFirstName());
+            post.setHeading("Post Heading");
+
+            // Generate a random date between February 1 and February 28
+            int dayOfMonth = i + 1;  // User index + 1 for day of month
+            int month = 2;  // February
+            int year = 2022;  // Year can be changed as needed
+
+            LocalDateTime dateTime = LocalDateTime.of(year, month, dayOfMonth, 0, 0);
+            post.setDate(dateTime);
+
+            // Create the post
+            userService.createPost(post, userId);
         }
     }
 }

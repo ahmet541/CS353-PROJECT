@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class LoginService {
     private AccountService accountService;
+    private UserService userService;
     private RegularUserService regularUserService;
     private CompanyService companyService;
     private GeneralMapper generalMapper;
@@ -52,6 +53,7 @@ public class LoginService {
 
     public void initialBuild() {
         regularUserService.initialBuild();
+        userService.initalBuild();
         //TODO for others
     }
 }
