@@ -4,6 +4,7 @@ import com.cs353.backend.dao.PostDao;
 import com.cs353.backend.mapper.AccountMapper;
 import com.cs353.backend.mapper.PostMapper;
 import com.cs353.backend.mapper.RegularUserMapper;
+import com.cs353.backend.model.dto.PostExtraInfoDTO;
 import com.cs353.backend.model.entities.Account;
 import com.cs353.backend.model.entities.Post;
 import com.cs353.backend.model.entities.RegularUser;
@@ -52,7 +53,6 @@ public class PostDataAccessService implements PostDao {
     public Post createPost(Post post, int userId) {
         String sql = """
                     INSERT INTO Post (user_id, photo_link, explanation, heading, date) VALUES ( ?, ?, ?, ?, ?)
-                    RETURNING post_id;
                     """;
         Post createdPost = jdbcTemplate.queryForObject(sql, new PostMapper(), userId, post.getPhotoLink(), post.getExplanation(), post.getHeading(), post.getDate());
 
@@ -61,4 +61,5 @@ public class PostDataAccessService implements PostDao {
 //        //TODO find id
 //        return post;
     }
+
 }

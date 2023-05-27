@@ -1,6 +1,8 @@
 package com.cs353.backend.dao.service;
 
 import com.cs353.backend.dao.UserDao;
+import com.cs353.backend.mapper.PostOwnerDTOMapper;
+import com.cs353.backend.model.dto.PostOwnerDTO;
 import com.cs353.backend.model.entities.User;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -27,5 +29,15 @@ public class UserDataAccessService implements UserDao {
             UPDATE "User" SET profile_description = ? WHERE id = ?
             """;
         jdbcTemplate.update(sql, user.getProfileDescription(), user.getId());
+    }
+    @Override
+    public PostOwnerDTO getPostOwnerInfo(int userId) {
+        String sql = """
+                SELECT userId, avatar, fullName
+                FROM post_owner_detail
+                WHERE userId = ?;                                                       
+            """;
+        PostOwnerDTO postOwnerDTO = jdbcTemplate.queryForObject(sql, new PostOwnerDTOMapper(), userId);
+        return postOwnerDTO;
     }
 }

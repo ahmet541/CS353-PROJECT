@@ -19,6 +19,7 @@ import java.util.*;
 public class RegularUserService {
     private final RegularUserDao regularUserDao;
     private final UserService userService;
+    private final PostService postService;
     private GeneralMapper generalMapper;
 
     public int createRegularUser(RegularUser regularUser) {
@@ -73,7 +74,7 @@ public class RegularUserService {
             post.setDate(dateTime);
 
             // Create the post
-            userService.createPost(post, userId);
+            postService.createPost(post, userId);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.cs353.backend.controller;
 
+import com.cs353.backend.model.dto.PostOwnerDTO;
 import com.cs353.backend.model.entities.Post;
 import com.cs353.backend.service.UserService;
 import lombok.AllArgsConstructor;
@@ -15,15 +16,9 @@ import java.util.List;
 @AllArgsConstructor
 public class UserController {
     UserService userService;
-    @GetMapping("{id}/post/others")
-    public ResponseEntity<List<Post>> getAllPostOfConnectionsAndFollows(@PathVariable int id) {
-        List<Post> posts = userService.getAllPostOfConnectionsAndFollows(id);
-        return new ResponseEntity<>(posts, HttpStatus.OK);
-    }
-
-    @PostMapping("{id}/post")
-    public ResponseEntity<Post> createPost(@Valid @RequestBody Post post, @RequestParam int id) {
-        Post newPost = userService.createPost(post,id);
-        return new ResponseEntity<>(newPost, HttpStatus.OK);
+    @GetMapping("{userId}/getOwner")
+    public ResponseEntity<PostOwnerDTO> getOwner(@PathVariable int userId) {
+        PostOwnerDTO postOwnerDTO = userService.getOwner(userId);
+        return new ResponseEntity<>(postOwnerDTO, HttpStatus.OK);
     }
 }

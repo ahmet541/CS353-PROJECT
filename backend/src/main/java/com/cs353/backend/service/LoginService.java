@@ -53,7 +53,6 @@ public class LoginService {
 
     public void initialBuild() {
         regularUserService.initialBuild();
-        userService.initalBuild();
         //TODO for others
     }
 }

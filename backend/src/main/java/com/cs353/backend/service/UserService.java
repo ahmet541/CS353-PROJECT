@@ -3,6 +3,7 @@ package com.cs353.backend.service;
 import com.cs353.backend.dao.AccountDao;
 import com.cs353.backend.dao.UserDao;
 import com.cs353.backend.mapper.GeneralMapper;
+import com.cs353.backend.model.dto.PostOwnerDTO;
 import com.cs353.backend.model.entities.Account;
 import com.cs353.backend.model.entities.Post;
 import com.cs353.backend.model.entities.User;
@@ -16,7 +17,6 @@ import java.util.List;
 public class UserService {
     private final UserDao userDao;
     private final AccountService accountService;
-    PostService postService;
     private final GeneralMapper generalMapper;
 
     public int createUser(User user) {
@@ -31,14 +31,8 @@ public class UserService {
         userDao.updateUser(user);
     }
 
-    public List<Post> getAllPostOfConnectionsAndFollows(int id) {
-        return postService.getAllPostOfConnectionsAndFollows(id);
-    }
 
-    public Post createPost(Post post, int id) {
-        return postService.createPost(post, id);
-    }
-
-    public void initalBuild() {
+    public PostOwnerDTO getOwner(int userId) {
+        return userDao.getPostOwnerInfo(userId);
     }
 }
