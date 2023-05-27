@@ -43,3 +43,7 @@
     background-color: green; /* Change the background color to green when liked */
     color: white; /* Change the text color to white when liked */
 }
+.comment-date-small {
+    font-size: 0.8rem;
+    color: #888;
+}

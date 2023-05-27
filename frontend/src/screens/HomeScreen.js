@@ -8,15 +8,17 @@ const HomeScreen = () => {
     const [posts, setPosts] = useState([]);
     const [newPostHeading, setNewPostHeading] = useState('');
     const [newPostContent, setNewPostContent] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await axios.get('/api/posts');
+                const response = await axios.get('http://localhost:8080/post/getAllPostOfConnectionsAndFollows/' + sessionStorage.getItem('userId'));
+                console.log(response);
                 setPosts(response.data);
             } catch (error) {
-                // Handle any error that occurs during the request
-                // const errorMessage = error.response.data;
+                console.log(error);
+                setErrorMessage('Something went wrong. Try to refresh page.\n');
             }
         };
 
@@ -27,7 +29,7 @@ const HomeScreen = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('/api/posts', {
+            const response = await axios.post('/post', {
                 heading: newPostHeading,
                 content: newPostContent,
             });
@@ -42,95 +44,6 @@ const HomeScreen = () => {
         }
     };
 
-    useEffect(() => {
-        const currentDate = new Date();
-
-        setPosts([
-            {
-                postId: '1',
-                heading: 'Post 1',
-                content: 'This is the content of Post 111\n11111111111111111111111111111111111111111111111',
-                author: {
-                    name: 'John Doe',
-                    authorId: 'author1',
-                },
-            },
-            {
-                postId: '2',
-                heading: 'Post 2',
-                sharedTime: currentDate.toLocaleString(),
-                content: 'This is the content of Post 2',
-                author: {
-                    name: 'Jane Smith',
-                    authorId: 'author2',
-                },
-            },
-            {
-                postId: '1',
-                heading: 'Post 1',
-                content: 'This is the content of Post 111\n11111111111111111111111111111111111111111111111',
-                author: {
-                    name: 'John Doe',
-                    authorId: 'author1',
-                },
-            },
-            {
-                postId: '1',
-                heading: 'Post 1',
-                content: 'This is the content of Post 111\n11111111111111111111111111111111111111111111111',
-                author: {
-                    name: 'John Doe',
-                    authorId: 'author1',
-                },
-            },
-            {
-                postId: '1',
-                heading: 'Post 1',
-                content: 'This is the content of Post 111\n11111111111111111111111111111111111111111111111',
-                author: {
-                    name: 'John Doe',
-                    authorId: 'author1',
-                },
-            },
-            {
-                postId: '1',
-                heading: 'Post 1',
-                content: 'This is the content of Post 111\n11111111111111111111111111111111111111111111111',
-                author: {
-                    name: 'John Doe',
-                    authorId: 'author1',
-                },
-            },
-            {
-                postId: '1',
-                heading: 'Post 1',
-                content: 'This is the content of Post 111\n11111111111111111111111111111111111111111111111',
-                author: {
-                    name: 'John Doe',
-                    authorId: 'author1',
-                },
-            },
-            {
-                postId: '1',
-                heading: 'Post 1',
-                content: 'This is the content of Post 111\n11111111111111111111111111111111111111111111111',
-                author: {
-                    name: 'John Doe',
-                    authorId: 'author1',
-                },
-            },
-            {
-                postId: '1',
-                heading: 'Post 1',
-                content: 'This is the content of Post 111\n11111111111111111111111111111111111111111111111',
-                author: {
-                    name: 'John Doe',
-                    authorId: 'author1',
-                },
-            },
-
-        ]);
-    }, []);
 
     return (
         <div>
@@ -141,7 +54,7 @@ const HomeScreen = () => {
                 <div className="create-post">
                     <h3>Create a New Post</h3>
                     <form onSubmit={handlePostCreate}>
-                        <label>Heading:</label>
+                        <label>Title:</label>
                         <div className="form-group">
                             <textarea
                                 type="text"
@@ -166,17 +79,15 @@ const HomeScreen = () => {
 
 
                 <h3>Posts</h3>
+                {errorMessage && <p>{errorMessage}</p>}
                 <div className="posts-wrapper">
                     {posts.map((post) => (
                         <div key={post.postId} className="post-item">
                             <Post
                                 heading={post.heading}
-                                content={post.content}
+                                content={post.explanation}
                                 sharedTime={post.sharedTime}
-                                author={{
-                                    name: post.author.name,
-                                    authorId: post.author.authorId,
-                                }}
+                                authorId={post.userId}
                                 postId={post.postId}
                             />
                         </div>

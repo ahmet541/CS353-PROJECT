@@ -9,9 +9,9 @@ import CommentForm from "./CommentForm";
 import axios from "axios";
 
 
-const Post = ({ heading, content, author, postId, sharedTime }) => {
+const Post = ({ heading, content, authorId, postId, sharedTime }) => {
     const [showComments, setShowComments] = useState(false);
-    const [comments, setComments] = useState([]);
+    const [comments, setComments] = useState(null);
     const [newComment, setNewComment] = useState('');
     const [likes, setLikes] = useState(0);
     const [likedByUser, setLikedByUser] = useState(false); // State for tracking if the current user has liked the post
@@ -19,8 +19,9 @@ const Post = ({ heading, content, author, postId, sharedTime }) => {
     useEffect(() => {
         // Fetch initial post data (comments, likes, and likedByUser) from the backend
         const fetchPostData = async () => {
+
             try {
-                const response = await axios.get(`/api/posts/${postId}`);
+                const response = await axios.get(`http://localhost:8080/post/getPostExtraInfo/${postId}`);
 
                 // Destructure the data from the response
                 const { comments, likes, likedByUser } = response.data;
@@ -29,9 +30,12 @@ const Post = ({ heading, content, author, postId, sharedTime }) => {
                 setComments(comments);
                 setLikes(likes);
                 setLikedByUser(likedByUser);
+
+
+
             } catch (error) {
                 // Handle any error that occurs during the request
-                // const errorMessage = error.response.data;
+                console.log("Error message: " + error.response.data);
             }
         };
 
@@ -45,9 +49,9 @@ const Post = ({ heading, content, author, postId, sharedTime }) => {
         if (!showComments) {
             try {
                 // Make a request to the backend to retrieve the comments
-                const response = await axios.get(`/api/posts/${postId}/comments`);
+                const response = await axios.get(`http://localhost:8080/post/${postId}/comments`);
                 const fetchedComments = response.data;
-
+                console.log(fetchedComments);
                 // Update the comments state with the fetched comments
                 setComments(fetchedComments);
             } catch (error) {
@@ -63,12 +67,13 @@ const Post = ({ heading, content, author, postId, sharedTime }) => {
 
         try {
             // Make a request to the backend to add the comment
-            await axios.post(`/api/posts/${postId}/comments`, {
+            console.log(newComment);
+            await axios.post(`http://localhost:8080/post/${postId}/addComment/${sessionStorage.getItem('userId')}`, {
                 comment: newComment,
             });
 
             // After the comment is successfully added, retrieve the updated comments
-            const response = await axios.get(`/api/posts/${postId}/comments`);
+            const response = await axios.get(`http://localhost:8080/post/${postId}/comments`);
             const updatedComments = response.data;
 
             // Update the comments state with the new comments
@@ -85,10 +90,10 @@ const Post = ({ heading, content, author, postId, sharedTime }) => {
         try {
             if (likedByUser) {
                 // If the post is already liked, send a request to unlike it
-                await axios.delete(`/api/posts/${postId}/like`);
+                await axios.delete(`http://localhost:8080/api/posts/${postId}/like`);
             } else {
                 // If the post is not liked, send a request to like it
-                await axios.post(`/api/posts/${postId}/like`);
+                await axios.post(`http://localhost:8080/api/posts/${postId}/like`);
             }
 
             // After the request is successful, retrieve the updated post information
@@ -109,7 +114,7 @@ const Post = ({ heading, content, author, postId, sharedTime }) => {
         <Card className="mb-4 post">
             <Card.Body>
                 <div className="author-info">
-                    <AuthorLink name={author.name} avatar={author.avatar} authorId={author.authorId} />
+                    <AuthorLink authorId={authorId} />
                 </div>
                 <div className="post-meta">
                     <span className="shared-time">{sharedTime}</span>
@@ -119,7 +124,7 @@ const Post = ({ heading, content, author, postId, sharedTime }) => {
                 <div className="post-meta">
                     <div className="meta-item">
                         <Badge variant="info" className="comment-count">
-                            {comments.length} {comments.length === 1 ? 'Comment' : 'Comments'}
+                            {comments ? comments.length : 0} {comments && comments.length === 1 ? 'Comment' : 'Comments'}
                         </Badge>
                         <Badge variant="info" className="like-count">
                             {likes} {likes === 1 ? 'Like' : 'Likes'}
@@ -127,7 +132,7 @@ const Post = ({ heading, content, author, postId, sharedTime }) => {
                     </div>
                 </div>
                 <div className="post-actions">
-                    <CommentButton commentsCount={comments.length} handleToggleComments={handleToggleComments} />
+                    <CommentButton commentsCount={comments ? comments.length : 0} handleToggleComments={handleToggleComments} />
                     <LikeButton likedByUser={likedByUser} handleLike={handleLike} />
                 </div>
 
@@ -136,15 +141,30 @@ const Post = ({ heading, content, author, postId, sharedTime }) => {
                         <h6>Comments:</h6>
                         {comments.length > 0 ? (
                             <ul className="comment-list">
-                                {comments.map((comment, index) => (
-                                    <li key={index} className="comment-item">
-                                        {comment}
+                                {comments.map((comment) => (
+                                    <li key={comment.commentId} className="comment-item">
+                                        <div className="author-info">
+                                            <AuthorLink authorId={comment.userId} />
+                                            <p className="comment-date comment-date-small">
+                                                {new Date(comment.date).toLocaleString('en-US', {
+                                                    year: 'numeric',
+                                                    month: 'short',
+                                                    day: 'numeric',
+                                                    hour: 'numeric',
+                                                    minute: 'numeric',
+                                                })}
+                                            </p>
+                                        </div>
+                                        <div className="comment-content">
+                                            <p>{comment.context.replace(/"/g, '')}</p> {/* Remove double quotation marks */}
+                                        </div>
                                     </li>
                                 ))}
                             </ul>
                         ) : (
                             <p>No comments yet.</p>
                         )}
+
                         <CommentForm
                             newComment={newComment}
                             handleCommentSubmit={handleCommentSubmit}
