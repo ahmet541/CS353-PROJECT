@@ -16,6 +16,7 @@ CREATE TABLE Account (
 CREATE TABLE "User"(
     id INT NOT NULL UNIQUE,
     profile_description VARCHAR(255),
+    avatar VARCHAR(255),
     PRIMARY KEY (id),
     FOREIGN KEY(id) REFERENCES Account(id) ON DELETE CASCADE
 );
@@ -105,4 +106,26 @@ CREATE TABLE Connection (
     FOREIGN KEY (connected_1_id) REFERENCES Regular_User(id) ON DELETE CASCADE,
     FOREIGN KEY (connected_2_id) REFERENCES Regular_User(id) ON DELETE CASCADE
 );
+CREATE TABLE Comment (
+     comment_id SERIAL PRIMARY KEY,
+     post_id INT NOT NULL,
+     user_id INT NOT NULL,
+     context VARCHAR(255) NOT NULL,
+     date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+     FOREIGN KEY (post_id) REFERENCES Post (post_id),
+     FOREIGN KEY (user_id) REFERENCES "User" (id)
+);
+
+
+CREATE VIEW post_owner_detail AS
+SELECT
+    "User".id AS userId,
+    "User".avatar,
+    COALESCE(CONCAT_WS(' ', Regular_User.first_name, Regular_User.last_name), Company.companyName) AS fullName
+FROM
+    "User"
+        LEFT JOIN
+    Regular_User ON "User".id = Regular_User.id
+        LEFT JOIN
+    Company ON "User".id = Company.id;
 
