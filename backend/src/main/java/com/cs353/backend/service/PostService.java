@@ -22,14 +22,16 @@ public class PostService {
     }
 
     public Post createPost(Post post, int userId) {
+        post.setUserId(userId);
         return postDao.createPost(post,userId);
     }
 
 
-    public PostExtraInfoDTO getPostExtraInfo(int postId) {
+    public PostExtraInfoDTO getPostExtraInfo(int postId, int userId) {
         PostExtraInfoDTO postExtraInfoDTO = new PostExtraInfoDTO();
         postExtraInfoDTO.setComments(commentService.getComments(postId));
-        //TODO
+        postExtraInfoDTO.setLikes(postDao.getLikeCount(postId));
+        postExtraInfoDTO.setLikedByUser(postDao.isLikedPost(postId,userId));
         return postExtraInfoDTO;
     }
 
@@ -44,5 +46,21 @@ public class PostService {
 
     public List<Comment> getComments(int postId) {
         return commentService.getComments(postId);
+    }
+
+    public PostExtraInfoDTO like(int postId, int userId) {
+        postDao.like(postId,userId);
+        PostExtraInfoDTO postExtraInfoDTO = new PostExtraInfoDTO();
+        postExtraInfoDTO.setLikes(postDao.getLikeCount(postId));
+        postExtraInfoDTO.setLikedByUser(postDao.isLikedPost(postId,userId));
+        return postExtraInfoDTO;
+    }
+
+    public PostExtraInfoDTO unlike(int postId, int userId) {
+        postDao.unlike(postId,userId);
+        PostExtraInfoDTO postExtraInfoDTO = new PostExtraInfoDTO();
+        postExtraInfoDTO.setLikes(postDao.getLikeCount(postId));
+        postExtraInfoDTO.setLikedByUser(postDao.isLikedPost(postId,userId));
+        return postExtraInfoDTO;
     }
 }

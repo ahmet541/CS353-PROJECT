@@ -10,7 +10,7 @@ public class PostOwnerDTOMapper implements RowMapper<PostOwnerDTO> {
 
     @Override
     public PostOwnerDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-        String userId = rs.getString("userId");
+        int userId = rs.getInt("userId");
         String fullName = rs.getString("fullName");
         String avatar = rs.getString("avatar");
 

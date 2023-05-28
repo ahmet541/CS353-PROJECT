@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostOwnerDTO {
-    private String userId;
+    private int userId;
     private String fullName;
     private String avatar;
 }

@@ -32,9 +32,9 @@ public class PostController {
         return new ResponseEntity<>(newPost, HttpStatus.OK);
     }
 
-    @GetMapping("getPostExtraInfo/{postId}")
-    public ResponseEntity<PostExtraInfoDTO> getPostExtraInfo(@PathVariable int postId) {
-        PostExtraInfoDTO postExtraInfo = postService.getPostExtraInfo(postId);
+    @GetMapping("{postId}/getPostExtraInfo/{userId}")
+    public ResponseEntity<PostExtraInfoDTO> getPostExtraInfo(@PathVariable int postId, @PathVariable int userId) {
+        PostExtraInfoDTO postExtraInfo = postService.getPostExtraInfo(postId, userId);
         return new ResponseEntity<>(postExtraInfo, HttpStatus.OK);
     }
 
@@ -51,4 +51,15 @@ public class PostController {
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
+    @PostMapping("{postId}/like/{userId}")
+    public ResponseEntity<PostExtraInfoDTO> like(@PathVariable int postId, @PathVariable int userId) {
+        PostExtraInfoDTO postExtraInfoDTO = postService.like(postId,userId);
+        return new ResponseEntity<>(postExtraInfoDTO, HttpStatus.OK);
+    }
+
+    @DeleteMapping("{postId}/unlike/{userId}")
+    public ResponseEntity<PostExtraInfoDTO> unlike(@PathVariable int postId, @PathVariable int userId) {
+        PostExtraInfoDTO postExtraInfoDTO = postService.unlike(postId,userId);
+        return new ResponseEntity<>(postExtraInfoDTO, HttpStatus.OK);
+    }
 }

@@ -11,4 +11,10 @@ public interface PostDao {
 
     Post createPost(Post post, int userId);
 
+    int getLikeCount(int postId);
+    boolean isLikedPost(int postId, int userId);
+
+    void like(int postId, int userId);
+
+    void unlike(int postId, int userId);
 }

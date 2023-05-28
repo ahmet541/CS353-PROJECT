@@ -14,11 +14,11 @@ public class Post {
 
     private int userId;
 
-    private String photoLink;
+    private String photoLink = "";
 
     private String explanation;
 
     private String heading;
 
-    private LocalDateTime date;
+    private LocalDateTime date = LocalDateTime.now();
 }

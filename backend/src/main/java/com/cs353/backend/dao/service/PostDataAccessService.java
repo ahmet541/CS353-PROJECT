@@ -52,14 +52,53 @@ public class PostDataAccessService implements PostDao {
     @Override
     public Post createPost(Post post, int userId) {
         String sql = """
-                    INSERT INTO Post (user_id, photo_link, explanation, heading, date) VALUES ( ?, ?, ?, ?, ?)
+                    INSERT INTO Post (user_id, photo_link, explanation, heading, date) 
+                    VALUES ( ?, ?, ?, ?, ?)
+                    RETURNING post_id
                     """;
-        Post createdPost = jdbcTemplate.queryForObject(sql, new PostMapper(), userId, post.getPhotoLink(), post.getExplanation(), post.getHeading(), post.getDate());
-
-        return createdPost;
-//        Integer postId = jdbcTemplate.queryForObject(sql, Integer.class, userId, post.getPhotoLink(), post.getExplanation(), post.getHeading(), post.getDate());
-//        //TODO find id
-//        return post;
+        int id = jdbcTemplate.queryForObject(sql, Integer.class, userId, post.getPhotoLink(), post.getExplanation(), post.getHeading(), post.getDate());
+        post.setPostId(id);
+        return post;
     }
 
+    @Override
+    public int getLikeCount(int postId) {
+        String sql = """
+                    SELECT COUNT(*) 
+                    FROM post_like 
+                    WHERE post_id = ?
+                    """;
+        int likeCount = jdbcTemplate.queryForObject(sql, Integer.class, postId);
+        return likeCount;
+    }
+
+    @Override
+    public boolean isLikedPost(int postId, int userId) {
+        String sql = """
+                    SELECT EXISTS(
+                        SELECT 1 
+                        FROM post_like 
+                        WHERE post_id = ? AND user_id = ?)
+                    """;
+        return jdbcTemplate.queryForObject(sql, Boolean.class, postId, userId);
+    }
+
+    @Override
+    public void like(int postId, int userId) {
+        String sql = """
+                    INSERT INTO post_like
+                    (user_id, post_id) 
+                    VALUES (?, ?)
+                    """;
+       jdbcTemplate.update(sql, userId, postId);
+    }
+
+    @Override
+    public void unlike(int postId, int userId) {
+        String sql = """
+                    DELETE FROM post_like
+                    WHERE user_id = ? AND post_id = ?
+                    """;
+        jdbcTemplate.update(sql, userId, postId);
+    }
 }
