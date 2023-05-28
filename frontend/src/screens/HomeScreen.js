@@ -29,12 +29,12 @@ const HomeScreen = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('/post', {
+            const response = await axios.post('http://localhost:8080/post/' + sessionStorage.getItem('userId'), {
                 heading: newPostHeading,
-                content: newPostContent,
+                explanation: newPostContent,
             });
 
-            setPosts((prevPosts) => [...prevPosts, response.data]);
+            setPosts((prevPosts) => [ response.data, ...prevPosts]);
 
             setNewPostHeading('');
             setNewPostContent('');
