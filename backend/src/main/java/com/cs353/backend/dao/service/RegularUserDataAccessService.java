@@ -42,7 +42,13 @@ public class RegularUserDataAccessService implements RegularUserDao {
 
     @Override
     public RegularUser getRegularUserById(int id) {
-        return null;
+        String sql = """
+                     SELECT RU.*, U.profile_description, U.avatar 
+                     FROM regular_user RU 
+                     JOIN "User" U ON U.id = RU.id
+                     WHERE RU.id = ?
+                     """;
+        return jdbcTemplate.queryForObject(sql, new RegularUserMapper(), id);
     }
 
     @Override

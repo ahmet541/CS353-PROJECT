@@ -29,7 +29,9 @@ public class RegularUserService {
         regularUserDao.createRegularUser(regularUser);
         return id;
     }
-
+    public RegularUser getRegularUser(int userId) {
+        return regularUserDao.getRegularUserById(userId);
+    }
     public List<RegularUser> getAllRegularUsers() {
         return regularUserDao.getAllRegularUsers();
     }
@@ -77,4 +79,6 @@ public class RegularUserService {
             postService.createPost(post, userId);
         }
     }
+
+
 }

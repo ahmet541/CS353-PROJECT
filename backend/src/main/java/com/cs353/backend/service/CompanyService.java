@@ -14,4 +14,8 @@ public class CompanyService {
         return 0;//TODO
     }
 
+    public Company getCompany(int userId) {
+        //TODO
+        return null;
+    }
 }

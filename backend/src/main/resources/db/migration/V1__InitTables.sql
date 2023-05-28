@@ -116,6 +116,14 @@ CREATE TABLE Comment (
      FOREIGN KEY (user_id) REFERENCES "User" (id)
 );
 
+CREATE TABLE Post_Like (
+       user_id INT NOT NULL,
+       post_id INT NOT NULL,
+       PRIMARY KEY (user_id, post_id),
+       FOREIGN KEY (user_id) REFERENCES "User"(id) ON DELETE CASCADE,
+       FOREIGN KEY (post_id) REFERENCES Post(post_id) ON DELETE CASCADE
+);
+
 
 CREATE VIEW post_owner_detail AS
 SELECT
