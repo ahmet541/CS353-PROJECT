@@ -21,7 +21,7 @@ const Post = ({ heading, content, authorId, postId, sharedTime }) => {
         const fetchPostData = async () => {
 
             try {
-                const response = await axios.get(`http://localhost:8080/post/getPostExtraInfo/${postId}`);
+                const response = await axios.get(`http://localhost:8080/post/${postId}/getPostExtraInfo/${sessionStorage.getItem('userId')}`);
 
                 // Destructure the data from the response
                 const { comments, likes, likedByUser } = response.data;
@@ -51,7 +51,7 @@ const Post = ({ heading, content, authorId, postId, sharedTime }) => {
                 // Make a request to the backend to retrieve the comments
                 const response = await axios.get(`http://localhost:8080/post/${postId}/comments`);
                 const fetchedComments = response.data;
-                console.log(fetchedComments);
+
                 // Update the comments state with the fetched comments
                 setComments(fetchedComments);
             } catch (error) {
@@ -88,16 +88,16 @@ const Post = ({ heading, content, authorId, postId, sharedTime }) => {
 
     const handleLike = async () => {
         try {
+            let response;
             if (likedByUser) {
                 // If the post is already liked, send a request to unlike it
-                await axios.delete(`http://localhost:8080/api/posts/${postId}/like`);
+                response = await axios.delete(`http://localhost:8080/post/${postId}/unlike/${sessionStorage.getItem('userId')}`);
             } else {
                 // If the post is not liked, send a request to like it
-                await axios.post(`http://localhost:8080/api/posts/${postId}/like`);
+                response = await axios.post(`http://localhost:8080/post/${postId}/like/${sessionStorage.getItem('userId')}`);
             }
 
             // After the request is successful, retrieve the updated post information
-            const response = await axios.get(`/api/posts/${postId}`);
             const { likes: updatedLikes, likedByUser: updatedLikedByUser } = response.data;
 
             // Update the likes and likedByUser state with the new values
