@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JS
 import '../css/Navbar.css'; // Import the CSS file for custom styling
 
-const Navbar = ({ children }) => {
+const Navbar = ({ userId }) => {
     const [searchQuery, setSearchQuery] = useState('');
 
     const handleLogout = () => {
@@ -15,7 +15,7 @@ const Navbar = ({ children }) => {
     const handleSearch = (e) => {
         e.preventDefault();
         // Perform search logic here based on the searchQuery state
-        console.log('Searching for:', searchQuery);
+        console.log(`Searching for:}`, searchQuery);
     };
 
     return (
@@ -24,12 +24,12 @@ const Navbar = ({ children }) => {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav me-auto">
                         <li className="nav-item">
-                            <Link className="nav-link" to="/">
+                            <Link className="nav-link" to="/home">
                                 Home
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/profile">
+                            <Link className="nav-link" to={`/profile/${userId}`}>
                                 Profile
                             </Link>
                         </li>
