@@ -38,6 +38,19 @@ CREATE TABLE follow(
    FOREIGN KEY(followed_id) REFERENCES "User"(id) ON DELETE CASCADE,
    FOREIGN KEY(follower_id) REFERENCES "User"(id) ON DELETE CASCADE
 );
+
+CREATE TABLE Regular_User (
+    id INT NOT NULL UNIQUE,
+    first_name varchar(255) NOT NULL,
+    last_name varchar(255) NOT NULL,
+    gender varchar(255),
+    phone_number varchar(255),
+    birthdate timestamp,
+    address varchar(255),
+    PRIMARY KEY (id),
+    FOREIGN KEY (id) REFERENCES "User" (id) ON DELETE CASCADE
+  );
+
 CREATE TABLE connection (
     connected_1_id INT NOT NULL,
     connected_2_id INT NOT NULL,
@@ -63,17 +76,7 @@ CREATE TABLE Company(
     FOREIGN KEY(id) REFERENCES "User"(id) ON DELETE CASCADE
  );
 
-CREATE TABLE Regular_User (
-    id INT NOT NULL UNIQUE,
-    first_name varchar(255) NOT NULL,
-    last_name varchar(255) NOT NULL,
-    gender varchar(255),
-    phone_number varchar(255),
-    birthdate timestamp,
-    address varchar(255),
-    PRIMARY KEY (id),
-    FOREIGN KEY (id) REFERENCES "User" (id) ON DELETE CASCADE
-);
+
 
 CREATE TABLE Recruiter (
     id INT NOT NULL UNIQUE,
@@ -98,14 +101,7 @@ CREATE TABLE Certificate_Skill (
    FOREIGN KEY(user_id) REFERENCES Regular_User(id) ON DELETE CASCADE
 );
 
-CREATE TABLE Connection (
-    connected_1_id int NOT NULL,
-    connected_2_id int NOT NULL,
-    accepted BOOLEAN DEFAULT FALSE,
-    PRIMARY KEY (connected_1_id, connected_2_id),
-    FOREIGN KEY (connected_1_id) REFERENCES Regular_User(id) ON DELETE CASCADE,
-    FOREIGN KEY (connected_2_id) REFERENCES Regular_User(id) ON DELETE CASCADE
-);
+
 CREATE TABLE Comment (
      comment_id SERIAL PRIMARY KEY,
      post_id INT NOT NULL,
@@ -122,6 +118,41 @@ CREATE TABLE Post_Like (
        PRIMARY KEY (user_id, post_id),
        FOREIGN KEY (user_id) REFERENCES "User"(id) ON DELETE CASCADE,
        FOREIGN KEY (post_id) REFERENCES Post(post_id) ON DELETE CASCADE
+);
+
+CREATE TABLE JobOpening(
+    job_opening_id INT NOT NULL UNIQUE,
+    employment_status INT NOT NULL,
+    explanation VARCHAR(255) NOT NULL,
+    due_date timestamp,
+    role_pro VARCHAR(255),
+    location VARCHAR(255),
+    work_type VARCHAR(255),
+    PRIMARY KEY(job_opening_id)
+);
+
+CREATE TABLE open_position(
+  company_id int NOT NULL,
+  recruiter_id int NOT NULL,
+  job_opening_id int NOT NULL,
+  PRIMARY KEY(company_id, recruiter_id, job_opening_id),
+  FOREIGN KEY(company_id) REFERENCES Company(id) ON DELETE CASCADE,
+  FOREIGN KEY(recruiter_id) REFERENCES Recruiter(id),
+  FOREIGN KEY(job_opening_id) REFERENCES JobOpening(job_opening_id) ON DELETE CASCADE
+);
+
+CREATE TABLE application(
+user_id int NOT NULL,
+job_opening_id int NOT NULL,
+--application_date timestamp NOT NULL DEFAULT GETDATE(),
+application_status int NOT NULL,
+experience VARCHAR(255),
+skills VARCHAR(255),
+education_lvl int,
+cv VARCHAR(255),
+PRIMARY KEY(user_id, job_opening_id),
+FOREIGN KEY(user_id) REFERENCES Regular_User(id) ON DELETE CASCADE,
+FOREIGN KEY(job_opening_id) REFERENCES JobOpening(job_opening_id) ON DELETE CASCADE
 );
 
 
