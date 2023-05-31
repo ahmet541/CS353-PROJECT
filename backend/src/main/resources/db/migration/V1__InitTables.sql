@@ -146,13 +146,21 @@ user_id int NOT NULL,
 job_opening_id int NOT NULL,
 --application_date timestamp NOT NULL DEFAULT GETDATE(),
 application_status int NOT NULL,
-experience VARCHAR(255),
+experience VARCHAR(255) NOT NULL ,
 skills VARCHAR(255),
 education_lvl int,
 cv VARCHAR(255),
 PRIMARY KEY(user_id, job_opening_id),
 FOREIGN KEY(user_id) REFERENCES Regular_User(id) ON DELETE CASCADE,
 FOREIGN KEY(job_opening_id) REFERENCES JobOpening(job_opening_id) ON DELETE CASCADE
+);
+
+CREATE TABLE verifies(
+     company_id int NOT NULL,
+     recruiter_id int NOT NULL,
+     PRIMARY KEY(company_id, recruiter_id),
+     FOREIGN KEY(company_id) REFERENCES Company(id) ON DELETE CASCADE,
+     FOREIGN KEY(recruiter_id) REFERENCES Recruiter(id) ON DELETE CASCADE
 );
 
 
