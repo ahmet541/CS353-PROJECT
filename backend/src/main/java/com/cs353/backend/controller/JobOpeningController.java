@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/jobopening")
@@ -22,7 +23,7 @@ public class JobOpeningController {
     }
 
     @GetMapping("getAllJobOpenings")
-    public ResponseEntity<JobOpening> getAllJobOpenings() {
-        return (ResponseEntity<JobOpening>)jobOpeningService.getAllJobOpenings();
+    public List<JobOpening> getAllJobOpenings() {
+        return jobOpeningService.getAllJobOpenings();
     }
 }
