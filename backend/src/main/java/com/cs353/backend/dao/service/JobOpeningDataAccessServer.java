@@ -3,6 +3,7 @@ package com.cs353.backend.dao.service;
 import com.cs353.backend.Enum.EmploymentStatus;
 import com.cs353.backend.dao.JobOpeningDao;
 import com.cs353.backend.mapper.JobOpeningMapper;
+import com.cs353.backend.model.dto.JobOpeningApplicationDTO;
 import com.cs353.backend.model.dto.JobOpeningDTO;
 import com.cs353.backend.model.entities.JobOpening;
 import lombok.AllArgsConstructor;
@@ -71,5 +72,15 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
         }
 
         return jdbcTemplate.query(queryBuilder.toString(), new JobOpeningMapper(), params.toArray());
+    }
+
+    //NOT TESTED
+    @Override
+    public boolean applyJobOpening(JobOpeningApplicationDTO jobOpeningApplicationDTO, int userId) {
+
+        /*
+        TO BE CHANGED BY ERKIN AYDIN.
+         */
+        return true;
     }
 }

@@ -1,5 +1,6 @@
 package com.cs353.backend.controller;
 
+import com.cs353.backend.model.dto.JobOpeningApplicationDTO;
 import com.cs353.backend.model.dto.JobOpeningDTO;
 import com.cs353.backend.model.entities.JobOpening;
 import com.cs353.backend.service.JobOpeningService;
@@ -31,5 +32,11 @@ public class JobOpeningController {
     @PostMapping("getJobOpeningsByFilter")
     public List<JobOpening> getJobOpeningsByFilter(@Valid @RequestBody JobOpeningDTO jobOpeningDTO) {
         return jobOpeningService.getJobOpeningsByFilter(jobOpeningDTO);
+    }
+
+    //NOT TESTED
+    @PostMapping("applyJobOpening/{userId}")
+    public boolean applyJobOpening(@Valid @RequestBody JobOpeningApplicationDTO jobOpeningApplicationDTO, @PathVariable int userId) {
+        return jobOpeningService.applyJobOpening(jobOpeningApplicationDTO, userId);
     }
 }
