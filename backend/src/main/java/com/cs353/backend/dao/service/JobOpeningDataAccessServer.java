@@ -3,11 +3,16 @@ package com.cs353.backend.dao.service;
 import com.cs353.backend.Enum.EmploymentStatus;
 import com.cs353.backend.dao.JobOpeningDao;
 import com.cs353.backend.mapper.JobOpeningMapper;
+import com.cs353.backend.model.dto.JobOpeningDTO;
 import com.cs353.backend.model.entities.JobOpening;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -35,5 +40,45 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
                 ORDER BY due_date
                 """;
         return jdbcTemplate.query(sql, new JobOpeningMapper());
+    }
+
+    @Override
+    public List<JobOpening> getJobOpeningsByFilter(JobOpeningDTO jobOpeningDTO) {
+        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM your_table WHERE 1=1");
+
+        List<Object> params = new ArrayList<>();
+
+        if (jobOpeningDTO.getEmploymentStatus() != null) {
+            queryBuilder.append(" AND employment_status = ?");
+            params.add(jobOpeningDTO.getEmploymentStatus());
+        }
+
+        if (jobOpeningDTO.getExplanation() != null) {
+            queryBuilder.append(" AND explanation = ?");
+            params.add(jobOpeningDTO.getExplanation());
+        }
+
+        if (jobOpeningDTO.getDueDate() != null) {
+            queryBuilder.append(" AND due_date = ?");
+            params.add(jobOpeningDTO.getDueDate());
+        }
+
+        if(jobOpeningDTO.getRolePro() != null) {
+            queryBuilder.append(" AND role_pro = ?");
+            params.add(jobOpeningDTO.getRolePro());
+        }
+
+        if(jobOpeningDTO.getLocation() != null) {
+            queryBuilder.append(" AND location = ?");
+            params.add(jobOpeningDTO.getLocation());
+        }
+
+        if(jobOpeningDTO.getWorkType() != null) {
+            queryBuilder.append(" AND work_type = ?");
+            params.add(jobOpeningDTO.getWorkType());
+        }
+
+        List<JobOpening> filteredJobOpenings = jdbcTemplate.query(queryBuilder.toString(), new JobOpeningMapper(), params.toArray());
+        return filteredJobOpenings;
     }
 }

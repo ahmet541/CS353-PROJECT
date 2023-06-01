@@ -1,5 +1,6 @@
 package com.cs353.backend.controller;
 
+import com.cs353.backend.model.dto.JobOpeningDTO;
 import com.cs353.backend.model.entities.JobOpening;
 import com.cs353.backend.service.JobOpeningService;
 import lombok.AllArgsConstructor;
@@ -25,5 +26,10 @@ public class JobOpeningController {
     @GetMapping("getAllJobOpenings")
     public List<JobOpening> getAllJobOpenings() {
         return jobOpeningService.getAllJobOpenings();
+    }
+
+    @GetMapping("getJobOpeningsByFilter")
+    public List<JobOpening> getJobOpeningsByFilter(@Valid @RequestBody JobOpeningDTO jobOpeningDTO) {
+        return jobOpeningService.getJobOpeningsByFilter(jobOpeningDTO);
     }
 }
