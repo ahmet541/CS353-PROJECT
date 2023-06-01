@@ -29,7 +29,6 @@ const Navbar = ({ onSearch  }) => {
     // };
     const handleSearch = (e) => {
         e.preventDefault();
-        console.log(e);
         onSearch(searchQuery);
     };
 

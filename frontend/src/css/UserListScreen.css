@@ -1,0 +1,31 @@
+.container {
+    margin-top: 20px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.list-group-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    border: none;
+}
+
+.list-group-item:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.list-group-item:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+.user-list-container {
+    max-width: 800px;
+    margin: 0 auto;
+}

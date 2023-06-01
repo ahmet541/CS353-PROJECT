@@ -13,6 +13,7 @@ import Message from "../components/Message";
 import { useParams } from "react-router";
 import ChatConnections from "../components/ChatConnections";
 import axios from "axios";
+import Navbar from "../components/Navbar";
 const MessagesScreen = () => {
     const [selectedIndex, setSelectedIndex] = useState(null);
     const [showModal, setShowModal] = useState(false);
@@ -112,6 +113,7 @@ const MessagesScreen = () => {
         setShowModal(false);
     };
     return (
+        <Navbar>
         <MDBContainer fluid className="py-5" style={{ backgroundColor: "#fcfcfc" }}>
             <MDBRow>
                 <MDBCol md="6" lg="5" xl="4" className="mb-4 mb-md-0">
@@ -171,6 +173,7 @@ const MessagesScreen = () => {
             </MDBRow>
 
         </MDBContainer>
+        </Navbar>
     );
 };
 

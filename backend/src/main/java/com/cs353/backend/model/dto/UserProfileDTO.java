@@ -32,5 +32,5 @@ public class UserProfileDTO {
     private List<UserRole> roles = new ArrayList<>();
     private List<PostOwnerDTO> followers = new ArrayList<>();
     private List<PostOwnerDTO> connections = new ArrayList<>();
-    private List<Account> employees = new ArrayList<>();
+    private List<PostOwnerDTO> employees = new ArrayList<>();
 }
