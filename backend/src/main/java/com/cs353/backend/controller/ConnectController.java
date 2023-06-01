@@ -1,10 +1,13 @@
 package com.cs353.backend.controller;
 
+import com.cs353.backend.model.entities.Account;
 import com.cs353.backend.service.ConnectionService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/connect")
@@ -14,9 +17,10 @@ public class ConnectController {
     private ConnectionService connectionService;
 
     @PostMapping("{senderId}/sendRequest/{receiverId}")
-    public ResponseEntity<Object> sendRequest(@PathVariable int senderId, @PathVariable int receiverId) {
+    public ResponseEntity<List<Account>> sendRequest(@PathVariable int senderId, @PathVariable int receiverId) {
         connectionService.sendRequest(senderId, receiverId);
-        return new ResponseEntity<>("Connection request sent successfully.", HttpStatus.OK);
+        List<Account> res = connectionService.getAllConnections(receiverId);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     @PostMapping("{senderId}/acceptRequest/{receiverId}")
@@ -26,8 +30,20 @@ public class ConnectController {
     }
 
     @DeleteMapping("{senderId}/removeConnection/{receiverId}")
-    public ResponseEntity<Object> removeConnection(@PathVariable int senderId, @PathVariable int receiverId) {
+    public ResponseEntity<List<Account>> removeConnection(@PathVariable int senderId, @PathVariable int receiverId) {
         connectionService.removeConnection(senderId, receiverId);
-        return new ResponseEntity<>("Connection removed successfully.", HttpStatus.OK);
+        List<Account> res = connectionService.getAllConnections(receiverId);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
+    @GetMapping("{userId}/allConnections")
+    public ResponseEntity<Object> getAllConnections(@PathVariable int userId) {
+        Object o = connectionService.getAllConnections(userId);
+        return new ResponseEntity<>(o, HttpStatus.OK);
+    }
+    @GetMapping("{senderId}/isPending/{receiverId}")
+    public ResponseEntity<Boolean> isPending(@PathVariable int senderId, @PathVariable int receiverId) {
+        Boolean res = connectionService.isPending(senderId,receiverId);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
 }

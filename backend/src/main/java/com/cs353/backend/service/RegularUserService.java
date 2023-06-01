@@ -29,6 +29,13 @@ public class RegularUserService {
         regularUserDao.createRegularUser(regularUser);
         return id;
     }
+    public void update(int userId, RegularUser regularUser) {
+        regularUser.setId(userId);
+        User user = generalMapper.mapRegularUserToUser(regularUser);
+        user.setId(userId);
+        userService.updateUser(user);
+        regularUserDao.updateRegularUser(regularUser);
+    }
     public RegularUser getRegularUser(int userId) {
         return regularUserDao.getRegularUserById(userId);
     }
@@ -38,24 +45,29 @@ public class RegularUserService {
 
     public void initialBuild() {
         List<String> turkishFirstNames = Arrays.asList(
-                "Ahmet", "Mehmet", "Mustafa", "Ali", "Ayşe", "Fatma", "Emine", "Hatice", "Zeynep", "Elif", "Murat", "Ömer",
-                "Hüseyin", "Hasan", "İbrahim", "Sultan", "Yusuf", "Merve", "Ceren", "Ebru", "Yasin", "Can", "Deniz", "Eren");
+                "Ahmet", "Mehmet", "Mustafa", "Ali", "Murat", "Ömer","Eren", "Yasin", "Can", "Yusuf",
+                "Hüseyin", "Hasan", "İbrahim", "Sultan", "Emine", "Hatice", "Zeynep", "Elif","Ayşe", "Fatma", "Merve", "Ceren", "Ebru", "Deniz" );
 
         List<String> turkishLastNames = Arrays.asList(
                 "Yılmaz", "Demir", "Çelik", "Kaya", "Öztürk", "Arslan", "Doğan", "Şahin", "Demirci", "Acar", "Bulut", "Akça",
                 "Aydın", "Aslan", "Baş", "Erdoğan", "Kurt", "Uçar", "Kaplan", "Bulut", "Tekin", "Karadağ", "Ergün", "Ünal");
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 5; i < 15; i++) {
             RegularUser user = new RegularUser();
             user.setFirstName(turkishFirstNames.get(i));
             user.setLastName(turkishLastNames.get(i));
             user.setEmail(user.getFirstName().toLowerCase() + "." + user.getLastName().toLowerCase() + "@hotmail.com");
             user.setPassword("pw");
-            user.setAddress("");
+            user.setAddress("Bilkent University " + (i+1) + ". Dormitory");
             user.setBirthdate(new Date());
-            user.setGender("");
-            user.setPhoneNumber("");
-            user.setProfileDescription("");
+            if( i < 13){
+                user.setGender("Male");
+            }
+            else{
+                user.setGender("Female");
+            }
+            user.setPhoneNumber("0555555555" + (i%10));
+            user.setProfileDescription("Hello, my name is " + user.getFirstName() + ", and I am looking for job.");
 
             // Create the regular user and get the user ID
             int userId = this.createRegularUser(user);
@@ -79,6 +91,7 @@ public class RegularUserService {
             postService.createPost(post, userId);
         }
     }
+
 
 
 }

@@ -7,7 +7,6 @@ import UserProfile from "./screens/UserProfileScreen";
 import EditProfile from "./screens/EditProfileScreen";
 import Messages from "./screens/MessagesScreen";
 import MessageScreen from "./screens/MessagesScreen";
-import UserProfile from "./screens/UserProfile";
 import CreateJobAdvertScreen from "./screens/CreateJobAdvertScreen";
 // Import other screens/components
 
