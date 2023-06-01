@@ -75,7 +75,6 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
             params.add(jobOpeningDTO.getWorkType());
         }
 
-        List<JobOpening> filteredJobOpenings = jdbcTemplate.query(queryBuilder.toString(), new JobOpeningMapper(), params.toArray());
-        return filteredJobOpenings;
+        return jdbcTemplate.query(queryBuilder.toString(), new JobOpeningMapper(), params.toArray());
     }
 }
