@@ -29,5 +29,4 @@ public class CareerExpertDataAccessService implements CareerExpertDao{
         String sql = "INSERT INTO career_expert (rank, last_year_score) VALUES (?, ?);";
         jdbcTemplate.update(sql, careerExpert.getRank(), careerExpert.getLast_year_score());
     }
-
 }

@@ -48,3 +48,11 @@ CREATE TRIGGER update_post_owner_trigger
     INSTEAD OF UPDATE ON post_owner_detail
     FOR EACH ROW
 EXECUTE FUNCTION update_post_owner_view();
+
+
+--The function below for updating Recruiter table after an update on Verifies table
+--CREATE OR REPLACE FUNCTION update_recruiter()
+--   RETURNS TRIGGER AS $$
+--BEGIN
+    --INSERT INTO recruiter ()
+--END;
