@@ -1,5 +1,6 @@
 package com.cs353.backend.mapper;
 
+import com.cs353.backend.Enum.EmploymentStatus;
 import com.cs353.backend.model.entities.JobOpening;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -11,7 +12,7 @@ public class JobOpeningMapper implements RowMapper<JobOpening> {
     @Override
     public JobOpening mapRow(ResultSet rs, int rowNum ) throws SQLException{
         int jobOpeningID = rs.getInt("job_opening_id");
-        int employmentStatus = rs.getInt("employment_status");
+        String employmentStatus = rs.getString("employment_status");
         String explanation = rs.getString("explanation");
         LocalDateTime dueDate = rs.getTimestamp("due_date").toLocalDateTime();
         String rolePro = rs.getString("role_pro");

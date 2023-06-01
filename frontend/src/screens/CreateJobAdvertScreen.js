@@ -21,17 +21,17 @@ const CreateJobAdvertScreen = () => {
             }
 
             const jobAdvertData = {
-                position,
-                employmentStatus,
-                profession,
-                location,
-                workType,
-                explanation,
-                dueDate,
+                position: position,
+                employmentStatus: employmentStatus.toUpperCase(),
+                profession: profession,
+                location: location,
+                workType: workType,
+                explanation: explanation,
+                dueDate: new Date(dueDate),
             };
 
             // Send the job advert data to the server for creation
-            const response = await axios.post(`http://localhost:8080/jobopening/${sessionStorage.getItem("userId")}`, jobAdvertData);
+            const response = await axios.post("http://localhost:8080/jobopening/" + sessionStorage.getItem("userId"), jobAdvertData);
             console.log(response);
 
             // Job advert creation success, navigate to a success page or perform other actions
@@ -56,9 +56,9 @@ const CreateJobAdvertScreen = () => {
                     <select className="form-control" value={employmentStatus} onChange={(e) => setEmploymentStatus(e.target.value)}>
                         <option value="">Select Employment Status</option>
                         <option value="internship">Internship</option>
-                        <option value="part-time">Part-time</option>
-                        <option value="full-time">Full-time</option>
-                        <option value="on-call">On-call</option>
+                        <option value="parttime">Part-time</option>
+                        <option value="fulltime">Full-time</option>
+                        <option value="oncall">On-call</option>
                         <option value="freelancer">Freelancer</option>
                         <option value="temporary">Temporary</option>
                     </select>

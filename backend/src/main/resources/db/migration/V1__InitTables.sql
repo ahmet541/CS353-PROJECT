@@ -121,7 +121,7 @@ CREATE TABLE Post_Like (
 );
 
 CREATE TABLE JobOpening(
-    job_opening_id INT NOT NULL UNIQUE,
+    job_opening_id SERIAL NOT NULL ,
     employment_status INT NOT NULL,
     explanation VARCHAR(255) NOT NULL,
     due_date timestamp,

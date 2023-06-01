@@ -1,5 +1,6 @@
 package com.cs353.backend.dao.service;
 
+import com.cs353.backend.Enum.EmploymentStatus;
 import com.cs353.backend.dao.JobOpeningDao;
 import com.cs353.backend.mapper.JobOpeningMapper;
 import com.cs353.backend.model.entities.JobOpening;
@@ -21,7 +22,7 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
                 VALUES (?, ?, ?, ?, ?, ?)
                 RETURNING job_opening_id
                 """;
-        int id = jdbcTemplate.queryForObject(sql, Integer.class, jobOpening.getEmploymentStatus(), jobOpening.getExplanation(), jobOpening.getDueDate(), jobOpening.getRolePro(), jobOpening.getLocation(), jobOpening.getWorkType() );
+        int id = jdbcTemplate.queryForObject(sql, Integer.class, Enum.valueOf(EmploymentStatus.class, jobOpening.getEmploymentStatus()).getValue(), jobOpening.getExplanation(), jobOpening.getDueDate(), jobOpening.getRolePro(), jobOpening.getLocation(), jobOpening.getWorkType() );
         jobOpening.setJobOpeningID(id);
         return jobOpening;
     }

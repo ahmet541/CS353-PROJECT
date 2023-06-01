@@ -17,7 +17,7 @@ public class JobOpeningController {
 
     private JobOpeningService jobOpeningService;
     @PostMapping("{userId}")
-    public ResponseEntity<JobOpening> createJobOpening(@Valid @RequestBody JobOpening jobOpening, int userId){
+    public ResponseEntity<JobOpening> createJobOpening(@Valid @RequestBody JobOpening jobOpening, @PathVariable int userId){
         JobOpening newJobOpening = jobOpeningService.createJobOpening(jobOpening, userId);
         return new ResponseEntity<>(newJobOpening, HttpStatus.OK);
     }
