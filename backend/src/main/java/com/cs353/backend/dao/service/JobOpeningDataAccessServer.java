@@ -3,6 +3,7 @@ package com.cs353.backend.dao.service;
 import com.cs353.backend.Enum.EmploymentStatus;
 import com.cs353.backend.dao.JobOpeningDao;
 import com.cs353.backend.mapper.JobOpeningMapper;
+import com.cs353.backend.model.dto.JobOpeningApplicationDTO;
 import com.cs353.backend.model.dto.JobOpeningDTO;
 import com.cs353.backend.model.entities.JobOpening;
 import lombok.AllArgsConstructor;
@@ -41,18 +42,13 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
 
     @Override
     public List<JobOpening> getJobOpeningsByFilter(JobOpeningDTO jobOpeningDTO) {
-        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM your_table WHERE 1=1");
+        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM jobopening WHERE 1=1");
 
         List<Object> params = new ArrayList<>();
 
-        if (jobOpeningDTO.getEmploymentStatus() != null) {
+        if (jobOpeningDTO.getEmploymentStatus() != null && !jobOpeningDTO.getEmploymentStatus().isEmpty()) {
             queryBuilder.append(" AND employment_status = ?");
-            params.add(jobOpeningDTO.getEmploymentStatus());
-        }
-
-        if (jobOpeningDTO.getExplanation() != null) {
-            queryBuilder.append(" AND explanation = ?");
-            params.add(jobOpeningDTO.getExplanation());
+            params.add(Enum.valueOf(EmploymentStatus.class, jobOpeningDTO.getEmploymentStatus().toUpperCase()).getValue());
         }
 
         if (jobOpeningDTO.getDueDate() != null) {
@@ -60,21 +56,32 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
             params.add(jobOpeningDTO.getDueDate());
         }
 
-        if(jobOpeningDTO.getRolePro() != null) {
+        if(jobOpeningDTO.getRolePro() != null && !jobOpeningDTO.getRolePro().isEmpty()) {
             queryBuilder.append(" AND role_pro = ?");
             params.add(jobOpeningDTO.getRolePro());
         }
 
-        if(jobOpeningDTO.getLocation() != null) {
+        if(jobOpeningDTO.getLocation() != null && !jobOpeningDTO.getLocation().isEmpty()) {
             queryBuilder.append(" AND location = ?");
             params.add(jobOpeningDTO.getLocation());
         }
 
-        if(jobOpeningDTO.getWorkType() != null) {
+        if(jobOpeningDTO.getWorkType() != null && !jobOpeningDTO.getWorkType().isEmpty()) {
             queryBuilder.append(" AND work_type = ?");
             params.add(jobOpeningDTO.getWorkType());
         }
 
         return jdbcTemplate.query(queryBuilder.toString(), new JobOpeningMapper(), params.toArray());
+    }
+
+    //NOT TESTED
+    @Override
+    public boolean applyJobOpening(JobOpeningApplicationDTO jobOpeningApplicationDTO, int userId) {
+
+
+        /*
+        TO BE CHANGED BY ERKIN AYDIN.
+         */
+        return true;
     }
 }
