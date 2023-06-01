@@ -45,14 +45,9 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
 
         List<Object> params = new ArrayList<>();
 
-        if (jobOpeningDTO.getEmploymentStatus() != null) {
+        if (jobOpeningDTO.getEmploymentStatus() != null && !jobOpeningDTO.getEmploymentStatus().isEmpty()) {
             queryBuilder.append(" AND employment_status = ?");
             params.add(Enum.valueOf(EmploymentStatus.class, jobOpeningDTO.getEmploymentStatus().toUpperCase()).getValue());
-        }
-
-        if (jobOpeningDTO.getExplanation() != null) {
-            queryBuilder.append(" AND explanation = ?");
-            params.add(jobOpeningDTO.getExplanation());
         }
 
         if (jobOpeningDTO.getDueDate() != null) {
@@ -60,17 +55,17 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
             params.add(jobOpeningDTO.getDueDate());
         }
 
-        if(jobOpeningDTO.getRolePro() != null) {
+        if(jobOpeningDTO.getRolePro() != null && !jobOpeningDTO.getRolePro().isEmpty()) {
             queryBuilder.append(" AND role_pro = ?");
             params.add(jobOpeningDTO.getRolePro());
         }
 
-        if(jobOpeningDTO.getLocation() != null) {
+        if(jobOpeningDTO.getLocation() != null && !jobOpeningDTO.getLocation().isEmpty()) {
             queryBuilder.append(" AND location = ?");
             params.add(jobOpeningDTO.getLocation());
         }
 
-        if(jobOpeningDTO.getWorkType() != null) {
+        if(jobOpeningDTO.getWorkType() != null && !jobOpeningDTO.getWorkType().isEmpty()) {
             queryBuilder.append(" AND work_type = ?");
             params.add(jobOpeningDTO.getWorkType());
         }

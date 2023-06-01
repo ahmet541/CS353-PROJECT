@@ -37,12 +37,15 @@ const ListJobOpeningsPage = () => {
 
     const fetchFilteredJobOpenings = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/job-openings', {
-                params: filters,
+            const response = await axios.post('http://localhost:8080/jobopening/getJobOpeningsByFilter', {
+                employmentStatus: filters.employmentStatus.toUpperCase(),
+                location: filters.location,
+                workType: filters.workType
             });
             setJobOpenings(response.data);
         } catch (error) {
             setErrorMessage('Failed to fetch filtered job openings.');
+            console.log(error);
         }
     };
 
@@ -63,9 +66,9 @@ const ListJobOpeningsPage = () => {
                     <select name="employmentStatus" value={filters.employmentStatus} onChange={handleFilterChange}>
                         <option value="">All</option>
                         <option value="internship">Internship</option>
-                        <option value="part-time">Part-Time</option>
-                        <option value="full-time">Full-Time</option>
-                        <option value="on-call">On-Call</option>
+                        <option value="parttime">Part-Time</option>
+                        <option value="fulltime">Full-Time</option>
+                        <option value="oncall">On-Call</option>
                         <option value="freelancer">Freelancer</option>
                         <option value="temporary">Temporary</option>
                     </select>
