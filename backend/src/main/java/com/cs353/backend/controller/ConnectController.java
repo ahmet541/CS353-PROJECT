@@ -1,5 +1,6 @@
 package com.cs353.backend.controller;
 
+import com.cs353.backend.model.dto.PostOwnerDTO;
 import com.cs353.backend.model.entities.Account;
 import com.cs353.backend.service.ConnectionService;
 import lombok.AllArgsConstructor;
@@ -17,9 +18,9 @@ public class ConnectController {
     private ConnectionService connectionService;
 
     @PostMapping("{senderId}/sendRequest/{receiverId}")
-    public ResponseEntity<List<Account>> sendRequest(@PathVariable int senderId, @PathVariable int receiverId) {
+    public ResponseEntity<List<PostOwnerDTO>> sendRequest(@PathVariable int senderId, @PathVariable int receiverId) {
         connectionService.sendRequest(senderId, receiverId);
-        List<Account> res = connectionService.getAllConnections(receiverId);
+        List<PostOwnerDTO> res = connectionService.getAllConnections(receiverId);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
@@ -30,9 +31,9 @@ public class ConnectController {
     }
 
     @DeleteMapping("{senderId}/removeConnection/{receiverId}")
-    public ResponseEntity<List<Account>> removeConnection(@PathVariable int senderId, @PathVariable int receiverId) {
+    public ResponseEntity<List<PostOwnerDTO>> removeConnection(@PathVariable int senderId, @PathVariable int receiverId) {
         connectionService.removeConnection(senderId, receiverId);
-        List<Account> res = connectionService.getAllConnections(receiverId);
+        List<PostOwnerDTO> res = connectionService.getAllConnections(receiverId);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
     @GetMapping("{userId}/allConnections")

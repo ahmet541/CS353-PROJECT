@@ -1,8 +1,8 @@
 package com.cs353.backend.dao.service;
 
 import com.cs353.backend.dao.FollowDao;
-import com.cs353.backend.mapper.AccountMapper;
-import com.cs353.backend.model.entities.Account;
+import com.cs353.backend.mapper.PostOwnerDTOMapper;
+import com.cs353.backend.model.dto.PostOwnerDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -42,21 +42,20 @@ public class FollowDataAccessService implements FollowDao {
     }
 
     @Override
-    public List<Account> getAllFollowers(int userId) {
-
+    public List<PostOwnerDTO> getAllFollowers(int userId) {
         String sql = """
-                WITH followers AS (
-                     SELECT follower_id as id
-                     FROM follow
-                     WHERE followed_id = ?
-                                 )
-                SELECT * 
-                FROM account
-                JOIN "User" U on account.id = U.id
-                WHERE account.id IN (SELECT * FROM followers)
-                """;
+            WITH followers AS (
+                SELECT follower_id as id
+                FROM follow
+                WHERE followed_id = ?
+            )
+            SELECT P.userId, P.avatar, P.fullName
+            FROM post_owner_detail P
+            WHERE P.userId IN (SELECT * FROM followers);
+            """;
 
-        List<Account> accounts = jdbcTemplate.query(sql, new AccountMapper(), userId);
-        return accounts;
+        List<PostOwnerDTO> followers = jdbcTemplate.query(sql, new PostOwnerDTOMapper(), userId);
+        return followers;
     }
+
 }

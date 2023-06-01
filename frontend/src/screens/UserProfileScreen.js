@@ -51,7 +51,7 @@ const UserProfileScreen = () => {
     const handleConnect = async () => {
         try {
             let response;
-            const isConnected = connections.some(connection => connection.id === parseInt(sessionStorage.getItem('userId')));
+            const isConnected = connections.some(connection => connection.userId === parseInt(sessionStorage.getItem('userId')));
 
             if (isConnected || conReqPending) {
                 // If the post is already liked, send a request to unlike it
@@ -79,7 +79,7 @@ const UserProfileScreen = () => {
     const handleFollow = async () => {
         try {
             let response;
-            const isFollowed = followers.some(follower => follower.id === parseInt(sessionStorage.getItem('userId'), 10))
+            const isFollowed = followers.some(follower => follower.userId === parseInt(sessionStorage.getItem('userId'), 10))
             if (isFollowed) {
                 // If the post is already liked, send a request to unlike it
                 response = await axios.delete(`http://localhost:8080/follow/${sessionStorage.getItem('userId')}/${userId}`);
@@ -100,20 +100,12 @@ const UserProfileScreen = () => {
             // const errorMessage = error.response.data;
         }
     };
+
     const handleChat = () => {
-        // Send follow request logic
-        console.log('Follow request sent');
-        // Make an axios request to send the follow request
-        // Example:
-        // axios.post('/follow', { userId: userData.userId })
-        //   .then(response => {
-        //     console.log('Follow request sent');
-        //     // Handle success
-        //   })
-        //   .catch(error => {
-        //     console.error('Error sending follow request:', error);
-        //     // Handle error
-        //   });
+        sessionStorage.setItem("selectedUserId", userId);
+        sessionStorage.setItem("selectedUserName", fullName);
+
+        navigate("/messages");
     };
     const handleEditProfile = () => {
         navigate('/editProfile');
@@ -196,11 +188,11 @@ const UserProfileScreen = () => {
                                                 </MDBBtn>
                                                 {!roles.includes(UserRole.COMPANY) && (
                                                     <ConnectButton pending={conReqPending}
-                                                                   connectedByUser={connections.some(connection => connection.id === parseInt(sessionStorage.getItem('userId')))}
+                                                                   connectedByUser={connections.some(connection => connection.userId === parseInt(sessionStorage.getItem('userId')))}
                                                                    handleConnect={handleConnect}/>
                                                 )}
                                                 <FollowButton
-                                                    followedByUser={followers.some(follower => follower.id === parseInt(sessionStorage.getItem('userId')))}
+                                                    followedByUser={followers.some(follower => follower.userId === parseInt(sessionStorage.getItem('userId')))}
                                                     handleFollow={handleFollow}/>
                                             </div>
                                         }

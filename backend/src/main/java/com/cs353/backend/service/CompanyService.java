@@ -2,6 +2,7 @@ package com.cs353.backend.service;
 
 import com.cs353.backend.dao.CompanyDao;
 
+import com.cs353.backend.model.dto.PostOwnerDTO;
 import com.cs353.backend.model.entities.Account;
 
 import com.cs353.backend.model.entities.Company;
@@ -41,8 +42,10 @@ public class CompanyService {
         return 0;
     }
 
-    public List<Account> getAllEmployees(int userId) {
+    public List<PostOwnerDTO> getAllEmployees(int userId) {
         //TODO
+        // type should be PostOwnerDTO, do not bother with name, this DTO includes id,fullName, and avatar
+        // See same methods for getAllFollowers() getAllConnections()
         return new ArrayList<>();
     }
 

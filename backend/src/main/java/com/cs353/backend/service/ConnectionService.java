@@ -1,6 +1,7 @@
 package com.cs353.backend.service;
 
 import com.cs353.backend.dao.ConnectionDao;
+import com.cs353.backend.model.dto.PostOwnerDTO;
 import com.cs353.backend.model.entities.Account;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class ConnectionService {
         return connectionDao.getNumberOfConnections(userId);
     }
 
-    public List<Account> getAllConnections(int userId) {
+    public List<PostOwnerDTO> getAllConnections(int userId) {
         return connectionDao.getAllConnections(userId);
     }
 

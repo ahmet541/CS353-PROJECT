@@ -60,6 +60,17 @@ CREATE TABLE connection (
     FOREIGN KEY (connected_2_id) REFERENCES Regular_User (id) ON DELETE CASCADE
 );
 
+CREATE TABLE message (
+     sender_id   INT NOT NULL,
+     receiver_id INT NOT NULL,
+     content     VARCHAR(255) NOT NULL,
+     post_date   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+     PRIMARY KEY (sender_id, receiver_id, post_date),
+     FOREIGN KEY (sender_id) REFERENCES account (id) ON DELETE CASCADE,
+     FOREIGN KEY (receiver_id) REFERENCES account (id) ON DELETE CASCADE
+);
+
+
 CREATE TABLE Admin (
     id INT NOT NULL UNIQUE,
     admin_name VARCHAR(255) NOT NULL,
@@ -75,7 +86,6 @@ CREATE TABLE Company(
     PRIMARY KEY (id),
     FOREIGN KEY(id) REFERENCES "User"(id) ON DELETE CASCADE
  );
-
 
 
 CREATE TABLE Recruiter (

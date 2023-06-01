@@ -12,49 +12,74 @@ import defaultAvatar from "../pictures/default-avatar.jpg";
 import Message from "../components/Message";
 import { useParams } from "react-router";
 import ChatConnections from "../components/ChatConnections";
+import axios from "axios";
 const MessagesScreen = () => {
-    const { selectUserId } = useParams();
     const [selectedIndex, setSelectedIndex] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [chats, setChats] = useState([]);
+    const [connectionData, setConnectionData] = useState([]);
 
-    const [chats, setChats] = useState([
-        { userId: 1, username: "John Doe", message: "Hello, Are you there?", time: "Just now" },
-        { userId: 2, username: "Danny Smith", message: "Lorem ipsum dolor sit.", time: "5 mins ago" },
-        { userId: 3, username: "Alex Steward", message: "Lorem ipsum dolor sit.", time: "Yesterday" },
-        { userId: 4, username: "Ashley Olsen", message: "Lorem ipsum dolor sit.", time: "Yesterday" },
-        { userId: 5, username: "Kate Moss", message: "Lorem ipsum dolor sit.", time: "Yesterday" },
-        { userId: 6, username: "Lara Croft", message: "Lorem ipsum dolor sit.", time: "Yesterday" },
-        { userId: 7, username: "Brad Pitt", message: "Lorem ipsum dolor sit.", time: "5 mins ago" },
-    ]);
-    const connectionData = [
-        { id: 1, name: "John Doe" },
-        { id: 2, name: "Jane Smith" },
-        { id: 3, name: "David Johnson" },
-        { id: 55, name: "Sarah Williams" },
-        // Add more connections as needed
-    ];
+    // const [chats, setChats] = useState([
+    //     { userId: 1, username: "John Doe", message: "Hello, Are you there?", time: "Just now" },
+    //     { userId: 2, username: "Danny Smith", message: "Lorem ipsum dolor sit.", time: "5 mins ago" },
+    //     { userId: 3, username: "Alex Steward", message: "Lorem ipsum dolor sit.", time: "Yesterday" },
+    //     { userId: 4, username: "Ashley Olsen", message: "Lorem ipsum dolor sit.", time: "Yesterday" },
+    //     { userId: 5, username: "Kate Moss", message: "Lorem ipsum dolor sit.", time: "Yesterday" },
+    //     { userId: 6, username: "Lara Croft", message: "Lorem ipsum dolor sit.", time: "Yesterday" },
+    //     { userId: 7, username: "Brad Pitt", message: "Lorem ipsum dolor sit.", time: "5 mins ago" },
+    // ]);
+    // const connectionData = [
+    //     { id: 1, name: "John Doe" },
+    //     { id: 2, name: "Jane Smith" },
+    //     { id: 3, name: "David Johnson" },
+    //     { id: 55, name: "Sarah Williams" },
+    //     // Add more connections as needed
+    // ];
     useEffect(() => {
-        const userId = selectUserId ? parseInt(selectUserId, 10) : -1;
-        setChats((prevChats) => {
-            const userIndex = prevChats.findIndex((chat) => chat.userId === userId);
+        const fetchChatsAndConnections = async () => {
+            try {
+                // Fetch chats from the backend
+                const chatsResponse = await axios.get("http://localhost:8080/message/" + sessionStorage.getItem("userId")+ "/chats");
+                setChats(chatsResponse.data);
 
-            if (userIndex !== -1) {
-                setSelectedIndex(userIndex);
-            } else if (userId > -1) {
-                const newChat = {
-                    userId,
-                    username: "New User",
-                    message: "",
-                    time: "Just now"
-                };
-                const updatedChats = [newChat, ...prevChats];
-                setSelectedIndex(0); // Set the selected index to the newly created chat
-                return updatedChats;
+                // Fetch connection data from the backend
+                const connectionsResponse = await axios.get("http://localhost:8080/connect/" + sessionStorage.getItem("userId") + "/allConnections");
+                setConnectionData(connectionsResponse.data);
+
+
+                // Perform the remaining operations that depend on setChats completion
+                const userId = sessionStorage.getItem('selectedUserId') ? parseInt(sessionStorage.getItem('selectedUserId'), 10) : -1;
+                const userName = sessionStorage.getItem("selectedUserName");
+                sessionStorage.removeItem("selectedUserId");
+                sessionStorage.removeItem("selectedUserName");
+
+                setChats((prevChats) => {
+                    const userIndex = prevChats.findIndex((chat) => chat.userId === userId);
+
+                    if (userIndex !== -1) {
+                        setSelectedIndex(userIndex);
+                    } else if (userId > -1) {
+                        const newChat = {
+                            userId,
+                            fullName: userName,
+                            message: "",
+                            time: "Just now"
+                        };
+                        const updatedChats = [newChat, ...prevChats];
+                        setSelectedIndex(0); // Set the selected index to the newly created chat
+                        return updatedChats;
+                    }
+
+                    return prevChats;
+                });
+            } catch (error) {
+                console.log(error);
             }
+        };
 
-            return prevChats;
-        });
-    }, [selectUserId]);
+        fetchChatsAndConnections();
+    }, []);
+
 
     const handleUserSelect = (userId) => {
         const userIndex = chats.findIndex((chat) => chat.userId === userId);
@@ -64,7 +89,6 @@ const MessagesScreen = () => {
 
         // Perform the logic to create a chat with your connections
         // For example, you can open a modal or navigate to a new page for selecting connections to chat with
-        console.log("Create chat with connections");
         setShowModal(true);
 
     };
@@ -77,7 +101,7 @@ const MessagesScreen = () => {
             // Logic for creating a new chat with the selected connection
             const newChat = {
                 userId,
-                username: name  ,
+                fullName: name  ,
                 message: "",
                 time: "Just now",
             };
@@ -122,7 +146,7 @@ const MessagesScreen = () => {
                                             />
                                             <div className="pt-1">
                                                 <p className={`fw-bold mb-0 ${selectedIndex === index ? "text-white" : ""}`}>
-                                                    {chat.username}
+                                                    {chat.fullName}
                                                 </p>
                                                 <p className={`small ${selectedIndex === index ? "text-white" : "text-muted"}`}>
                                                     {chat.message}
@@ -140,7 +164,7 @@ const MessagesScreen = () => {
                     {selectedIndex !== null && (
                         <MDBTypography listUnStyled>
                             {/* Placeholder for displaying selected user's chat */}
-                            <Message selectedUserId={chats[selectedIndex].userId} />
+                            <Message selectedUserId={chats[selectedIndex].userId} selectedUserName={chats[selectedIndex].fullName} />
                         </MDBTypography>
                     )}
                 </MDBCol>

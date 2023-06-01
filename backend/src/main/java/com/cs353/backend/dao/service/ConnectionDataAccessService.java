@@ -2,6 +2,8 @@ package com.cs353.backend.dao.service;
 
 import com.cs353.backend.dao.ConnectionDao;
 import com.cs353.backend.mapper.AccountMapper;
+import com.cs353.backend.mapper.PostOwnerDTOMapper;
+import com.cs353.backend.model.dto.PostOwnerDTO;
 import com.cs353.backend.model.entities.Account;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -64,20 +66,19 @@ public class ConnectionDataAccessService implements ConnectionDao {
     }
 
     @Override
-    public List<Account> getAllConnections(int userId) {
+    public List<PostOwnerDTO> getAllConnections(int userId) {
         String sql = """
-                WITH connectedUsers AS (
-                        SELECT (CASE WHEN connected_1_id = ? THEN connected_2_id ELSE connected_1_id END) AS id
-                        FROM connection
-                        WHERE (connected_1_id = ? OR connected_2_id = ?) AND accepted = true
-                            )
-                SELECT * 
-                FROM account
-                JOIN "User" U on account.id = U.id
-                WHERE account.id IN (SELECT * FROM connectedUsers)
-                """;
+            WITH connectedUsers AS (
+                SELECT (CASE WHEN connected_1_id = ? THEN connected_2_id ELSE connected_1_id END) AS id
+                FROM connection
+                WHERE (connected_1_id = ? OR connected_2_id = ?) AND accepted = true
+            )
+            SELECT P.userId, P.avatar, P.fullName
+            FROM post_owner_detail P
+            WHERE P.userId IN (SELECT * FROM connectedUsers);
+            """;
 
-        List<Account> accounts = jdbcTemplate.query(sql, new AccountMapper(), userId, userId, userId);
+        List<PostOwnerDTO> accounts = jdbcTemplate.query(sql, new PostOwnerDTOMapper(), userId, userId, userId);
         return accounts;
     }
 

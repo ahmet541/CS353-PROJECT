@@ -8,6 +8,7 @@ import EditProfile from "./screens/EditProfileScreen";
 import Messages from "./screens/MessagesScreen";
 import MessageScreen from "./screens/MessagesScreen";
 import CreateJobAdvertScreen from "./screens/CreateJobAdvertScreen";
+import UserListScreen from "./screens/UserListScreen";
 import ListJobOpeningsPage from "./screens/ListJobOpeningsPage";
 // Import other screens/components
 
@@ -22,6 +23,9 @@ function App() {
             <Route path="home" element={<HomeScreen />} />
             <Route path="/profile/:userId" element={<UserProfile />} />
             <Route path="editProfile" element={<EditProfile />} />
+            <Route path="messages" element={<Messages />} />
+            <Route path="userlist" element={<UserListScreen />} />
+
             <Route path="messages/:selectUserId?" element={<Messages />} />
             <Route path="/jobopenings" element={<ListJobOpeningsPage />} />
             <Route path="/createadvert" element={<CreateJobAdvertScreen />} />

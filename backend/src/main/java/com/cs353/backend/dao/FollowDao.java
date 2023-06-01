@@ -1,6 +1,6 @@
 package com.cs353.backend.dao;
 
-import com.cs353.backend.model.entities.Account;
+import com.cs353.backend.model.dto.PostOwnerDTO;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ public interface FollowDao {
 
     int getNumberOfConnections(int userId);
 
-    List<Account> getAllFollowers(int userId);
+    List<PostOwnerDTO> getAllFollowers(int userId);
 }

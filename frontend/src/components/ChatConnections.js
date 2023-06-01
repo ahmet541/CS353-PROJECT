@@ -11,7 +11,7 @@ const ChatConnections = ({ showModal, setShowModal, connectionData, handleConnec
     const [searchQuery, setSearchQuery] = useState("");
 
     const filteredConnections = connectionData.filter((connection) =>
-        connection.name.toLowerCase().includes(searchQuery.toLowerCase())
+        connection.fullName.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const handleSearch = (e) => {
@@ -24,8 +24,8 @@ const ChatConnections = ({ showModal, setShowModal, connectionData, handleConnec
             <MDBModalBody>
                 <input type="text" placeholder="Search by name" value={searchQuery} onChange={handleSearch} />
                 {filteredConnections.map((connection) => (
-                    <div key={connection.id}>
-                        <button onClick={() => handleConnectionSelect(connection.id, connection.name)}>{connection.name}</button>
+                    <div key={connection.userId}>
+                        <button onClick={() => handleConnectionSelect(connection.userId, connection.fullName)}>{connection.fullName}</button>
                     </div>
                 ))}
             </MDBModalBody>

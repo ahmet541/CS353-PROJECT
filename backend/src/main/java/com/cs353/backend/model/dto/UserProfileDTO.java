@@ -30,7 +30,7 @@ public class UserProfileDTO {
     private int rank;
     private double last_year_score;
     private List<UserRole> roles = new ArrayList<>();
-    private List<Account> followers = new ArrayList<>();
-    private List<Account> connections = new ArrayList<>();
+    private List<PostOwnerDTO> followers = new ArrayList<>();
+    private List<PostOwnerDTO> connections = new ArrayList<>();
     private List<Account> employees = new ArrayList<>();
 }

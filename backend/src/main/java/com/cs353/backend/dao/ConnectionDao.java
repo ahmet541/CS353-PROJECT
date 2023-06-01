@@ -1,5 +1,6 @@
 package com.cs353.backend.dao;
 
+import com.cs353.backend.model.dto.PostOwnerDTO;
 import com.cs353.backend.model.entities.Account;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface ConnectionDao {
 
     int getNumberOfConnections(int userId);
 
-    List<Account> getAllConnections(int userId);
+    List<PostOwnerDTO> getAllConnections(int userId);
 
     Boolean isPending(int senderId, int receiverId);
 }

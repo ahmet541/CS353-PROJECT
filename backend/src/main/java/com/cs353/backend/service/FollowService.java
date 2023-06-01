@@ -1,6 +1,7 @@
 package com.cs353.backend.service;
 
 import com.cs353.backend.dao.FollowDao;
+import com.cs353.backend.model.dto.PostOwnerDTO;
 import com.cs353.backend.model.entities.Account;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class FollowService {
         return followDao.getNumberOfConnections(userId);
     }
 
-    public List<Account> getAllFollowers(int userId) {
+    public List<PostOwnerDTO> getAllFollowers(int userId) {
         return followDao.getAllFollowers(userId);
     }
 }

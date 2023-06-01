@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JS
 import '../css/Navbar.css'; // Import the CSS file for custom styling
 
-const Navbar = ({ children }) => {
+const Navbar = ({ onSearch  }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
 
@@ -17,12 +17,22 @@ const Navbar = ({ children }) => {
         // Perform logout logic here
         // Redirect the user to the login page
     };
-
+    // const handleSearch = (e) => {
+    //     e.preventDefault();
+    //     const newSearchQuery = searchQuery.trim();
+    //     if (newSearchQuery !== "") {
+    //         sessionStorage.setItem("userlistsearchtext", newSearchQuery);
+    //     } else {
+    //         sessionStorage.removeItem("userlistsearchtext");
+    //     }
+    //     navigate("/userlist");
+    // };
     const handleSearch = (e) => {
         e.preventDefault();
-        // Perform search logic here based on the searchQuery state
-        console.log('Searching for:', searchQuery);
+        console.log(e);
+        onSearch(searchQuery);
     };
+
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -50,8 +60,7 @@ const Navbar = ({ children }) => {
                                     <div className="input-group">
                                         <input
                                             type="text"
-                                            className="form-control"
-                                            placeholder="Search people..."
+                                            placeholder="Search..."
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
                                         />

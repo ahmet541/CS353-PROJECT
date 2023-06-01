@@ -1,5 +1,6 @@
 package com.cs353.backend.controller;
 
+import com.cs353.backend.model.dto.PostOwnerDTO;
 import com.cs353.backend.model.entities.Account;
 import com.cs353.backend.model.entities.Post;
 import com.cs353.backend.service.FollowService;
@@ -18,16 +19,16 @@ public class FollowController {
     private FollowService followService;
 
     @PostMapping("{followerId}/{followedId}")
-    public ResponseEntity<List<Account>> follow(@PathVariable int followerId, @PathVariable int followedId) {
+    public ResponseEntity<List<PostOwnerDTO>> follow(@PathVariable int followerId, @PathVariable int followedId) {
         followService.follow(followerId,followedId);
-        List<Account> followers = followService.getAllFollowers(followedId);
+        List<PostOwnerDTO> followers = followService.getAllFollowers(followedId);
         return new ResponseEntity<>(followers, HttpStatus.OK);
     }
 
     @DeleteMapping("{followerId}/{followedId}")
-    public ResponseEntity<List<Account>> unfollow(@PathVariable int followerId, @PathVariable int followedId) {
+    public ResponseEntity<List<PostOwnerDTO>> unfollow(@PathVariable int followerId, @PathVariable int followedId) {
         followService.unfollow(followerId,followedId);
-        List<Account> followers = followService.getAllFollowers(followedId);
+        List<PostOwnerDTO> followers = followService.getAllFollowers(followedId);
         return new ResponseEntity<>(followers, HttpStatus.OK);
     }
 }
