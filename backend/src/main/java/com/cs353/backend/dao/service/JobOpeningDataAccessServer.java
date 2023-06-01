@@ -33,6 +33,6 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
                 FROM jobopening
                 ORDER BY due_date
                 """;
-        return = jdbcTemplate.query(sql, new JobOpeningMapper());
+        return jdbcTemplate.query(sql, new JobOpeningMapper());
     }
 }
