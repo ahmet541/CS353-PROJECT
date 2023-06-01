@@ -41,7 +41,7 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
 
     @Override
     public List<JobOpening> getJobOpeningsByFilter(JobOpeningDTO jobOpeningDTO) {
-        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM your_table WHERE 1=1");
+        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM jobopening WHERE 1=1");
 
         List<Object> params = new ArrayList<>();
 
