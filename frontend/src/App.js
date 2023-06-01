@@ -8,6 +8,7 @@ import EditProfile from "./screens/EditProfileScreen";
 import Messages from "./screens/MessagesScreen";
 import MessageScreen from "./screens/MessagesScreen";
 import CreateJobAdvertScreen from "./screens/CreateJobAdvertScreen";
+import ListJobOpeningsPage from "./screens/ListJobOpeningsPage";
 // Import other screens/components
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
             <Route path="/profile/:userId" element={<UserProfile />} />
             <Route path="editProfile" element={<EditProfile />} />
             <Route path="messages/:selectUserId?" element={<Messages />} />
-
+            <Route path="/jobopenings" element={<ListJobOpeningsPage />} />
             <Route path="/createadvert" element={<CreateJobAdvertScreen />} />
             {/*<Route path="profile" element={<UserProfile />} />*/}
             {/*<Route path="home" element={<HomeScreen />} />*/}

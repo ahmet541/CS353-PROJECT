@@ -35,7 +35,7 @@ const CreateJobAdvertScreen = () => {
             console.log(response);
 
             // Job advert creation success, navigate to a success page or perform other actions
-            navigate('/success');
+            navigate('/jobopenings');
         } catch (error) {
             console.log(error);
             setErrorMessage('Job advert creation failed. Please try again.');
