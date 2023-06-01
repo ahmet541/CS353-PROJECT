@@ -78,6 +78,7 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
     @Override
     public boolean applyJobOpening(JobOpeningApplicationDTO jobOpeningApplicationDTO, int userId) {
 
+
         /*
         TO BE CHANGED BY ERKIN AYDIN.
          */
