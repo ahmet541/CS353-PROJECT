@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JS
 import '../css/Navbar.css'; // Import the CSS file for custom styling
 
-const Navbar = ({ onSearch  }) => {
+const Navbar = ({}) => {
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
 
@@ -17,19 +17,11 @@ const Navbar = ({ onSearch  }) => {
         // Perform logout logic here
         // Redirect the user to the login page
     };
-    // const handleSearch = (e) => {
-    //     e.preventDefault();
-    //     const newSearchQuery = searchQuery.trim();
-    //     if (newSearchQuery !== "") {
-    //         sessionStorage.setItem("userlistsearchtext", newSearchQuery);
-    //     } else {
-    //         sessionStorage.removeItem("userlistsearchtext");
-    //     }
-    //     navigate("/userlist");
-    // };
+
     const handleSearch = (e) => {
         e.preventDefault();
-        onSearch(searchQuery);
+        // sessionStorage.setItem("searchKey",e);
+        navigate("/userlist")
     };
 
 
@@ -54,17 +46,22 @@ const Navbar = ({ onSearch  }) => {
                             </Link>
                         </li>
                         <li className="nav-item">
+                            <Link className="nav-link" to="/connection-requests">
+                                Connection Requests
+                            </Link>
+                        </li>
+                        <li className="nav-item">
                             <div className="navbar__search d-flex align-items-center">
                                 <form className="navbar__search-form flex-grow-1" onSubmit={handleSearch}>
                                     <div className="input-group">
-                                        <input
-                                            type="text"
-                                            placeholder="Search..."
-                                            value={searchQuery}
-                                            onChange={(e) => setSearchQuery(e.target.value)}
-                                        />
+                                        {/*<input*/}
+                                        {/*    type="text"*/}
+                                        {/*    placeholder="Search..."*/}
+                                        {/*    value={searchQuery}*/}
+                                        {/*    onChange={(e) => setSearchQuery(e.target.value)}*/}
+                                        {/*/>*/}
                                         <button type="submit" className="btn btn-primary">
-                                            Search
+                                            Search User
                                         </button>
                                     </div>
                                 </form>

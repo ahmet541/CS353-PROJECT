@@ -58,7 +58,7 @@ const UserListScreen = () => {
     };
     return (
         <div>
-            <Navbar onSearch={handleSearch2} />
+            <Navbar />
             <div className="container user-list-container">
                 <div className="search-bar mb-3">
                     <div className="row">

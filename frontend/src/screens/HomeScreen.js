@@ -55,7 +55,7 @@ const HomeScreen = () => {
 
     return (
         <div>
-            <Navbar userId={userId} />
+            <Navbar/>
             <div className="post-container">
                 <h2>Welcome to the Home Page!</h2>
                 <p>This is the home page of your application.</p>

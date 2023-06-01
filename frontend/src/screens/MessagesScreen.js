@@ -20,22 +20,7 @@ const MessagesScreen = () => {
     const [chats, setChats] = useState([]);
     const [connectionData, setConnectionData] = useState([]);
 
-    // const [chats, setChats] = useState([
-    //     { userId: 1, username: "John Doe", message: "Hello, Are you there?", time: "Just now" },
-    //     { userId: 2, username: "Danny Smith", message: "Lorem ipsum dolor sit.", time: "5 mins ago" },
-    //     { userId: 3, username: "Alex Steward", message: "Lorem ipsum dolor sit.", time: "Yesterday" },
-    //     { userId: 4, username: "Ashley Olsen", message: "Lorem ipsum dolor sit.", time: "Yesterday" },
-    //     { userId: 5, username: "Kate Moss", message: "Lorem ipsum dolor sit.", time: "Yesterday" },
-    //     { userId: 6, username: "Lara Croft", message: "Lorem ipsum dolor sit.", time: "Yesterday" },
-    //     { userId: 7, username: "Brad Pitt", message: "Lorem ipsum dolor sit.", time: "5 mins ago" },
-    // ]);
-    // const connectionData = [
-    //     { id: 1, name: "John Doe" },
-    //     { id: 2, name: "Jane Smith" },
-    //     { id: 3, name: "David Johnson" },
-    //     { id: 55, name: "Sarah Williams" },
-    //     // Add more connections as needed
-    // ];
+
     useEffect(() => {
         const fetchChatsAndConnections = async () => {
             try {
@@ -113,7 +98,9 @@ const MessagesScreen = () => {
         setShowModal(false);
     };
     return (
-        <Navbar>
+        <div>
+            <Navbar/>
+
         <MDBContainer fluid className="py-5" style={{ backgroundColor: "#fcfcfc" }}>
             <MDBRow>
                 <MDBCol md="6" lg="5" xl="4" className="mb-4 mb-md-0">
@@ -172,9 +159,9 @@ const MessagesScreen = () => {
                 </MDBCol>
             </MDBRow>
 
-        </MDBContainer>
-        </Navbar>
-    );
+        </MDBContainer></div>
+
+);
 };
 
 export default MessagesScreen;
