@@ -47,7 +47,7 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
 
         if (jobOpeningDTO.getEmploymentStatus() != null) {
             queryBuilder.append(" AND employment_status = ?");
-            params.add(jobOpeningDTO.getEmploymentStatus());
+            params.add(Enum.valueOf(EmploymentStatus.class, jobOpeningDTO.getEmploymentStatus().toUpperCase()).getValue());
         }
 
         if (jobOpeningDTO.getExplanation() != null) {

@@ -10,14 +10,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class JobOpeningDTO {
-    private Integer employmentStatus;
+    private String employmentStatus;
     private String explanation;
     private LocalDateTime dueDate;
     private String rolePro;
     private String location;
     private String workType;
 
-    public Integer getEmploymentStatus() {
+    public String getEmploymentStatus() {
         return employmentStatus;
     }
 
