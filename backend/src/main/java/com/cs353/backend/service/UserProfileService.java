@@ -173,4 +173,8 @@ public class UserProfileService {
         return;
     }
 
+
+    public void verifyRecruiter(int companyId, int recruiterId) {
+        companyService.verifyRecruiter(companyId, recruiterId);
+    }
 }
