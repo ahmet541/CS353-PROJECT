@@ -14,5 +14,5 @@ public interface JobOpeningDao {
     List<JobOpening> getJobOpeningsByFilter(JobOpeningDTO jobOpeningDTO);
 
     //NOT TESTED
-    boolean applyJobOpening(JobOpeningApplicationDTO jobOpeningApplicationDTO, int userId);
+    boolean applyJobOpening(JobOpeningApplicationDTO jobOpeningApplicationDTO);
 }

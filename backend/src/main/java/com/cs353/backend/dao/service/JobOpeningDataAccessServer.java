@@ -3,6 +3,7 @@ package com.cs353.backend.dao.service;
 import com.cs353.backend.Enum.EmploymentStatus;
 import com.cs353.backend.dao.JobOpeningDao;
 import com.cs353.backend.mapper.JobOpeningMapper;
+import com.cs353.backend.mapper.JobOppeningApplicationMapper;
 import com.cs353.backend.model.dto.JobOpeningApplicationDTO;
 import com.cs353.backend.model.dto.JobOpeningDTO;
 import com.cs353.backend.model.entities.JobOpening;
@@ -76,12 +77,20 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
 
     //NOT TESTED
     @Override
-    public boolean applyJobOpening(JobOpeningApplicationDTO jobOpeningApplicationDTO, int userId) {
+    public boolean applyJobOpening(JobOpeningApplicationDTO jobOpeningApplicationDTO) {
+        //If this method is executed, it is assumed that jobOpeningApplicationDTO's all properties are properly initialized.
+        String sql = """
+                INSERT INTO application (user_id, job_opening_id, application_status, experience, skills, education_lvl, cv)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                """;
 
-
-        /*
-        TO BE CHANGED BY ERKIN AYDIN.
-         */
-        return true;
+        return jdbcTemplate.update(sql, new JobOppeningApplicationMapper(),
+                jobOpeningApplicationDTO.getUserId(),
+                jobOpeningApplicationDTO.getJobOpeningId(),
+                jobOpeningApplicationDTO.getApplicationStatus(),
+                jobOpeningApplicationDTO.getExperience(),
+                jobOpeningApplicationDTO.getSkills(),
+                jobOpeningApplicationDTO.getEducationLvl(),
+                jobOpeningApplicationDTO.getCv()) > 0;  //BEWARE of comparison!
     }
 }

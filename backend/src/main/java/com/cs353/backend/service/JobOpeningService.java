@@ -27,7 +27,7 @@ public class JobOpeningService {
     }
 
     //NOT TESTED
-    public boolean applyJobOpening(JobOpeningApplicationDTO jobOpeningApplicationDTO, int userId) {
-        return jobOpeningDao.applyJobOpening(jobOpeningApplicationDTO, userId);
+    public boolean applyJobOpening(JobOpeningApplicationDTO jobOpeningApplicationDTO) {
+        return jobOpeningDao.applyJobOpening(jobOpeningApplicationDTO);
     }
 }

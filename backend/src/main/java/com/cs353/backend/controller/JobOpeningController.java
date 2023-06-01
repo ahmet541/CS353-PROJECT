@@ -35,8 +35,13 @@ public class JobOpeningController {
     }
 
     //NOT TESTED
-    @PostMapping("applyJobOpening/{userId}")
-    public boolean applyJobOpening(@Valid @RequestBody JobOpeningApplicationDTO jobOpeningApplicationDTO, @PathVariable int userId) {
-        return jobOpeningService.applyJobOpening(jobOpeningApplicationDTO, userId);
+    @PostMapping("applyJobOpening/")
+    public boolean applyJobOpening(@Valid @RequestBody JobOpeningApplicationDTO jobOpeningApplicationDTO) {
+        //It is assumed that a cv is uploaded in a string format, as specified in the database.
+        //It is also assumed that JobOpeningApplicationDTO.cv would be an empty string if no cv is uploaded.
+        if(jobOpeningApplicationDTO.getCv().isEmpty()) {
+            return false;
+        }
+        return jobOpeningService.applyJobOpening(jobOpeningApplicationDTO);
     }
 }

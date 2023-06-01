@@ -12,16 +12,13 @@ import java.time.LocalDateTime;
 public class JobOpeningApplicationDTO {
     /*
     * TO BE IMPLEMENTED BY ERKIN AYDIN*/
-    private LocalDateTime applicationDate;
+    private int jobOpeningId;
+    private int userId;
     private String applicationStatus;
     private String experience;
     private String skills;
     private String educationLvl;
     private String cv;
-
-    public LocalDateTime getApplicationDate() {
-        return applicationDate;
-    }
 
     public String getApplicationStatus() {
         return applicationStatus;
