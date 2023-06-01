@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JS
 import '../css/Navbar.css'; // Import the CSS file for custom styling
 
-const Navbar = ({ userId }) => {
+const Navbar = ({ children }) => {
     const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
 
     const handleLogout = () => {
+        sessionStorage.setItem("userId","");
+        sessionStorage.setItem("userRole","");
+        navigate("");
+
         // Perform logout logic here
         // Redirect the user to the login page
     };
@@ -15,7 +21,7 @@ const Navbar = ({ userId }) => {
     const handleSearch = (e) => {
         e.preventDefault();
         // Perform search logic here based on the searchQuery state
-        console.log(`Searching for:}`, searchQuery);
+        console.log('Searching for:', searchQuery);
     };
 
     return (
@@ -29,7 +35,7 @@ const Navbar = ({ userId }) => {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to={`/profile/${userId}`}>
+                            <Link className="nav-link" to={"/profile/" + sessionStorage.getItem("userId")}>
                                 Profile
                             </Link>
                         </li>
@@ -61,9 +67,9 @@ const Navbar = ({ userId }) => {
 
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <button className="btn btn-primary bg-danger" onClick={handleLogout}>
+                            <Link className="btn btn-primary bg-danger" onClick={handleLogout} to ="/">
                                 Logout
-                            </button>
+                            </Link>
                         </li>
                     </ul>
                 </div>

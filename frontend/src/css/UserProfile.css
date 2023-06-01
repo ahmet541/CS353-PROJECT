@@ -1,3 +1,11 @@
 .custom-col-width {
     width: 1000px;
 }
+.follow-button.followed {
+    background-color: green; /* Change the background color to green when liked */
+    color: white; /* Change the text color to white when liked */
+}
+.connect-button.connected {
+    background-color: green; /* Change the background color to green when liked */
+    color: white; /* Change the text color to white when liked */
+}
