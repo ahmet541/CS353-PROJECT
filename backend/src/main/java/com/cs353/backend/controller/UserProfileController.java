@@ -34,4 +34,18 @@ public class UserProfileController {
         userProfileService.update(userId,editProfileDTO);
         return new ResponseEntity<>("Update successfull", HttpStatus.OK);
     }
+
+    @PostMapping("/{companyId}/verifyAsRecruiter/{recruiterId}")
+    public ResponseEntity<String> update(@PathVariable int companyId, @PathVariable  Integer recruiterId) {
+        try{
+            userProfileService.verifyRecruiter(companyId, recruiterId);
+            return new ResponseEntity<>("Company has a new recruiter now", HttpStatus.OK);
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
+    }
+
+
 }
