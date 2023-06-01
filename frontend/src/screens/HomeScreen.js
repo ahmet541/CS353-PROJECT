@@ -3,12 +3,16 @@ import Navbar from '../components/Navbar';
 import '../css/HomeScreen.css';
 import Post from '../components/Post';
 import axios from 'axios';
+import {useNavigate} from "react-router-dom";
 
 const HomeScreen = () => {
+    const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
     const [newPostHeading, setNewPostHeading] = useState('');
     const [newPostContent, setNewPostContent] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [userId, setUserId] = useState(sessionStorage.getItem("userId"));
+    const [userRole, setUserRole] = useState(sessionStorage.getItem("userRole"));
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -45,9 +49,13 @@ const HomeScreen = () => {
     };
 
 
+    function handleCreateJobAdvert() {
+        navigate('/createadvert');
+    }
+
     return (
         <div>
-            <Navbar />
+            <Navbar userId={userId} />
             <div className="post-container">
                 <h2>Welcome to the Home Page!</h2>
                 <p>This is the home page of your application.</p>
@@ -93,6 +101,17 @@ const HomeScreen = () => {
                         </div>
                     ))}
                 </div>
+                {userRole === "COMPANY" && (
+                    <button
+                        style={{position: "fixed",
+                            bottom: "20px",
+                            right: "20px"}}
+                        className="btn btn-primary create-job-advert-button"
+                        onClick={handleCreateJobAdvert}
+                    >
+                        Create Job Advert
+                    </button>
+                )}
             </div>
         </div>
     );

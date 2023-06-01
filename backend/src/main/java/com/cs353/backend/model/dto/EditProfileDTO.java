@@ -13,9 +13,11 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserProfileDTO {
+public class EditProfileDTO {
     private int userId;
-    private String fullName;
+    private String companyName;
+    private String firstName;
+    private String lastName;
     private String profileDescription;
     private String userAvatar;
     private String phoneNumber;
@@ -25,12 +27,5 @@ public class UserProfileDTO {
     private String companyType;
     private int economicScale;
     private List<String> Certificate_Skills = new ArrayList<>();
-    private List<String> workExperience = new ArrayList<>();
-    private Date recruiting_startDate;
-    private int rank;
-    private double last_year_score;
     private List<UserRole> roles = new ArrayList<>();
-    private List<Account> followers = new ArrayList<>();
-    private List<Account> connections = new ArrayList<>();
-    private List<Account> employees = new ArrayList<>();
 }

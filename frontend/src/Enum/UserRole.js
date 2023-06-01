@@ -1,11 +1,11 @@
 const UserRole = {
-    ACCOUNT: 'Account',
-    USER: 'User',
-    REGULAR_USER: 'RegularUser',
-    COMPANY: 'Company',
-    ADMIN: 'Admin',
-    CAREER_EXPERT: 'CareerExpert',
-    RECRUITER: 'Recruiter',
+    ACCOUNT: 'ACCOUNT',
+    USER: 'USER',
+    REGULAR_USER: 'REGULAR_USER',
+    COMPANY: 'COMPANY',
+    ADMIN: 'ADMIN',
+    CAREER_EXPERT: 'CAREER_EXPERT',
+    RECRUITER: 'RECRUITER',
 };
 
 export default UserRole;

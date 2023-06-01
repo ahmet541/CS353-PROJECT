@@ -1,0 +1,29 @@
+.message-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.own-message {
+    background-color: #007c05;
+    color: white;
+    justify-self: end;
+}
+
+.recipient-message {
+    background-color: #727a86;
+    color: white;
+    justify-self: start;
+}
+.post {
+    border: 1px solid #ddd; /* Add border */
+    padding: 10px; /* Add padding */
+    margin-bottom: 20px; /* Add margin between posts */
+    width: 800px;
+}

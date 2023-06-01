@@ -6,11 +6,27 @@ import defaultAvatar from "../pictures/default-avatar.jpg";
 import { Card, Button, Badge } from 'react-bootstrap';
 import '../css/UserProfile.css';
 import {useParams} from "react-router";
+import FollowButton from "../components/FollowButton";
+import LikeButton from "../components/LikeButton";
+import * as PropTypes from "prop-types";
+import ConnectButton from "../components/ConnectButton";
+import UserRole from "../Enum/UserRole";
+import { useNavigate, Link } from 'react-router-dom';
+import RegisterScreen from "./RegisterScreen";
 
-export default function UserProfile() {
+
+// ConnectButton.propTypes = {
+//     handleConnect: PropTypes.func,
+//     connectedByUser: PropTypes.any
+// };
+const UserProfileScreen = () => {
+    const navigate = useNavigate();
     const { userId } = useParams();
     const [userData, setUserData] = React.useState(null);
-
+    const [conReqPending, setConReqPending] = React.useState(false);
+    // const [followers, setFollower] = React.useState([]);
+    // const [connections, setConnections] = React.useState([]);
+    // const [employees, setEmployees] = React.useState([]);
     React.useEffect(() => {
         // Fetch user profile data
         const fetchUserProfile = async () => {
@@ -19,65 +35,70 @@ export default function UserProfile() {
                 const data = response.data;
                 console.log(data);
                 setUserData(data);
+
+                const isPending = await axios.get(`http://localhost:8080/connect/${sessionStorage.getItem('userId')}/isPending/${userId}`);
+                setConReqPending(isPending.data);
+
             } catch (error) {
                 console.error('Error fetching user profile:', error);
             }
         };
         fetchUserProfile();
         // Simulating initial data for each role
-        const initialData = {
-            userId: '123',
-            fullName: 'John Doe',
-            profileDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-            userAvatar: 'https://example.com/avatar.jpg',
-            phoneNumber: '123-456-7890',
-            gender: 'Male',
-            birthdate: '1990-01-01',
-            address: '123 Main St',
-            companyName: 'Example Company',
-            companyType: 'Technology',
-            economicScale: 5,
-            Certificate_Skills: ['Skill 1', 'Skill 2', 'Skill 3'],
-            workExperience: ['Company A', 'Company B'],
-            recruiting_startDate: '2022-01-01',
-            rank: 'Senior',
-            last_year_score: 8.5,
-            roles: ['careerExpert'],
-            followers: 100,
-            numberOfConnections: 10,
-            numberOfFollowers: 11,
-            numberOfEmployees: 9,
-        };
 
-        setUserData(initialData);
     }, []);
 
-    const handleConnect = () => {
-        // axios.post('/connections', { userId: userData.userId })
-        //   .then(response => {
-        //     console.log('Connection request sent');
-        //     // Handle success
-        //   })
-        //   .catch(error => {
-        //     console.error('Error sending connection request:', error);
-        //     // Handle error
-        //   });
+    const handleConnect = async () => {
+        try {
+            let response;
+            const isConnected = connections.some(connection => connection.id === parseInt(sessionStorage.getItem('userId')));
+
+            if (isConnected || conReqPending) {
+                // If the post is already liked, send a request to unlike it
+                response = await axios.delete(`http://localhost:8080/connect/${sessionStorage.getItem('userId')}/removeConnection/${userId}`);
+            } else {
+                // If the post is not liked, send a request to like it
+                response = await axios.post(`http://localhost:8080/connect/${sessionStorage.getItem('userId')}/sendRequest/${userId}`);
+            }
+
+            // After the request is successful, retrieve the updated post information
+
+            // Update the likes and likedByUser state with the new values
+            if (response && response.data) {
+                setUserData((prevState) => ({ ...prevState, connections: response.data }));
+            }
+
+            const isPending = await axios.get(`http://localhost:8080/connect/${sessionStorage.getItem('userId')}/isPending/${userId}`);
+            setConReqPending(isPending.data);
+        } catch (error) {
+            // Handle any error that occurs during the request
+            // const errorMessage = error.response.data;
+        }
     };
 
-    const handleFollow = () => {
-        // Send follow request logic
-        console.log('Follow request sent');
-        // Make an axios request to send the follow request
-        // Example:
-        // axios.post('/follow', { userId: userData.userId })
-        //   .then(response => {
-        //     console.log('Follow request sent');
-        //     // Handle success
-        //   })
-        //   .catch(error => {
-        //     console.error('Error sending follow request:', error);
-        //     // Handle error
-        //   });
+    const handleFollow = async () => {
+        try {
+            let response;
+            const isFollowed = followers.some(follower => follower.id === parseInt(sessionStorage.getItem('userId'), 10))
+            if (isFollowed) {
+                // If the post is already liked, send a request to unlike it
+                response = await axios.delete(`http://localhost:8080/follow/${sessionStorage.getItem('userId')}/${userId}`);
+
+            } else {
+                // If the post is not liked, send a request to like it
+                response = await axios.post(`http://localhost:8080/follow/${sessionStorage.getItem('userId')}/${userId}`);
+            }
+            console.log(response);
+            // After the request is successful, retrieve the updated post information
+
+            // Update the likes and likedByUser state with the new values
+            if (response && response.data) {
+                setUserData((prevState) => ({ ...prevState, followers: response.data }));
+            }
+        } catch (error) {
+            // Handle any error that occurs during the request
+            // const errorMessage = error.response.data;
+        }
     };
     const handleChat = () => {
         // Send follow request logic
@@ -94,20 +115,21 @@ export default function UserProfile() {
         //     // Handle error
         //   });
     };
+    const handleEditProfile = () => {
+        navigate('/editProfile');
+    };
     if (!userData) {
         return <div>Loading...</div>;
     }
 
     const {
         fullName,
-        username,
         profileDescription,
         userAvatar,
         phoneNumber,
         gender,
         birthdate,
         address,
-        companyName,
         companyType,
         economicScale,
         Certificate_Skills,
@@ -117,15 +139,12 @@ export default function UserProfile() {
         last_year_score,
         roles,
         followers,
-        allUsers,
-        numberOfConnections,
-        numberOfFollowers,
-        numberOfEmployees,
+        connections,
+        employees,
 
     } = userData;
 
     const avatar = defaultAvatar;
-
 
 
     return (
@@ -144,38 +163,53 @@ export default function UserProfile() {
                                             alt="User Avatar"
                                             fluid
                                         />
+
+                                        <div className="d-flex pt-1">
+                                            {sessionStorage.getItem("userId") === userId && (
+                                                <>
+                                                    <button onClick={handleEditProfile} className="me-1 flex-grow-1">
+                                                        Edit Profile
+                                                    </button>
+                                                    {/* ... */}
+                                                </>
+                                            )}
+                                        </div>
+
                                         <div className="post-meta">
                                             <div className="meta-item">
                                                 <Badge variant="info" className="follower-count">
-                                                    {numberOfFollowers} {numberOfFollowers === 1 ? 'Follower' : 'Followers'}
+                                                    {followers.length} {followers.length === 1 ? 'Follower' : 'Followers'}
                                                 </Badge>
                                                 <Badge variant="info" className="connect-count">
-                                                    {numberOfConnections} {numberOfConnections === 1 ? 'Connect' : 'Connects'}
+                                                    {connections.length} {connections.length === 1 ? 'Connection' : 'Connections'}
                                                 </Badge>
-                                                <Badge variant="info" className="employee-count">
-                                                    {numberOfEmployees} {numberOfEmployees === 1 ? 'Employee' : 'Employees'}
-                                                </Badge>
+                                                {roles.includes(UserRole.COMPANY) && (
+                                                    <Badge variant="info" className="employee-count">
+                                                        {employees.length} {employees.length === 1 ? 'Employee' : 'Employees'}
+                                                    </Badge>)}
                                             </div>
                                         </div>
-                                        <div className="d-flex pt-1">
-                                            <MDBBtn outline className="me-1 flex-grow-1" onClick={handleChat}>
-                                                Chat
-                                            </MDBBtn>
-                                            {!roles.includes('company') && (
-                                                <MDBBtn className="flex-grow-1" onClick={handleConnect}>
-                                                    Connect
+                                        {sessionStorage.getItem("userId") !== userId &&
+                                            <div className="d-flex pt-1">
+                                                <MDBBtn outline className="me-1 flex-grow-1" onClick={handleChat}>
+                                                    Chat
                                                 </MDBBtn>
-                                            )}
-                                            <MDBBtn className="flex-grow-1" onClick={handleFollow}>
-                                                Follow
-                                            </MDBBtn>
-                                        </div>
+                                                {!roles.includes(UserRole.COMPANY) && (
+                                                    <ConnectButton pending={conReqPending}
+                                                                   connectedByUser={connections.some(connection => connection.id === parseInt(sessionStorage.getItem('userId')))}
+                                                                   handleConnect={handleConnect}/>
+                                                )}
+                                                <FollowButton
+                                                    followedByUser={followers.some(follower => follower.id === parseInt(sessionStorage.getItem('userId')))}
+                                                    handleFollow={handleFollow}/>
+                                            </div>
+                                        }
                                     </div>
                                     <div className="flex-grow-1 ms-3" style={{ maxWidth: '1000px' }}>
                                         <MDBCardTitle>{fullName}</MDBCardTitle>
                                         <MDBCardText>{profileDescription}</MDBCardText>
 
-                                        {roles.includes('company') ? (
+                                        {roles.includes(UserRole.COMPANY) ? (
                                             <div className="company-details d-flex justify-content-start rounded-3 p-2 mb-2" style={{ backgroundColor: '#efefef' }}>
                                                 <div className="px-3">
                                                     <p className="small text-muted mb-1">Company Type</p>
@@ -200,6 +234,10 @@ export default function UserProfile() {
                                                     <p className="small text-muted mb-1">Birthdate</p>
                                                     <p className="mb-0">{birthdate}</p>
                                                 </div>
+                                                <div className="px-3">
+                                                    <p className="small text-muted mb-1">Address</p>
+                                                    <p className="mb-0">{address}</p>
+                                                </div>
                                             </div>
                                         )}
 
@@ -208,18 +246,18 @@ export default function UserProfile() {
                                 </div>
 
                                 {/* Regular User Details */}
-                                {roles.includes('regularUser') && (
+                                {roles.includes(UserRole.REGULAR_USER) && (
                                     <MDBCard className="mt-3">
                                         <MDBCardBody>
                                             <h5>Certificate/Skills:</h5>
                                             <ul>
-                                                {Certificate_Skills.map((item, index) => (
+                                                {Certificate_Skills && Certificate_Skills.map((item, index) => (
                                                     <li key={index}>{item}</li>
                                                 ))}
                                             </ul>
                                             <h5>Work Experience:</h5>
                                             <ul>
-                                                {workExperience.map((item, index) => (
+                                                {workExperience && workExperience.map((item, index) => (
                                                     <li key={index}>{item}</li>
                                                 ))}
                                             </ul>
@@ -228,7 +266,7 @@ export default function UserProfile() {
                                 )}
 
                                 {/* Recruiter Details */}
-                                {roles.includes('recruiter') && (
+                                {roles.includes(UserRole.RECRUITER) && (
                                     <MDBCard className="mt-3">
                                         <MDBCardBody>
                                             <p>Recruiting Start Date: {recruiting_startDate}</p>
@@ -237,7 +275,7 @@ export default function UserProfile() {
                                 )}
 
                                 {/* Career Expert Details */}
-                                {roles.includes('careerExpert') && (
+                                {roles.includes(UserRole.RECRUITER) && (
                                     <MDBCard className="mt-3">
                                         <MDBCardBody>
                                             <p>Rank: {rank}</p>
@@ -253,3 +291,5 @@ export default function UserProfile() {
         </div>
     );
 }
+export default UserProfileScreen;
+

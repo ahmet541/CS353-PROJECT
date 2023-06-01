@@ -59,8 +59,10 @@ public class RegularUserDataAccessService implements RegularUserDao {
 
     @Override
     public void updateRegularUser(RegularUser regularUser) {
-
+        String sql = "UPDATE Regular_User SET first_name = ?, last_name = ?, gender = ?, phone_number = ?, birthdate = ?, address = ? WHERE id = ?;";
+        jdbcTemplate.update(sql, regularUser.getFirstName(), regularUser.getLastName(), regularUser.getGender(), regularUser.getPhoneNumber(), regularUser.getBirthdate(), regularUser.getAddress(), regularUser.getId());
     }
+
 
     @Override
     public void deleteRegularUser(int id) {

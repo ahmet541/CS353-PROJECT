@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
 import React from "react";
-import CommentForm from "./CommentForm";
+import '../css/UserProfile.css';
 
 const LikeButton = ({ likedByUser, handleLike }) => {
     return (
