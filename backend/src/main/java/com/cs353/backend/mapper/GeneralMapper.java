@@ -25,6 +25,15 @@ public class GeneralMapper {
         return account;
     }
 
+    public User mapCompanyToUser(Company company) {
+        User user = new User();
+        user.setEmail(company.getEmail());
+        user.setPassword(company.getPassword());
+        user.setProfileDescription(company.getProfileDescription());
+
+        return user;
+    }
+
     public Account mapUserToAccount(User user) {
         Account account = new Account();
         account.setEmail(user.getEmail());
