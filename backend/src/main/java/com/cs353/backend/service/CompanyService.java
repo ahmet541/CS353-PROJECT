@@ -57,7 +57,7 @@ public class CompanyService {
 
     public void verifyRecruiter(int companyId, int recruiterId){
 
-        //recruiterService.addRecruiter(recruiterId);
+        recruiterService.addRecruiter(recruiterId);
         companyDao.verifyRecruiter(companyId, recruiterId);
 
     }
