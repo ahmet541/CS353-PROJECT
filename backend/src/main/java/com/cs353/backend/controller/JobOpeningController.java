@@ -28,7 +28,7 @@ public class JobOpeningController {
         return jobOpeningService.getAllJobOpenings();
     }
 
-    @GetMapping("getJobOpeningsByFilter")
+    @PostMapping("getJobOpeningsByFilter")
     public List<JobOpening> getJobOpeningsByFilter(@Valid @RequestBody JobOpeningDTO jobOpeningDTO) {
         return jobOpeningService.getJobOpeningsByFilter(jobOpeningDTO);
     }
