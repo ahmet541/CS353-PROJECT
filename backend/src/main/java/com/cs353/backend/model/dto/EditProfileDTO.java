@@ -2,6 +2,7 @@ package com.cs353.backend.model.dto;
 
 import com.cs353.backend.Enum.UserRole;
 import com.cs353.backend.model.entities.Account;
+import com.cs353.backend.model.entities.Certificate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,6 @@ public class EditProfileDTO {
     private String address;
     private String companyType;
     private int economicScale;
-    private List<String> Certificate_Skills = new ArrayList<>();
+    private List<Certificate> Certificate_Skills = new ArrayList<>();
     private List<UserRole> roles = new ArrayList<>();
 }

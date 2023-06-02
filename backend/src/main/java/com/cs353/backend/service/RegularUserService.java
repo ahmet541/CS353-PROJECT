@@ -1,11 +1,9 @@
 package com.cs353.backend.service;
 
+import com.cs353.backend.dao.CertificateDao;
 import com.cs353.backend.dao.RegularUserDao;
 import com.cs353.backend.mapper.GeneralMapper;
-import com.cs353.backend.model.entities.Account;
-import com.cs353.backend.model.entities.Post;
-import com.cs353.backend.model.entities.RegularUser;
-import com.cs353.backend.model.entities.User;
+import com.cs353.backend.model.entities.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +19,7 @@ public class RegularUserService {
     private final UserService userService;
     private final PostService postService;
     private GeneralMapper generalMapper;
+    private CertificateDao certificateDao;
 
     public int createRegularUser(RegularUser regularUser) {
         User user = generalMapper.mapRegularUserToUser(regularUser);
@@ -92,6 +91,12 @@ public class RegularUserService {
         }
     }
 
+    public List<Certificate> getCertificates(int userId){
+        return certificateDao.getCertificates(userId);
+    }
 
+    public void addCertificate(Certificate certificate){
+        certificateDao.addCertificate(certificate);
+    }
 
 }

@@ -35,6 +35,7 @@ public class UserProfileService {
             userProfileDTO.setGender(regularUser.getGender());
             userProfileDTO.setFullName(regularUser.getFirstName() + " " + regularUser.getLastName());
             userProfileDTO.setPhoneNumber(regularUser.getPhoneNumber());
+            userProfileDTO.setCertificate_Skills(regularUserService.getCertificates(userId));
             roles.add(UserRole.REGULAR_USER);
         }
         catch (Exception e){
@@ -114,6 +115,7 @@ public class UserProfileService {
             editProfileDTO.setFirstName(regularUser.getFirstName());
             editProfileDTO.setLastName(regularUser.getLastName());
             editProfileDTO.setPhoneNumber(regularUser.getPhoneNumber());
+            editProfileDTO.setCertificate_Skills(regularUserService.getCertificates(userId));
             roles.add(UserRole.REGULAR_USER);
         }
         catch (Exception e){

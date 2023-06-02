@@ -2,6 +2,7 @@ package com.cs353.backend.model.dto;
 
 import com.cs353.backend.Enum.UserRole;
 import com.cs353.backend.model.entities.Account;
+import com.cs353.backend.model.entities.Certificate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +25,7 @@ public class UserProfileDTO {
     private String address;
     private String companyType;
     private int economicScale;
-    private List<String> Certificate_Skills = new ArrayList<>();
+    private List<Certificate> Certificate_Skills = new ArrayList<Certificate>();
     private List<String> workExperience = new ArrayList<>();
     private Date recruiting_startDate;
     private int rank;
@@ -33,4 +34,5 @@ public class UserProfileDTO {
     private List<PostOwnerDTO> followers = new ArrayList<>();
     private List<PostOwnerDTO> connections = new ArrayList<>();
     private List<PostOwnerDTO> employees = new ArrayList<>();
+
 }
