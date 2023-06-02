@@ -51,6 +51,11 @@ const Navbar = ({}) => {
                             </Link>
                         </li>
                         <li className="nav-item">
+                            <Link className="nav-link" to="/jobopenings">
+                                Job Openings
+                            </Link>
+                        </li>
+                        <li className="nav-item">
                             <div className="navbar__search d-flex align-items-center">
                                 <form className="navbar__search-form flex-grow-1" onSubmit={handleSearch}>
                                     <div className="input-group">

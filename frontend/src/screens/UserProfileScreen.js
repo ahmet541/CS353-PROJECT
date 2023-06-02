@@ -110,6 +110,15 @@ const UserProfileScreen = () => {
     const handleEditProfile = () => {
         navigate('/editProfile');
     };
+    const handleVerify = () => {
+        axios.post(`http://localhost:8080/profile/${sessionStorage.getItem("userId")}/verifyAsRecruiter/${userId}`)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error)=> {
+                console.log(error);
+            })
+    };
     if (!userData) {
         return <div>Loading...</div>;
     }
@@ -148,7 +157,7 @@ const UserProfileScreen = () => {
                         <MDBCard className="w-100">
                             <MDBCardBody className="p-4">
                                 <div className="d-flex text-black">
-                                    <div className="flex-shrink-0" style={{ width: '180px' }}>
+                                    <div className="flex-shrink-0" style={{ width: '300px' }}>
                                         <MDBCardImage
                                             style={{ borderRadius: '10px' }}
                                             src={avatar}
@@ -183,7 +192,7 @@ const UserProfileScreen = () => {
                                         </div>
                                         {sessionStorage.getItem("userId") !== userId &&
                                             <div className="d-flex pt-1">
-                                                <MDBBtn outline className="me-1 flex-grow-1" onClick={handleChat}>
+                                                <MDBBtn outline onClick={handleChat}>
                                                     Chat
                                                 </MDBBtn>
                                                 {!roles.includes(UserRole.COMPANY) && (
@@ -194,10 +203,15 @@ const UserProfileScreen = () => {
                                                 <FollowButton
                                                     followedByUser={followers.some(follower => follower.userId === parseInt(sessionStorage.getItem('userId')))}
                                                     handleFollow={handleFollow}/>
+                                                {sessionStorage.getItem("userRole") === UserRole.COMPANY && roles.includes(UserRole.REGULAR_USER) && (
+                                                    <MDBBtn outline onClick={handleVerify}>
+                                                        Verify
+                                                    </MDBBtn>
+                                                )}
                                             </div>
                                         }
                                     </div>
-                                    <div className="flex-grow-1 ms-3" style={{ maxWidth: '1000px' }}>
+                                    <div className="flex-shrink-1 ms-3" style={{ maxWidth: '1000px' }}>
                                         <MDBCardTitle>{fullName}</MDBCardTitle>
                                         <MDBCardText>{profileDescription}</MDBCardText>
 

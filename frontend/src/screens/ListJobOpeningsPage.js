@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import JobOpening from '../components/JobOpening';
+import {MDBBtn, MDBCard, MDBCardBody, MDBCardImage} from "mdb-react-ui-kit";
+import defaultAvatar from "../pictures/default-avatar.jpg";
+import {useNavigate} from "react-router-dom";
 
 const ListJobOpeningsPage = () => {
     const [jobOpenings, setJobOpenings] = useState([]);
@@ -10,6 +13,9 @@ const ListJobOpeningsPage = () => {
         location: '',
         workType: '',
     });
+    const employmentStatusList = ["", "Internship", "Part-time", "Full-time", "On-call", "Freelancer", "Temporary"]
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchJobOpenings();
@@ -48,6 +54,10 @@ const ListJobOpeningsPage = () => {
             console.log(error);
         }
     };
+
+    const handleApply = () => {
+        navigate("/apply")
+    }
 
     return (
         <div>
@@ -93,17 +103,37 @@ const ListJobOpeningsPage = () => {
 
             <div className="job-openings-wrapper">
                 {jobOpenings.map((jobOpening) => (
-                    <div key={jobOpening.jobOpeningId} className="job-opening-item">
-                        <JobOpening
-                            jobOpeningId={jobOpening.jobOpeningId}
-                            employmentStatus={jobOpening.employmentStatus}
-                            explanation={jobOpening.explanation}
-                            dueDate={jobOpening.dueDate}
-                            rolePro={jobOpening.rolePro}
-                            location={jobOpening.location}
-                            workType={jobOpening.workType}
-                        />
-                    </div>
+                    <MDBCard key={jobOpening.jobOpeningId} className="job-opening-item">
+                        <MDBCardBody className="d-flex align-items-center">
+                            <MDBCardImage
+                                className="company-photo"
+                                src={defaultAvatar}
+                                alt="Company Avatar"
+                                fluid
+                            />
+                            <div className="card-details ms-5">
+                                <h5 className="company-name">{jobOpening.companyName ? jobOpening.companyName : "'Insert Company Name'"}</h5>
+                                <p className="role-pro">{jobOpening.rolePro}</p>
+                                <p className="card-text">
+                                    <strong>Due Date:</strong> {jobOpening.dueDate}
+                                </p>
+                                <p className="card-text">
+                                    <strong>Employment Status:</strong> {employmentStatusList[jobOpening.employmentStatus]}
+                                </p>
+                                <p className="card-text">
+                                    <strong>Location:</strong> {jobOpening.location}
+                                </p>
+                                <p className="card-text">
+                                    <strong>Work Type:</strong> {jobOpening.workType}
+                                </p>
+                            </div>
+                            <div className={"ms-5"}>
+                                <MDBBtn rounded onClick={handleApply}>
+                                    Apply
+                                </MDBBtn>
+                            </div>
+                        </MDBCardBody>
+                    </MDBCard>
                 ))}
             </div>
         </div>
