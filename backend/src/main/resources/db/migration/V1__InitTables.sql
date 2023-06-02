@@ -154,7 +154,7 @@ CREATE TABLE open_position(
 CREATE TABLE application(
 user_id int NOT NULL,
 job_opening_id int NOT NULL,
---application_date timestamp NOT NULL DEFAULT GETDATE(),
+application_date timestamp NOT NULL,
 application_status int NOT NULL,
 experience VARCHAR(255) NOT NULL ,
 skills VARCHAR(255),
@@ -171,6 +171,19 @@ CREATE TABLE verifies(
      PRIMARY KEY(company_id, recruiter_id),
      FOREIGN KEY(company_id) REFERENCES Company(id) ON DELETE CASCADE,
      FOREIGN KEY(recruiter_id) REFERENCES Recruiter(id) ON DELETE CASCADE
+);
+
+CREATE TABLE employs(
+    company_id int NOT NULL,
+    regular_user_id int NOT NULL,
+    recruiter_id int,
+    emp_role int NOT NULL,
+    emp_start_date datetime NOT NULL, --DEFAULT GETDATE(),
+    emp_end_date datetime,
+    PRIMARY KEY(company_id, regular_user_id),
+    FOREIGN KEY(company_id) REFERENCES Company(id) ON DELETE CASCADE,
+    FOREIGN KEY(recruiter_id) REFERENCES Recruiter(id) ON DELETE SET NULL,
+    FOREIGN KEY(regular_user_id) REFERENCES Regular_User(id) ON DELETE CASCADE
 );
 
 
