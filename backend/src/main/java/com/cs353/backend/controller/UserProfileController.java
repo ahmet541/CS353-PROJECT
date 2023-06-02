@@ -1,8 +1,10 @@
 package com.cs353.backend.controller;
 
 import com.cs353.backend.model.dto.EditProfileDTO;
+import com.cs353.backend.model.dto.EmployDTO;
 import com.cs353.backend.model.dto.UserProfileDTO;
 import com.cs353.backend.model.entities.Account;
+import com.cs353.backend.service.EmployService;
 import com.cs353.backend.service.UserProfileService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import javax.validation.Valid;
 @AllArgsConstructor
 public class UserProfileController {
     private UserProfileService userProfileService;
+    private EmployService employService;
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserProfileDTO> getAccountById(@PathVariable int userId) {
@@ -47,5 +50,37 @@ public class UserProfileController {
 
     }
 
+    @PostMapping("/employ")
+    public ResponseEntity<String> employUser(@Valid @RequestBody EmployDTO employDTO) {
+        try{
+            employService.employUser(employDTO);
+            return new ResponseEntity<>("Hired!!", HttpStatus.OK);
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/{companyId}/fire/{userId}")
+    public ResponseEntity<String> fireEmployee(@PathVariable int companyId, @PathVariable  Integer userId) {
+        try{
+            employService.fireEmployee(companyId, userId);
+            return new ResponseEntity<>("Fired!!", HttpStatus.OK);
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/{companyId}/deleteEmployee/{userId}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable int companyId, @PathVariable  Integer userId) {
+        try{
+            employService.deleteEmployee(companyId, userId);
+            return new ResponseEntity<>("Fired!!", HttpStatus.OK);
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 
 }

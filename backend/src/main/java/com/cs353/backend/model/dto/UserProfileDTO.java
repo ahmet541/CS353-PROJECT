@@ -35,4 +35,6 @@ public class UserProfileDTO {
     private List<PostOwnerDTO> connections = new ArrayList<>();
     private List<PostOwnerDTO> employees = new ArrayList<>();
 
+    private int numberOfEmployees;
+
 }

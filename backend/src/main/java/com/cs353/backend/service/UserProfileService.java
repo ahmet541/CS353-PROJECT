@@ -52,6 +52,7 @@ public class UserProfileService {
             userProfileDTO.setFullName(company.getCompanyName());
             userProfileDTO.setCompanyType(company.getType());
             userProfileDTO.setEconomicScale(company.getEconomicScale());
+            userProfileDTO.setNumberOfEmployees(companyService.getNumberOfEmployees(userId));
             roles.add(UserRole.COMPANY);
         }
         catch (Exception e){
