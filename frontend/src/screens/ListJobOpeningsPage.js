@@ -3,7 +3,8 @@ import axios from 'axios';
 import JobOpening from '../components/JobOpening';
 import {MDBBtn, MDBCard, MDBCardBody, MDBCardImage} from "mdb-react-ui-kit";
 import defaultAvatar from "../pictures/default-avatar.jpg";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import UserRole from "../Enum/UserRole";
 
 const ListJobOpeningsPage = () => {
     const [jobOpenings, setJobOpenings] = useState([]);
@@ -61,6 +62,33 @@ const ListJobOpeningsPage = () => {
 
     return (
         <div>
+            <nav className="navbar navbar-expand-sm navbar-light bg-light" style={{maxWidth:"10px"}}>
+                <div className="container-fluid">
+                    <div className="collapse navbar-collapse" id="navbarNav">
+                        <ul className="navbar-nav me-sm-auto">
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/home">
+                                    Home
+                                </Link>
+                            </li>
+                        </ul>
+                        { sessionStorage.getItem("userRole") === UserRole.REGULAR_USER && <ul className="navbar-nav me-auto">
+                            <li className="nav-item">
+                                <Link style={{fontSize: "14px"}} className="nav-link" to={`/myApplications/${sessionStorage.getItem("userId")}`}>
+                                    MyApplications
+                                </Link>
+                            </li>
+                        </ul>}
+                        { sessionStorage.getItem("userRole") === UserRole.RECRUITER && <ul className="navbar-nav me-auto">
+                            <li className="nav-item">
+                                <Link className="nav-link" to={`/myAdverts/${sessionStorage.getItem("userId")}`}>
+                                    MyAdverts
+                                </Link>
+                            </li>
+                        </ul>}
+                    </div>
+                </div>
+            </nav>
             <h2 style={{ color: 'blue', fontSize: '24px' }}>List Job Openings</h2>
             <form onSubmit={handleFilterSubmit} style={{
                 border: '1px solid #ccc',

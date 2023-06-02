@@ -11,6 +11,9 @@ import CreateJobAdvertScreen from "./screens/CreateJobAdvertScreen";
 import UserListScreen from "./screens/UserListScreen";
 import ListJobOpeningsPage from "./screens/ListJobOpeningsPage";
 import ConnectionRequestScreen from "./screens/ConnectionRequestScreen";
+import MyApplicationsScreen from "./screens/MyApplicationsScreen";
+import MyAdvertsPage from "./screens/MyAdvertsScreen";
+import MyAdvertsScreen from "./screens/MyAdvertsScreen";
 // Import other screens/components
 
 function App() {
@@ -30,6 +33,8 @@ function App() {
             <Route path="messages/:selectUserId?" element={<Messages />} />
             <Route path="/jobopenings" element={<ListJobOpeningsPage />} />
             <Route path="/createadvert" element={<CreateJobAdvertScreen />} />
+            <Route path="/myApplications/:userId" element={<MyApplicationsScreen />} />
+            <Route path="/myAdverts/:userId" element={<MyAdvertsScreen />} />
             {/*<Route path="profile" element={<UserProfile />} />*/}
             {/*<Route path="home" element={<HomeScreen />} />*/}
         </Routes>

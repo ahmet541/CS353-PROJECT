@@ -1,0 +1,62 @@
+.my-adverts-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.my-adverts-heading {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.job-openings-list {
+    list-style: none;
+    padding: 0;
+}
+
+.job-opening-item {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.job-opening-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.job-opening-id {
+    margin: 0;
+}
+
+.applicants-heading {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.applicants-list {
+    list-style: none;
+    padding: 0;
+}
+
+.applicant-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.applicant-name {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.hire-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}

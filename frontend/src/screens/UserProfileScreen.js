@@ -121,7 +121,15 @@ const UserProfileScreen = () => {
     };
 
     const handleWork = () => {
-        //TODO
+        axios.post("http://localhost:8080/profile/employ", {
+            company_id: userId,
+            regular_user_id: sessionStorage.getItem("userId"),
+            emp_start_date: Date.now()
+        }).then((response)=>{
+            console.log(response);
+        }).catch((error) => {
+            console.log(error);
+        })
     }
     if (!userData) {
         return <div>Loading...</div>;
@@ -146,6 +154,7 @@ const UserProfileScreen = () => {
         followers,
         connections,
         employees,
+        numberOfEmployees
 
     } = userData;
 
@@ -190,7 +199,7 @@ const UserProfileScreen = () => {
                                                 </Badge>
                                                 {roles.includes(UserRole.COMPANY) && (
                                                     <Badge variant="info" className="employee-count">
-                                                        {employees.length} {employees.length === 1 ? 'Employee' : 'Employees'}
+                                                        {numberOfEmployees} {numberOfEmployees === 1 ? 'Employee' : 'Employees'}
                                                     </Badge>)}
                                             </div>
                                         </div>
