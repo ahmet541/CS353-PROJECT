@@ -119,6 +119,10 @@ const UserProfileScreen = () => {
                 console.log(error);
             })
     };
+
+    const handleWork = () => {
+        //TODO
+    }
     if (!userData) {
         return <div>Loading...</div>;
     }
@@ -206,6 +210,11 @@ const UserProfileScreen = () => {
                                                 {sessionStorage.getItem("userRole") === UserRole.COMPANY && roles.includes(UserRole.REGULAR_USER) && (
                                                     <MDBBtn outline onClick={handleVerify}>
                                                         Verify
+                                                    </MDBBtn>
+                                                )}
+                                                {sessionStorage.getItem("userRole") === UserRole.REGULAR_USER && roles.includes(UserRole.COMPANY) && (
+                                                    <MDBBtn outline onClick={handleWork}>
+                                                        Work Here
                                                     </MDBBtn>
                                                 )}
                                             </div>

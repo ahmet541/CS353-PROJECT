@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate , Link } from 'react-router-dom';
+import "../css/LoginScreen.css"
 
 const LoginScreen = () => {
     const navigate = useNavigate();
@@ -31,21 +32,21 @@ const LoginScreen = () => {
     };
 
     return (
-        <div>
-            <h2>Login</h2>
-            {error && <p>{error}</p>}
-            <form>
-                <div>
-                    <label>Email:</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <div className="login-container">
+            <h2 className="login-heading">Login</h2>
+            {error && <p className="error-message">{error}</p>}
+            <form className="login-form">
+                <div className="form-group">
+                    <label htmlFor="email">Email:</label>
+                    <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-input" />
                 </div>
-                <div>
-                    <label>Password:</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <div className="form-group">
+                    <label htmlFor="password">Password:</label>
+                    <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-input" />
                 </div>
-                <button type="button" onClick={handleLogin}>Login</button>
+                <button type="button" onClick={handleLogin} className="login-button">Login</button>
             </form>
-            <p>Don't have an account? <Link to="/register">Register</Link></p>
+            <p className="register-text">Don't have an account? <Link to="/register">Register</Link></p>
         </div>
     );
 };

@@ -95,72 +95,73 @@ const RegisterScreen = () => {
     };
 
     return (
-        <div>
-            <h2>Register</h2>
-            {errorMessage && <p>{errorMessage}</p>}
-            <form>
-                <div>
-                    <label>Email:</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                    {errors.email && <span style={{ color: "red" }}>{errors.email}</span>}
+        <div className="register-container">
+            <h2 className="register-heading">Register</h2>
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+            <form className="register-form">
+                <div className="form-group">
+                    <label htmlFor="email">Email:</label>
+                    <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-input" />
+                    {errors.email && <span className="error-text">{errors.email}</span>}
                 </div>
-                <div>
-                    <label>Password:</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    {errors.password && <span style={{ color: "red" }}>{errors.password}</span>}
+                <div className="form-group">
+                    <label htmlFor="password">Password:</label>
+                    <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-input" />
+                    {errors.password && <span className="error-text">{errors.password}</span>}
                 </div>
-                <div>
-                    <label>User Type:</label>
-                    <select value={userType} onChange={(e) => setUserType(e.target.value)}>
+                <div className="form-group">
+                    <label htmlFor="userType">User Type:</label>
+                    <select id="userType" value={userType} onChange={(e) => setUserType(e.target.value)} className="form-input">
                         <option value={UserRole.REGULAR_USER}>{UserRole.REGULAR_USER}</option>
                         <option value={UserRole.COMPANY}>{UserRole.COMPANY}</option>
                     </select>
-                    {errors.userType && <span style={{ color: "red" }}>{errors.userType}</span>}
+                    {errors.userType && <span className="error-text">{errors.userType}</span>}
                 </div>
                 {userType === UserRole.COMPANY && (
-                    <div>
-                        <label>Company Name:</label>
-                        <input type="text" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
-                        {errors.companyName && <span style={{ color: "red" }}>{errors.companyName}</span>}
+                    <div className="form-group">
+                        <label htmlFor="companyName">Company Name:</label>
+                        <input type="text" id="companyName" value={companyName} onChange={(e) => setCompanyName(e.target.value)} className="form-input" />
+                        {errors.companyName && <span className="error-text">{errors.companyName}</span>}
                     </div>
                 )}
                 {userType === UserRole.REGULAR_USER && (
                     <>
-                        <div>
-                            <label>First Name:</label>
-                            <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value) } required="required"/>
-                            {errors.firstName && <span style={{ color: "red" }}>{errors.firstName}</span>}
+                        <div className="form-group">
+                            <label htmlFor="firstName">First Name:</label>
+                            <input type="text" id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="form-input" required />
+                            {errors.firstName && <span className="error-text">{errors.firstName}</span>}
                         </div>
-                        <div>
-                            <label>Second Name:</label>
-                            <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                        <div className="form-group">
+                            <label htmlFor="lastName">Last Name:</label>
+                            <input type="text" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} className="form-input" />
                         </div>
-                        <div>
-                            <label>Gender:</label>
-                            <select value={gender} onChange={(e) => setGender(e.target.value)}>
+                        <div className="form-group">
+                            <label htmlFor="gender">Gender:</label>
+                            <select id="gender" value={gender} onChange={(e) => setGender(e.target.value)} className="form-input">
                                 <option value=""></option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                             </select>
                         </div>
-                        <div>
-                            <label>Phone Number:</label>
-                            <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+                        <div className="form-group">
+                            <label htmlFor="phoneNumber">Phone Number:</label>
+                            <input type="text" id="phoneNumber" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="form-input" />
                         </div>
-                        <div>
-                            <label>Birthdate:</label>
-                            <input type="date" value={birthdate} onChange={(e) => setBirthdate(e.target.value)} />
+                        <div className="form-group">
+                            <label htmlFor="birthdate">Birthdate:</label>
+                            <input type="date" id="birthdate" value={birthdate} onChange={(e) => setBirthdate(e.target.value)} className="form-input" />
                         </div>
-                        <div>
-                            <label>Address:</label>
-                            <textarea value={address} onChange={(e) => setAddress(e.target.value)} />
+                        <div className="form-group">
+                            <label htmlFor="address">Address:</label>
+                            <textarea id="address" value={address} onChange={(e) => setAddress(e.target.value)} className="form-input" />
                         </div>
                     </>
-                    )}
-                <button type="button" onClick={handleRegister}>Register</button>
+                )}
+                <button type="button" onClick={handleRegister} className="register-button">Register</button>
             </form>
-            <p>Already have an account? <Link to="/login">Login</Link></p>
+            <p className="login-text">Already have an account? <Link to="/login">Login</Link></p>
         </div>
+
     );
 };
 

@@ -101,7 +101,7 @@ const HomeScreen = () => {
                         </div>
                     ))}
                 </div>
-                {userRole === "COMPANY" && (
+                {userRole === "RECRUITER" && (
                     <button
                         style={{position: "fixed",
                             bottom: "20px",
