@@ -56,3 +56,20 @@ EXECUTE FUNCTION update_post_owner_view();
 --BEGIN
     --INSERT INTO recruiter ()
 --END;
+
+
+--The function below for updating open_position table after an update on jobopening table
+--CREATE OR REPLACE FUNCTION add_open_position()
+--    RETURNS TRIGGER AS $$
+--BEGIN
+--    INSERT INTO open_position (company_id, recruiter_id, job_opening_id)
+    --VALUES (-1, -1, NEW.job_opening_id);
+
+  --  RETURN NEW;
+--END;
+--$$ LANGUAGE plpgsql;
+
+---CREATE TRIGGER job_opening_trigger
+--    AFTER INSERT ON JobOpening
+--    FOR EACH ROW
+--EXECUTE FUNCTION add_open_position();

@@ -4,6 +4,7 @@ import com.cs353.backend.dao.CompanyDao;
 import com.cs353.backend.mapper.CompanyMapper;
 import com.cs353.backend.model.entities.Company;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -66,6 +67,22 @@ public class CompanyDataAccessService implements CompanyDao {
                     """;
 
         jdbcTemplate.update(sql, companyId, recruiterId);
+    }
+
+    @Override
+    public int isRecruiterVerified(int userid) {
+
+        String sql = """
+                SELECT V.company_id
+                FROM verifies V
+                WHERE V.recruiter_id = ?
+                """;
+        try {
+            return jdbcTemplate.queryForObject(sql, Integer.class, userid);
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("The recruiter is not in the verified table: " + e.getMessage());
+        }
+        return -1; // Error value
     }
 
 

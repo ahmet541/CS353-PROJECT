@@ -14,5 +14,5 @@ public interface CompanyDao {
     void deleteCompany(int id);
 
     void verifyRecruiter(int companyId, int recruiterId);
-
+    int isRecruiterVerified(int userid);
 }

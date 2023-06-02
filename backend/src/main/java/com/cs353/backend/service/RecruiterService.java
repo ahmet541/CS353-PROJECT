@@ -16,4 +16,8 @@ public class RecruiterService {
     public int addRecruiter(int userid){
         return recruiterDao.addRecruiter(userid);
     }
+
+    public boolean recruiterExist(int userid){
+        return recruiterDao.recruiterExist(userid);
+    }
 }

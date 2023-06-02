@@ -65,6 +65,10 @@ public class CompanyService {
 
     }
 
+    public int isRecruiterVerified(int userid){
+        return companyDao.isRecruiterVerified(userid);
+    }
+
 
 
 }
