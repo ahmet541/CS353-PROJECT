@@ -2,6 +2,7 @@ package com.cs353.backend.service;
 
 import com.cs353.backend.dao.CompanyDao;
 
+import com.cs353.backend.dao.EmployDao;
 import com.cs353.backend.model.dto.PostOwnerDTO;
 import com.cs353.backend.model.entities.Account;
 
@@ -22,6 +23,8 @@ public class CompanyService {
 
     private final CompanyDao companyDao;
     private final GeneralMapper generalMapper;
+
+    private final EmployDao employDao;
     private final UserService userService;
     private final RecruiterService recruiterService;
 
@@ -37,9 +40,8 @@ public class CompanyService {
         return companyDao.getCompanyById(userId);
     }
 
-    public int getNumberOfEmployees(int userId) { // userId == companyId
-        //TODO
-        return 0;
+    public int getNumberOfEmployees(int companyId) {
+        return employDao.numberOfEmployees(companyId);
     }
 
     public List<PostOwnerDTO> getAllEmployees(int userId) {

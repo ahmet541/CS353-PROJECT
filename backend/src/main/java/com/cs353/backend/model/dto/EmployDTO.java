@@ -11,10 +11,10 @@ import java.util.Date;
 @AllArgsConstructor
 public class EmployDTO {
 
-    int company_id;
-    int  regular_user_id;
-    int recruiter_id;
-    int emp_role;
+    Integer company_id;
+    Integer  regular_user_id;
+    Integer recruiter_id;
+    String emp_role;
     Date emp_start_date;
     Date emp_end_date;
 

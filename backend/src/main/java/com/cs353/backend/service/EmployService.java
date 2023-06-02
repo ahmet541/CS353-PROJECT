@@ -30,6 +30,7 @@ public class EmployService {
         return employDao.isWorkingAt(companyId, userId);
     }
 
-
-
+    public void deleteEmployee(int companyId, Integer userId) {
+        employDao.deleteEmployeePermanent(companyId, userId);
+    }
 }

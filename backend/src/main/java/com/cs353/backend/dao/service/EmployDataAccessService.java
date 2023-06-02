@@ -19,6 +19,7 @@ public class EmployDataAccessService implements EmployDao {
                 VALUES (?, ?, ?, ?, ?, ?);
                 """;
 
+
         jdbcTemplate.update(sql, employDTO.getCompany_id(), employDTO.getRegular_user_id(), employDTO.getRecruiter_id(),
                 employDTO.getEmp_role(), employDTO.getEmp_start_date(), employDTO.getEmp_end_date());
     }
@@ -29,7 +30,7 @@ public class EmployDataAccessService implements EmployDao {
     public void deleteEmployee(int companyId, int employeeId) {
         String sql1 = """
         SELECT emp_end_date 
-        FROM employs(company_id, regular_user_id ,recruiter_id, emp_role, emp_start_date, emp_end_date)  
+        FROM employs
         WHERE company_id = ? AND regular_user_id = ?
         """;
         Date endDate = jdbcTemplate.queryForObject(sql1, Date.class, companyId, employeeId);
@@ -38,9 +39,6 @@ public class EmployDataAccessService implements EmployDao {
             String sql2 = "UPDATE employs SET emp_end_date = CURRENT_TIMESTAMP WHERE company_id = ? AND regular_user_id = ?";
 
             int rowsAffected = jdbcTemplate.update(sql2, companyId, employeeId);
-        }
-        else{
-            //we might consider to remove the employee for good temelli
         }
 
     }
@@ -54,5 +52,26 @@ public class EmployDataAccessService implements EmployDao {
                 """;
 
         return  jdbcTemplate.queryForObject(sql, Boolean.class,companyId, employeeId);
+    }
+
+    @Override
+    public void deleteEmployeePermanent(int companyId, Integer userId) {
+        String sql = """
+        Delete From employes 
+        WHERE company_id = ? AND regular_user_id = ?
+        """;
+        jdbcTemplate.update(sql, companyId, userId);
+
+    }
+
+    @Override
+    public int numberOfEmployees(int companyId) {
+        String sql = "SELECT COUNT(*) FROM employs WHERE company_id = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, companyId);
+
+        if(count == null)
+            return  0;
+        else
+            return count;
     }
 }

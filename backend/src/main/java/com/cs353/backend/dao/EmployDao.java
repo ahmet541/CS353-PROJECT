@@ -11,4 +11,8 @@ public interface EmployDao {
 
     boolean isWorkingAt(int companyId, int employeeId);
 
+    void deleteEmployeePermanent(int companyId, Integer userId);
+
+    int numberOfEmployees(int companyId);
+
 }
