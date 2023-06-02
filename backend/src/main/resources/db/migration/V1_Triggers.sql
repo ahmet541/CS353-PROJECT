@@ -50,13 +50,19 @@ CREATE TRIGGER update_post_owner_trigger
 EXECUTE FUNCTION update_post_owner_view();
 
 --when recruiter is added, it should be added to employes table as well
+CREATE OR REPLACE FUNCTION insert_employs_trigger_function()
+    RETURNS TRIGGER AS $$
+BEGIN
+INSERT INTO employs (company_id, regular_user_id, recruiter_id, emp_role, emp_start_date, emp_end_date)
+VALUES (NEW.company_id, NEW.recruiter_id, NULL, 'Recruiter', NOW(), NULL);
+RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
 CREATE TRIGGER insert_employs
     AFTER INSERT ON verifies
     FOR EACH ROW
-BEGIN
-    INSERT INTO employs ( company_id, regular_user_id ,recruiter_id, emp_role, emp_start_date, emp_end_date)
-    VALUES ( NEW.company_id, NEW.recruiter_id, NULL ,'Recruiter', NOW(), NULL);
-END;
+    EXECUTE FUNCTION insert_employs_trigger_function();
 
 --The function below for updating Recruiter table after an update on Verifies table
 --CREATE OR REPLACE FUNCTION update_recruiter()
