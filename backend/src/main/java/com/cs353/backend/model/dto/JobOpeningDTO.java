@@ -18,6 +18,9 @@ public class JobOpeningDTO {
     private String workType;
     private String field;
 
+    private LocalDateTime minDueDate;
+    private LocalDateTime maxDueDate;
+
     public String getEmploymentStatus() {
         return employmentStatus;
     }

@@ -81,6 +81,12 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
             params.add(jobOpeningDTO.getWorkType());
         }
 
+        if(jobOpeningDTO.getMinDueDate() != null && jobOpeningDTO.getMaxDueDate() != null){
+            queryBuilder.append(" AND due_date between ? AND ?");
+            params.add(jobOpeningDTO.getMinDueDate());
+            params.add(jobOpeningDTO.getMaxDueDate());
+        }
+
         return jdbcTemplate.query(queryBuilder.toString(), new JobOpeningMapper(), params.toArray());
     }
 
