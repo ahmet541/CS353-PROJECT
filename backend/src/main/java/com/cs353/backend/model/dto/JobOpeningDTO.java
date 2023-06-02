@@ -16,6 +16,7 @@ public class JobOpeningDTO {
     private String rolePro;
     private String location;
     private String workType;
+    private String field;
 
     public String getEmploymentStatus() {
         return employmentStatus;

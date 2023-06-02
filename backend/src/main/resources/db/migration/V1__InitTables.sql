@@ -185,7 +185,16 @@ CREATE TABLE employs(
     FOREIGN KEY(recruiter_id) REFERENCES Recruiter(id) ON DELETE SET NULL,
     FOREIGN KEY(regular_user_id) REFERENCES Regular_User(id) ON DELETE CASCADE
 );
+CREATE TABLE Field(
+    field_name varchar(255) NOT NULL UNIQUE,
+    PRIMARY KEY(field_name));
 
+CREATE TABLE job_field(
+      field_name varchar(255) NOT NULL,
+      job_opening_id int NOT NULL,
+      PRIMARY KEY(field_name, job_opening_id),
+      FOREIGN KEY(field_name) REFERENCES Field(field_name) ON UPDATE CASCADE ON DELETE CASCADE,
+      FOREIGN KEY(job_opening_id) REFERENCES Job Opening(job_opening_id) ON DELETE CASCADE);
 
 CREATE VIEW post_owner_detail AS
 SELECT

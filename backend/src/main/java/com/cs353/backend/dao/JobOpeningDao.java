@@ -8,10 +8,12 @@ import java.util.List;
 
 public interface JobOpeningDao {
 
-    JobOpening createJobOpening(JobOpening jobOpening, int userId);
+    JobOpening createJobOpening(JobOpeningDTO jobOpening, int userId);
     List<JobOpening> getAllJobOpenings();
 
     List<JobOpening> getJobOpeningsByFilter(JobOpeningDTO jobOpeningDTO);
+
+    void addJobField(String field, int jobOpeningId);
 
     //NOT TESTED
     boolean applyJobOpening(JobOpeningApplicationDTO jobOpeningApplicationDTO);

@@ -17,7 +17,7 @@ public class JobOpeningService {
     private final RecruiterService recruiterService;
     private final CompanyService companyService;
     private final OpenPositionService openPositionService;
-    public JobOpening createJobOpening(JobOpening jobOpening, int userId) {
+    public JobOpening createJobOpening(JobOpeningDTO jobOpening, int userId) {
         boolean recruiterExist = recruiterService.recruiterExist(userId);
         int recruitersCompanyId = companyService.isRecruiterVerified(userId);
         if (recruitersCompanyId == -1){
@@ -26,6 +26,7 @@ public class JobOpeningService {
         }
         JobOpening newJobOpening = jobOpeningDao.createJobOpening(jobOpening, userId);
         openPositionService.addOpenPosition(recruitersCompanyId, userId, newJobOpening.getJobOpeningID());
+        jobOpeningDao.addJobField(jobOpening.getField(), newJobOpening.getJobOpeningID());
         return newJobOpening;
     }
 
