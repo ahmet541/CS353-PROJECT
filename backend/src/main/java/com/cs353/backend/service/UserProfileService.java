@@ -35,7 +35,8 @@ public class UserProfileService {
             userProfileDTO.setGender(regularUser.getGender());
             userProfileDTO.setFullName(regularUser.getFirstName() + " " + regularUser.getLastName());
             userProfileDTO.setPhoneNumber(regularUser.getPhoneNumber());
-            userProfileDTO.setCertificate_Skills(regularUserService.getCertificates(userId));
+            //userProfileDTO.setCertificate_Skills(regularUserService.getCertificates(userId));
+            System.out.println("40");
             roles.add(UserRole.REGULAR_USER);
         }
         catch (Exception e){
