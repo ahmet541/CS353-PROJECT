@@ -22,9 +22,9 @@ public class ApplicationController {
     public boolean applyJobOpening(@Valid @RequestBody ApplicationDTO applicationDTO) {
         //It is assumed that a cv is uploaded in a string format, as specified in the database.
         //It is also assumed that JobOpeningApplicationDTO.cv would be an empty string if no cv is uploaded.
-        if(applicationDTO.getCv().isEmpty()) {
-            return false;
-        }
+//        if(applicationDTO.getCv().isEmpty()) {
+//            return false;
+//        }
         //return
         return applicationService.applyJobOpening(applicationDTO);
     }

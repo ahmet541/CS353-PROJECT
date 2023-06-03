@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../css/MyApplicationsScreen.css';
+import axios from "axios";
 
 const MyApplicationsScreen = () => {
     const [applications, setApplications] = useState([{
@@ -13,9 +14,8 @@ const MyApplicationsScreen = () => {
     // Fetch applications data from API or database
     useEffect(() => {
         // Example API call to fetch applications
-        fetch('/api/applications')
-            .then(response => response.json())
-            .then(data => setApplications(data))
+        axios.get(`http://localhost:8080/regular-user/myApplications/${sessionStorage.getItem("userId")}`)
+            .then(response => setApplications(response.data))
             .catch(error => console.log(error));
     }, []);
 
@@ -35,6 +35,7 @@ const MyApplicationsScreen = () => {
                         <tr key={application.id}>
                             <td>{application.jobOpeningId}</td>
                             <td>{application.applicationStatus}</td>
+                            <td>{application.applicationDate}</td>
                         </tr>
                     ))}
                     </tbody>
