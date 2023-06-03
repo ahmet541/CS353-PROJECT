@@ -12,6 +12,7 @@ const CreateJobAdvertScreen = () => {
     const [explanation, setExplanation] = useState('');
     const [dueDate, setDueDate] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [field, setField] = useState('');
 
     const handleCreateJobAdvert = async () => {
         try {
@@ -23,11 +24,12 @@ const CreateJobAdvertScreen = () => {
             const jobAdvertData = {
                 position: position,
                 employmentStatus: employmentStatus.toUpperCase(),
-                profession: profession,
+                rolePro: profession,
                 location: location,
                 workType: workType,
                 explanation: explanation,
                 dueDate: new Date(dueDate),
+                field: field
             };
 
             // Send the job advert data to the server for creation
@@ -50,6 +52,15 @@ const CreateJobAdvertScreen = () => {
                 <div className="form-group">
                     <label>Position:</label>
                     <input type="text" className="form-control" value={position} onChange={(e) => setPosition(e.target.value)} />
+                </div>
+                <div className="form-group">
+                    <label>Field:</label>
+                    <select className="form-control" value={field} onChange={(e) => setField(e.target.value)}>
+                        <option value="">Select Field</option>
+                        <option value="AI">AI</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Consulting">Consulting</option>
+                    </select>
                 </div>
                 <div className="form-group">
                     <label>Employment Status:</label>

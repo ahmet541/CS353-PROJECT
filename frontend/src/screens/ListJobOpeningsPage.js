@@ -13,6 +13,8 @@ const ListJobOpeningsPage = () => {
         employmentStatus: '',
         location: '',
         workType: '',
+        minDueDate: '',
+        maxDueDate: ''
     });
     const employmentStatusList = ["", "Internship", "Part-time", "Full-time", "On-call", "Freelancer", "Temporary"]
 
@@ -39,7 +41,12 @@ const ListJobOpeningsPage = () => {
     const handleFilterSubmit = (event) => {
         event.preventDefault();
         // Apply filters and fetch job openings with the selected filters
-        fetchFilteredJobOpenings();
+        if ((filters.minDueDate === '' ^ filters.maxDueDate === '')) {
+            setErrorMessage('Enter either both min and max date or enter neither of them.');
+        } else {
+            setErrorMessage('');
+            fetchFilteredJobOpenings();
+        }
     };
 
     const fetchFilteredJobOpenings = async () => {
@@ -47,7 +54,9 @@ const ListJobOpeningsPage = () => {
             const response = await axios.post('http://localhost:8080/jobopening/getJobOpeningsByFilter', {
                 employmentStatus: filters.employmentStatus.toUpperCase(),
                 location: filters.location,
-                workType: filters.workType
+                workType: filters.workType,
+                minDueDate: new Date(filters.minDueDate),
+                maxDueDate: new Date(filters.maxDueDate)
             });
             setJobOpenings(response.data);
         } catch (error) {
@@ -123,6 +132,12 @@ const ListJobOpeningsPage = () => {
                         <option value="Remote">Remote</option>
                         <option value="Hybrid">Hybrid</option>
                     </select>
+                </div>
+                <div>
+                    <label>Min Due Date:</label>
+                    <input type="date" name="minDueDate" value={filters.minDueDate} onChange={handleFilterChange} />
+                    <label>Max Due Date:</label>
+                    <input type="date" name="maxDueDate" value={filters.maxDueDate} onChange={handleFilterChange} />
                 </div>
                 <button type="submit">Apply Filters</button>
             </form>

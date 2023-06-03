@@ -189,6 +189,10 @@ CREATE TABLE Field(
     field_name varchar(255) NOT NULL UNIQUE,
     PRIMARY KEY(field_name));
 
+INSERT INTO Field (field_name) VALUES ('AI');
+INSERT INTO Field (field_name) VALUES ('Web Development');
+INSERT INTO Field (field_name) VALUES ('Consulting');
+
 CREATE TABLE job_field(
       field_name varchar(255) NOT NULL,
       job_opening_id int NOT NULL,
