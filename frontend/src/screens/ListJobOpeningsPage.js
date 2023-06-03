@@ -65,8 +65,16 @@ const ListJobOpeningsPage = () => {
         }
     };
 
-    const handleApply = () => {
-        navigate("/apply")
+    const handleApply = (jobOpeningId) => {
+        axios.post('http://localhost:8080/jobopening/applyJobOpening/', {
+            job_opening_id: jobOpeningId,
+            user_id: sessionStorage.getItem("userId"),
+            applicationDate: Date.now()
+        }).then((response) => {
+            console.log(response);
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     return (
@@ -170,11 +178,11 @@ const ListJobOpeningsPage = () => {
                                     <strong>Work Type:</strong> {jobOpening.workType}
                                 </p>
                             </div>
-                            <div className={"ms-5"}>
-                                <MDBBtn rounded onClick={handleApply}>
+                            {sessionStorage.getItem("userRole") === UserRole.REGULAR_USER && <div className={"ms-5"}>
+                                <MDBBtn rounded onClick={()=>handleApply(jobOpening.jobOpeningId)}>
                                     Apply
                                 </MDBBtn>
-                            </div>
+                            </div>}
                         </MDBCardBody>
                     </MDBCard>
                 ))}
