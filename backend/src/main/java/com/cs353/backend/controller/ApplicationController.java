@@ -25,7 +25,7 @@ public class ApplicationController {
 //        if(applicationDTO.getCv().isEmpty()) {
 //            return false;
 //        }
-        //return
+
         return applicationService.applyJobOpening(applicationDTO);
     }
 }

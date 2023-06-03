@@ -11,31 +11,12 @@ import lombok.NoArgsConstructor;
 public class JobOpeningApplicationDTO {
     /*
     * TO BE IMPLEMENTED BY ERKIN AYDIN*/
-    private int jobOpeningId;
     private int userId;
+    private int jobOpeningId;
     private String applicationStatus;
     private String experience;
     private String skills;
     private String educationLvl;
     private String cv;
 
-    public String getApplicationStatus() {
-        return applicationStatus;
-    }
-
-    public String getExperience() {
-        return experience;
-    }
-
-    public String getSkills() {
-        return skills;
-    }
-
-    public String getEducationLvl() {
-        return educationLvl;
-    }
-
-    public String getCv() {
-        return cv;
-    }
 }
