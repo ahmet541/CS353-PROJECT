@@ -12,4 +12,6 @@ public interface ApplicationDao {
     ApplicationDTO getApplication(int userId, int job_opening_id);
 
     List<ApplicationDTO> getApplicationsOfJobOpening(int jobOpeningId);
+
+    boolean applyJobOpening(ApplicationDTO applicationDTO);
 }
