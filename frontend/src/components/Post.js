@@ -117,7 +117,16 @@ const Post = ({ heading, content, authorId, postId, sharedTime }) => {
                     <AuthorLink authorId={authorId} />
                 </div>
                 <div className="post-meta">
-                    <span className="shared-time">{sharedTime}</span>
+                    <span className="shared-time"> {new Date(sharedTime).toLocaleString('en-US', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    })}</span>
+                    <Badge variant="info" className="post-tag">
+                        Informative
+                    </Badge>
                 </div>
                 <Card.Title>{heading}</Card.Title>
                 <Card.Text>{content}</Card.Text>
@@ -165,11 +174,7 @@ const Post = ({ heading, content, authorId, postId, sharedTime }) => {
                             <p>No comments yet.</p>
                         )}
 
-                        <CommentForm
-                            newComment={newComment}
-                            handleCommentSubmit={handleCommentSubmit}
-                            setNewComment={setNewComment}
-                        />
+                        <CommentForm newComment={newComment} handleCommentSubmit={handleCommentSubmit} setNewComment={setNewComment} />
                     </div>
                 )}
             </Card.Body>
