@@ -2,7 +2,7 @@ package com.cs353.backend.dao.service;
 
 import com.cs353.backend.dao.ApplicationDao;
 import com.cs353.backend.mapper.ApplicationDTOMapper;
-import com.cs353.backend.mapper.ApplicationMapper;
+
 import com.cs353.backend.model.dto.ApplicationDTO;
 import com.cs353.backend.model.entities.RegularUser;
 import lombok.AllArgsConstructor;

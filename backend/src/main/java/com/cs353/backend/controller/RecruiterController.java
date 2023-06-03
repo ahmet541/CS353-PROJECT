@@ -25,7 +25,7 @@ public class RecruiterController {
         return jobOpeningService.getMyJobOpenings(recruiterId);
     }
 
-    @GetMapping("applications/{jobOpeningId]")
+    @GetMapping("applications/{jobOpeningId}")
     public List<ApplicationDTO> getApplications(@PathVariable int jobOpeningId) {
         return jobOpeningService.getApplicationsOfJobOpening(jobOpeningId);
     }

@@ -139,8 +139,8 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
         String sql = """
                 SELECT  JO.*
                 FROM jobopening JO
-                JOIN open_position OP ON OP.job_opening_id = JO.job_opening_id; 
-                where OP.recruiter_id = ?
+                JOIN open_position OP ON OP.job_opening_id = JO.job_opening_id 
+                Where OP.recruiter_id = ?
                 """;
 
         return jdbcTemplate.query(sql, new JobOpeningMapper(), recruiterId);
