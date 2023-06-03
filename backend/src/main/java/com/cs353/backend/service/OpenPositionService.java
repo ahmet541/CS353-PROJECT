@@ -14,4 +14,8 @@ public class OpenPositionService {
         openPositionDao.addOpenPosition(companyId, recruiterId, jobOpeningId);
     }
 
+    public int getCompanyId(int jobOpeningId){
+        return openPositionDao.getCompanyId(jobOpeningId);
+    }
+
 }

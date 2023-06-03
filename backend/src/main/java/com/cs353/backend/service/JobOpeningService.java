@@ -35,8 +35,15 @@ public class JobOpeningService {
         return newJobOpening;
     }
 
-    public List<JobOpening> getAllJobOpenings() {
-        return jobOpeningDao.getAllJobOpenings();
+    public List<JobOpeningDTO> getAllJobOpenings() {
+        List<JobOpeningDTO> jobOpeningDTOList = jobOpeningDao.getAllJobOpenings();
+        for (int i = 0; i < jobOpeningDTOList.size(); i++){
+            int companyId = openPositionService.getCompanyId(jobOpeningDTOList.get(i).getJobOpeningId());
+            String field = jobOpeningDao.getJobField(jobOpeningDTOList.get(i).getJobOpeningId());
+            jobOpeningDTOList.get(i).setCompanyId(companyId);
+            jobOpeningDTOList.get(i).setField(field);
+        }
+        return jobOpeningDTOList;
     }
 
     public List<JobOpening> getJobOpeningsByFilter(JobOpeningDTO jobOpeningDTO) {

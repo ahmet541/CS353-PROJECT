@@ -1,14 +1,13 @@
 package com.cs353.backend.dao.service;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.cs353.backend.Enum.EmploymentStatus;
 import com.cs353.backend.dao.JobOpeningDao;
-import com.cs353.backend.mapper.ApplicantMapper;
 import com.cs353.backend.mapper.JobOpeningMapper;
 import com.cs353.backend.mapper.JobOppeningApplicationMapper;
-import com.cs353.backend.mapper.RegularUserMapper;
-import com.cs353.backend.model.dto.*;
+import com.cs353.backend.model.dto.JobOpeningApplicationDTO;
+import com.cs353.backend.model.dto.JobOpeningDTO;
 import com.cs353.backend.model.entities.JobOpening;
-import com.cs353.backend.model.entities.RegularUser;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -42,13 +41,29 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
     }
 
     @Override
-    public List<JobOpening> getAllJobOpenings() {
+    public List<JobOpeningDTO> getAllJobOpenings() {
         String sql = """
                 SELECT *
                 FROM jobopening
                 ORDER BY due_date
                 """;
-        return jdbcTemplate.query(sql, new JobOpeningMapper());
+        List<JobOpening> jobOpeningList = jdbcTemplate.query(sql, new JobOpeningMapper());
+        List <JobOpeningDTO> jobOpeningDTOList = new ArrayList<>();
+
+        for (int i = 0; i < jobOpeningList.size(); i++){
+            JobOpeningDTO newJobOpeningDTO = new JobOpeningDTO();
+            newJobOpeningDTO.setJobOpeningId(jobOpeningList.get(i).getJobOpeningID());
+            newJobOpeningDTO.setLocation(jobOpeningList.get(i).getLocation());
+            newJobOpeningDTO.setExplanation(jobOpeningList.get(i).getExplanation());
+            newJobOpeningDTO.setRolePro(jobOpeningList.get(i).getRolePro());
+            newJobOpeningDTO.setDueDate(jobOpeningList.get(i).getDueDate());
+            newJobOpeningDTO.setEmploymentStatus(jobOpeningList.get(i).getEmploymentStatus());
+            newJobOpeningDTO.setWorkType(jobOpeningList.get(i).getWorkType());
+            System.out.println("checkpoint1");
+            jobOpeningDTOList.add(newJobOpeningDTO);
+            System.out.println("checkpoint2");
+        }
+        return jobOpeningDTOList;
     }
 
     @Override
@@ -134,7 +149,7 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
                 jobOpeningApplicationDTO.getEducationLvl(),
                 jobOpeningApplicationDTO.getCv()) > 0;  //BEWARE of comparison!
     }
-/*
+
     @Override
     public List<JobOpening> getMyJobOpenings(int recruiterId) {
         String sql = """
@@ -143,45 +158,19 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
                 JOIN open_position OP ON OP.job_opening_id = JO.job_opening_id 
                 Where OP.recruiter_id = ?
                 """;
+
         return jdbcTemplate.query(sql, new JobOpeningMapper(), recruiterId);
 
     }
 
- */
-    
     @Override
-    public List<JobOpeningApplicantsDTO> getMyJobOpenings(int recruiterId) {
+    public String getJobField(int jobOpeningId) {
+
         String sql = """
-                SELECT  JO.*
-                FROM jobopening JO
-                JOIN open_position OP ON OP.job_opening_id = JO.job_opening_id
-                Where OP.recruiter_id = ?
+                SELECT field_name
+                FROM job_field
+                WHERE job_opening_id = ?
                 """;
-        List<JobOpening> jobOpenings = jdbcTemplate.query(sql, new JobOpeningMapper(), recruiterId);
-        String applicationSql = """
-                SELECT AP.*
-                FROM application AP
-                WHERE AP.job_opening_id = ?
-                """;
-        String applicantSql = """
-                SELECT RE.*
-                FROM regular_user RE
-                WHERE RE.id = ?
-                """;
-        List<JobOpeningApplicantsDTO> jobOpeningsAndApplicants = new ArrayList<>();
-        for (JobOpening jobOpening: jobOpenings) {
-            List<JobOpeningApplicationDTO> applications = jdbcTemplate.query(applicationSql, new JobOppeningApplicationMapper(),
-                    jobOpening.getJobOpeningID());
-            List<ApplicantDTO> applicants = new ArrayList<>();
-            for (JobOpeningApplicationDTO application: applications) {
-                //THE QUERY WITH THE PROBLEM.!!!
-                ApplicantDTO applicant = jdbcTemplate.queryForObject(applicantSql, new ApplicantMapper(), application.getUserId());
-                applicants.add(applicant);
-            }
-
-            jobOpeningsAndApplicants.add(new JobOpeningApplicantsDTO(jobOpening, applicants));
-        }
-        return jobOpeningsAndApplicants;
-
+        return jdbcTemplate.queryForObject(sql, String.class, jobOpeningId);
     }
 }
