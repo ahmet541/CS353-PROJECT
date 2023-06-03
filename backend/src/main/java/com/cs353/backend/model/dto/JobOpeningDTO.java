@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class JobOpeningDTO {
+    private int jobOpeningId;
     private String employmentStatus;
     private String explanation;
     private LocalDateTime dueDate;
@@ -17,7 +18,7 @@ public class JobOpeningDTO {
     private String location;
     private String workType;
     private String field;
-
+    private int companyId;
     private LocalDateTime minDueDate;
     private LocalDateTime maxDueDate;
 

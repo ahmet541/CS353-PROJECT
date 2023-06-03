@@ -9,7 +9,7 @@ import java.util.List;
 public interface JobOpeningDao {
 
     JobOpening createJobOpening(JobOpeningDTO jobOpening, int userId);
-    List<JobOpening> getAllJobOpenings();
+    List<JobOpeningDTO> getAllJobOpenings();
 
     List<JobOpening> getJobOpeningsByFilter(JobOpeningDTO jobOpeningDTO);
 
@@ -19,4 +19,6 @@ public interface JobOpeningDao {
     boolean applyJobOpening(JobOpeningApplicationDTO jobOpeningApplicationDTO);
 
     List<JobOpening> getMyJobOpenings(int recruiterId);
+
+    String getJobField(int jobOpeningId);
 }

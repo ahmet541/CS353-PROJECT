@@ -17,4 +17,14 @@ public class OpenPositionDataAccessService implements OpenPositionDao {
                 """;
                 jdbcTemplate.update(sql, companyId, recruiterId, jobOpeningId);
     }
+
+     @Override
+    public int getCompanyId(int jobOpeningID){
+        String sql = """
+                SELECT company_id
+                FROM open_position
+                WHERE job_opening_id = ?
+                """;
+        return jdbcTemplate.queryForObject(sql, Integer.class, jobOpeningID);
+    }
 }

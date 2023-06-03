@@ -25,7 +25,7 @@ public class JobOpeningController {
     }
 
     @GetMapping("getAllJobOpenings")
-    public List<JobOpening> getAllJobOpenings() {
+    public List<JobOpeningDTO> getAllJobOpenings() {
         return jobOpeningService.getAllJobOpenings();
     }
 

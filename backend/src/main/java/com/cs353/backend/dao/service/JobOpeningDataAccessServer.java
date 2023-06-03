@@ -41,13 +41,29 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
     }
 
     @Override
-    public List<JobOpening> getAllJobOpenings() {
+    public List<JobOpeningDTO> getAllJobOpenings() {
         String sql = """
                 SELECT *
                 FROM jobopening
                 ORDER BY due_date
                 """;
-        return jdbcTemplate.query(sql, new JobOpeningMapper());
+        List<JobOpening> jobOpeningList = jdbcTemplate.query(sql, new JobOpeningMapper());
+        List <JobOpeningDTO> jobOpeningDTOList = new ArrayList<>();
+
+        for (int i = 0; i < jobOpeningList.size(); i++){
+            JobOpeningDTO newJobOpeningDTO = new JobOpeningDTO();
+            newJobOpeningDTO.setJobOpeningId(jobOpeningList.get(i).getJobOpeningID());
+            newJobOpeningDTO.setLocation(jobOpeningList.get(i).getLocation());
+            newJobOpeningDTO.setExplanation(jobOpeningList.get(i).getExplanation());
+            newJobOpeningDTO.setRolePro(jobOpeningList.get(i).getRolePro());
+            newJobOpeningDTO.setDueDate(jobOpeningList.get(i).getDueDate());
+            newJobOpeningDTO.setEmploymentStatus(jobOpeningList.get(i).getEmploymentStatus());
+            newJobOpeningDTO.setWorkType(jobOpeningList.get(i).getWorkType());
+            System.out.println("checkpoint1");
+            jobOpeningDTOList.add(newJobOpeningDTO);
+            System.out.println("checkpoint2");
+        }
+        return jobOpeningDTOList;
     }
 
     @Override
@@ -145,5 +161,16 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
 
         return jdbcTemplate.query(sql, new JobOpeningMapper(), recruiterId);
 
+    }
+
+    @Override
+    public String getJobField(int jobOpeningId) {
+
+        String sql = """
+                SELECT field_name
+                FROM job_field
+                WHERE job_opening_id = ?
+                """;
+        return jdbcTemplate.queryForObject(sql, String.class, jobOpeningId);
     }
 }
