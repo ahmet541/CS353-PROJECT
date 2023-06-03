@@ -205,9 +205,9 @@ const UserProfileScreen = () => {
                                         </div>
                                         {sessionStorage.getItem("userId") !== userId &&
                                             <div className="d-flex pt-1">
-                                                <MDBBtn outline onClick={handleChat}>
+                                                <Button onClick={handleChat}>
                                                     Chat
-                                                </MDBBtn>
+                                                </Button>
                                                 {!roles.includes(UserRole.COMPANY) && (
                                                     <ConnectButton pending={conReqPending}
                                                                    connectedByUser={connections.some(connection => connection.userId === parseInt(sessionStorage.getItem('userId')))}

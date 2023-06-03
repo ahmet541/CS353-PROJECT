@@ -14,13 +14,14 @@ const UserListScreen = () => {
 
     useEffect(() => {
         fetchUserList();
-    }, [searchQuery, filterOption, sortOption]);
+    }, [searchQuery, filterOption, sortOption, userType]);
 
     const fetchUserList = async () => {
         try {
+            console.log(sortOption)   ;
             const response = await axios.get('http://localhost:8080/search-user', {
                 params: {
-                    searchQuery,
+                    searchQuery:searchQuery,
                     sortOption,
                     filterOption,
                     userType

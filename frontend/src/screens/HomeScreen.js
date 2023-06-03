@@ -4,10 +4,12 @@ import '../css/HomeScreen.css';
 import Post from '../components/Post';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
+import UserRole from "../Enum/UserRole";
 
 const HomeScreen = () => {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
+    const [postType, setPostType] = useState('Informative');
     const [newPostHeading, setNewPostHeading] = useState('');
     const [newPostContent, setNewPostContent] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -58,33 +60,41 @@ const HomeScreen = () => {
             <Navbar/>
             <div className="post-container">
                 <h2>Welcome to the Home Page!</h2>
-                <p>This is the home page of your application.</p>
-                <div className="create-post">
-                    <h3>Create a New Post</h3>
-                    <form onSubmit={handlePostCreate}>
-                        <label>Title:</label>
-                        <div className="form-group">
-                            <textarea
-                                type="text"
-                                className="form-control custom-input no-resize"
-                                style={{ width: "600px", height: "60px" }}
-                                value={newPostHeading}
-                                onChange={(e) => setNewPostHeading(e.target.value)}
-                            />
-                        </div>
-                        <label>Content:</label>
-                        <div className="form-group">
-                            <textarea
-                                className="form-control custom-input no-resize"
-                                style={{ width: "600px", height: "125px" }}
-                                value={newPostContent}
-                                onChange={(e) => setNewPostContent(e.target.value)}
-                            />
-                        </div>
-                        <button type="submit" className="btn btn-primary">Create Post</button>
-                    </form>
-                </div>
+                {/*UserRole.RECRUITER || userRole == UserRole.CAREER_EXPERT*/}
+                {userRole === UserRole.REGULAR_USER  && (
+                    <div className="create-post">
+                        <h3>Create a New Post</h3>
+                        <form onSubmit={handlePostCreate}>
+                            <div className="form-group">
+                                <label htmlFor="userType">Post Type:</label>
+                                <select id="userType" value={postType} onChange={(e) => setPostType(e.target.value)} className="form-input">
+                                    <option value={"Informative"}>{'Informative'}</option>
+                                </select>
+                            </div>
 
+                            <label>Title:</label>
+                            <div className="form-group">
+                                <textarea
+                                    type="text"
+                                    className="form-control custom-input no-resize"
+                                    style={{ width: "600px", height: "60px" }}
+                                    value={newPostHeading}
+                                    onChange={(e) => setNewPostHeading(e.target.value)}
+                                />
+                            </div>
+                            <label>Content:</label>
+                            <div className="form-group">
+                                <textarea
+                                    className="form-control custom-input no-resize"
+                                    style={{ width: "600px", height: "125px" }}
+                                    value={newPostContent}
+                                    onChange={(e) => setNewPostContent(e.target.value)}
+                                />
+                            </div>
+                            <button type="submit" className="btn btn-primary">Create Post</button>
+                        </form>
+                    </div>
+                    )}
 
                 <h3>Posts</h3>
                 {errorMessage && <p>{errorMessage}</p>}
@@ -94,7 +104,7 @@ const HomeScreen = () => {
                             <Post
                                 heading={post.heading}
                                 content={post.explanation}
-                                sharedTime={post.sharedTime}
+                                sharedTime={post.date}
                                 authorId={post.userId}
                                 postId={post.postId}
                             />
