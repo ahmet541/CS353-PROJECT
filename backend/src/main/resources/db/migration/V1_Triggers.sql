@@ -36,14 +36,15 @@ CREATE TRIGGER update_post_owner_trigger
 EXECUTE FUNCTION update_post_owner_view();
 
 CREATE TRIGGER update_post_owner_trigger_regular_user
-    AFTER UPDATE ON Regular_User
+    AFTER INSERT OR UPDATE ON  Regular_User
     FOR EACH ROW
 EXECUTE FUNCTION update_post_owner_view();
 
 CREATE TRIGGER update_post_owner_trigger_company
-    AFTER UPDATE ON Company
+    AFTER INSERT OR UPDATE ON Company
     FOR EACH ROW
 EXECUTE FUNCTION update_post_owner_view();
+
 CREATE TRIGGER update_post_owner_trigger
     INSTEAD OF UPDATE ON post_owner_detail
     FOR EACH ROW

@@ -200,7 +200,7 @@ CREATE VIEW post_owner_detail AS
 SELECT
     "User".id AS userId,
     "User".avatar,
-    COALESCE(CONCAT_WS(' ', Regular_User.first_name, Regular_User.last_name), Company.companyName) AS fullName
+    COALESCE(Company.companyName, CONCAT_WS(' ', Regular_User.first_name, Regular_User.last_name)) AS fullName
 FROM
     "User"
         LEFT JOIN
