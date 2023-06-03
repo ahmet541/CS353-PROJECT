@@ -19,4 +19,6 @@ public interface ConnectionDao {
     List<PostOwnerDTO> getAllConnections(int userId);
 
     Boolean isPending(int senderId, int receiverId);
+
+    List<PostOwnerDTO> getRequests(int userId);
 }

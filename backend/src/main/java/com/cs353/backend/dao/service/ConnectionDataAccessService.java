@@ -95,4 +95,21 @@ public class ConnectionDataAccessService implements ConnectionDao {
         return exists;
     }
 
+    @Override
+    public List<PostOwnerDTO> getRequests(int userId) {
+        String sql = """
+            WITH requests AS (
+                SELECT connected_1_id AS id
+                FROM connection
+                WHERE connected_2_id = ? AND accepted = false
+            )
+            SELECT P.userId, P.avatar, P.fullName
+            FROM post_owner_detail P
+            WHERE P.userId IN (SELECT * FROM requests);
+            """;
+
+        List<PostOwnerDTO> accounts = jdbcTemplate.query(sql, new PostOwnerDTOMapper(), userId);
+        return accounts;
+    }
+
 }

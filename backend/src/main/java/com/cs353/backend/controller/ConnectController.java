@@ -37,8 +37,13 @@ public class ConnectController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
     @GetMapping("{userId}/allConnections")
-    public ResponseEntity<Object> getAllConnections(@PathVariable int userId) {
-        Object o = connectionService.getAllConnections(userId);
+    public ResponseEntity<List<PostOwnerDTO>> getAllConnections(@PathVariable int userId) {
+        List<PostOwnerDTO> o = connectionService.getAllConnections(userId);
+        return new ResponseEntity<>(o, HttpStatus.OK);
+    }
+    @GetMapping("{userId}/requests")
+    public ResponseEntity<List<PostOwnerDTO>> getRequests(@PathVariable int userId) {
+        List<PostOwnerDTO> o = connectionService.getRequests(userId);
         return new ResponseEntity<>(o, HttpStatus.OK);
     }
     @GetMapping("{senderId}/isPending/{receiverId}")

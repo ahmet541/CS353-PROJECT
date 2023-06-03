@@ -41,4 +41,8 @@ public class ConnectionService {
     public Boolean isPending(int senderId, int receiverId) {
         return connectionDao.isPending(senderId,receiverId);
     }
+
+    public List<PostOwnerDTO> getRequests(int userId) {
+        return connectionDao.getRequests(userId);
+    }
 }

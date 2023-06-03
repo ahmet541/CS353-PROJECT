@@ -20,8 +20,8 @@ public class SearchUserController {
     @GetMapping()
     public List<SearchUserDTO> getUsers(
             @RequestParam(name = "searchQuery", required = false) String searchQuery,
-            @RequestParam(name = "sort", required = false) String sortOption,
-            @RequestParam(name = "field", required = false) String filterOption,
+            @RequestParam(name = "sortOption", required = false) String sortOption,
+            @RequestParam(name = "filterOption", required = false) String filterOption,
             @RequestParam(name = "userType", required = false) String userType
     ) {
         // Pass the query, sortOption, filterOption, and userType to the userService
