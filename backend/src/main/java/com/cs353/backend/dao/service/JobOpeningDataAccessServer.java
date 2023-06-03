@@ -133,4 +133,17 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
                 jobOpeningApplicationDTO.getEducationLvl(),
                 jobOpeningApplicationDTO.getCv()) > 0;  //BEWARE of comparison!
     }
+
+    @Override
+    public List<JobOpening> getMyJobOpenings(int recruiterId) {
+        String sql = """
+                SELECT  JO.*
+                FROM jobopening JO
+                JOIN open_position OP ON OP.job_opening_id = JO.job_opening_id; 
+                where OP.recruiter_id = ?
+                """;
+
+        return jdbcTemplate.query(sql, new JobOpeningMapper(), recruiterId);
+
+    }
 }

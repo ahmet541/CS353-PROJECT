@@ -1,8 +1,10 @@
 package com.cs353.backend.controller;
 
+import com.cs353.backend.model.dto.ApplicationDTO;
 import com.cs353.backend.model.entities.Account;
 import com.cs353.backend.model.entities.RegularUser;
 import com.cs353.backend.service.AccountService;
+import com.cs353.backend.service.JobOpeningService;
 import com.cs353.backend.service.RegularUserService;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +20,7 @@ import java.util.List;
 public class RegularUserController {
 
     private RegularUserService regularUserService;
+    //private JobOpeningService jobOpeningService;
 
     @GetMapping("getAll")
     public ResponseEntity<List<RegularUser>> getAllRegularUsers() {
@@ -45,4 +48,11 @@ public class RegularUserController {
 //    public ResponseEntity<String> deleteAccount(@PathVariable int id) {
 //
 //    }
+
+    @GetMapping("myApplications/{userId}")
+    public List<ApplicationDTO> getMyApplications(@PathVariable int userId) {
+        return regularUserService.getMyApplications(userId);
+    }
+
+
 }

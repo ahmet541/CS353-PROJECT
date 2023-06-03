@@ -17,4 +17,6 @@ public interface JobOpeningDao {
 
     //NOT TESTED
     boolean applyJobOpening(JobOpeningApplicationDTO jobOpeningApplicationDTO);
+
+    List<JobOpening> getMyJobOpenings(int recruiterId);
 }
