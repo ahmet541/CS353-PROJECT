@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+
 import java.util.List;
 
 @Repository
@@ -23,5 +24,19 @@ public class QuestionDataAccessService implements QuestionDao {
                 """;
 
         return jdbcTemplate.query(sql, new QuestionDTOMapper(), qualification_test_id);
+    }
+
+    /*NOT TESTED YET...*/
+    @Override
+    public boolean createQuestions(List<QuestionDTO> questions, int qualification_test_id) {
+        if(questions.isEmpty()) {
+            return false;
+        }
+        StringBuilder sql = new StringBuilder("INSERT INTO questions (qualification_test_id, th_question, content, answer) VALUES ");
+        for (QuestionDTO ignored : questions) {
+            sql.append("( ?, ?, ?, ?), ");
+        }
+
+        return jdbcTemplate.update(sql.toString(), questions) > 0;
     }
 }

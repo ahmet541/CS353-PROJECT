@@ -16,4 +16,8 @@ public class QuestionService {
     public List<QuestionDTO> getQuestions(int qualification_test_id) {
         return questionDataAccessService.getQuestions(qualification_test_id);
     }
+
+    public boolean createQuestions(List<QuestionDTO> questions, int qualification_test_id) {
+        return questionDataAccessService.createQuestions(questions, qualification_test_id);
+    }
 }
