@@ -39,7 +39,17 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
         newJobOpening.setWorkType(jobOpening.getWorkType());
         return newJobOpening;
     }
-
+    @Override
+    public JobOpeningDTO getJobOpeningByJobOpeningId(int jobOpeningId){
+        String sql = """
+                SELECT JO.*, OP.company_id, C.companyname
+                FROM jobopening JO
+                JOIN open_position OP ON JO.job_opening_id  = OP.job_opening_id 
+                JOIN company C ON C.id = OP.company_id
+                ORDER BY due_date
+                """;
+        return jdbcTemplate.queryForObject(sql, new JobOpeningDTOMapper(), jobOpeningId);
+    }
     @Override
     public List<JobOpeningDTO> getAllJobOpenings() {
         String sql = """

@@ -9,6 +9,9 @@ import java.util.List;
 public interface JobOpeningDao {
 
     JobOpening createJobOpening(JobOpeningDTO jobOpening, int userId);
+
+    JobOpeningDTO getJobOpeningByJobOpeningId(int jobOpeningId);
+
     List<JobOpeningDTO> getAllJobOpenings();
 
     List<JobOpeningDTO> getJobOpeningsByFilter(JobOpeningDTO jobOpeningDTO);

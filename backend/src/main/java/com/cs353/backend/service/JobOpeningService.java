@@ -33,6 +33,7 @@ public class JobOpeningService {
         return newJobOpening;
     }
 
+
     public List<JobOpeningDTO> getAllJobOpenings() {
         List<JobOpeningDTO> jobOpeningDTOList = jobOpeningDao.getAllJobOpenings();
         for (int i = 0; i < jobOpeningDTOList.size(); i++){
@@ -66,4 +67,7 @@ public class JobOpeningService {
         return jobOpeningDao.getMyJobOpenings(recruiterId);
     }
 
+    public JobOpeningDTO getJobOpeningById(int jobOpeningId){
+        return jobOpeningDao.getJobOpeningByJobOpeningId(jobOpeningId);
+    }
 }
