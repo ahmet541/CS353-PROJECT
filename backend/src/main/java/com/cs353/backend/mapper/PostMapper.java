@@ -1,5 +1,6 @@
 package com.cs353.backend.mapper;
 
+import com.cs353.backend.Enum.PostType;
 import com.cs353.backend.model.entities.Account;
 import com.cs353.backend.model.entities.Post;
 import org.springframework.jdbc.core.RowCallbackHandler;
@@ -19,7 +20,8 @@ public class PostMapper implements RowMapper<Post> {
         String explanation = rs.getString("explanation");
         String heading = rs.getString("heading");
         LocalDateTime date = rs.getTimestamp("date").toLocalDateTime();
-
-        return new Post(postId, userId, photoLink, explanation, heading, date);
+        String postTypeValue = rs.getString("type");
+        PostType type = PostType.valueOf(postTypeValue);
+        return new Post(postId, userId, photoLink, explanation, heading, date, type );
     }
 }

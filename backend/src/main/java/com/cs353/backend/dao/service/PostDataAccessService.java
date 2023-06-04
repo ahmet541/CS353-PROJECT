@@ -52,11 +52,11 @@ public class PostDataAccessService implements PostDao {
     @Override
     public Post createPost(Post post, int userId) {
         String sql = """
-                    INSERT INTO Post (user_id, photo_link, explanation, heading, date) 
-                    VALUES ( ?, ?, ?, ?, ?)
+                    INSERT INTO Post (user_id, photo_link, explanation, heading, date, type) 
+                    VALUES ( ?, ?, ?, ?, ?, ?)
                     RETURNING post_id
                     """;
-        int id = jdbcTemplate.queryForObject(sql, Integer.class, userId, post.getPhotoLink(), post.getExplanation(), post.getHeading(), post.getDate());
+        int id = jdbcTemplate.queryForObject(sql, Integer.class, userId, post.getPhotoLink(), post.getExplanation(), post.getHeading(), post.getDate(), post.getType().getValue());
         post.setPostId(id);
         return post;
     }

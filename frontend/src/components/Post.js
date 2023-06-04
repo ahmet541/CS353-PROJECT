@@ -7,9 +7,10 @@ import CommentButton from "./CommentButton";
 import LikeButton from "./LikeButton";
 import CommentForm from "./CommentForm";
 import axios from "axios";
+import PostType from "../Enum/PostType";
 
 
-const Post = ({ heading, content, authorId, postId, sharedTime }) => {
+const Post = ({ heading, content, postType, authorId, postId, sharedTime }) => {
     const [showComments, setShowComments] = useState(false);
     const [comments, setComments] = useState(null);
     const [newComment, setNewComment] = useState('');
@@ -124,9 +125,11 @@ const Post = ({ heading, content, authorId, postId, sharedTime }) => {
                         hour: '2-digit',
                         minute: '2-digit'
                     })}</span>
-                    <Badge variant="info" className="post-tag">
+
+                    {(postType == PostType.INFORMATIVE && <Badge variant="info" className="post-tag">
                         Informative
                     </Badge>
+                        )}
                 </div>
                 <Card.Title>{heading}</Card.Title>
                 <Card.Text>{content}</Card.Text>

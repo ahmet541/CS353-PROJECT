@@ -28,6 +28,7 @@ CREATE TABLE Post (
     explanation VARCHAR(255) NOT NULL,
     heading VARCHAR(255) NOT NULL,
     date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    type VARCHAR(255),
     FOREIGN KEY (user_id) REFERENCES "User" (id)
 );
 

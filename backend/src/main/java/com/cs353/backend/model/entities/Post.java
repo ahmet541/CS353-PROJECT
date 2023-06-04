@@ -1,5 +1,6 @@
 package com.cs353.backend.model.entities;
 
+import com.cs353.backend.Enum.PostType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,4 +22,5 @@ public class Post {
     private String heading;
 
     private LocalDateTime date = LocalDateTime.now();
+    private PostType type = PostType.COMMENT;
 }

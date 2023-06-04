@@ -5,13 +5,14 @@ import Post from '../components/Post';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
 import UserRole from "../Enum/UserRole";
+import PostType from "../Enum/PostType";
 
 const HomeScreen = () => {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
-    const [postType, setPostType] = useState('Informative');
     const [newPostHeading, setNewPostHeading] = useState('');
     const [newPostContent, setNewPostContent] = useState('');
+    const [newPostType, setNewPostType] = useState(PostType.COMMENT);
     const [errorMessage, setErrorMessage] = useState('');
     const [userId, setUserId] = useState(sessionStorage.getItem("userId"));
     const [userRole, setUserRole] = useState(sessionStorage.getItem("userRole"));
@@ -38,12 +39,14 @@ const HomeScreen = () => {
             const response = await axios.post('http://localhost:8080/post/' + sessionStorage.getItem('userId'), {
                 heading: newPostHeading,
                 explanation: newPostContent,
+                type: newPostType,
             });
 
             setPosts((prevPosts) => [ response.data, ...prevPosts]);
 
             setNewPostHeading('');
             setNewPostContent('');
+            setNewPostType(PostType.COMMENT)
         } catch (error) {
             // Handle any error that occurs during the request
             // const errorMessage = error.response.data;
@@ -61,14 +64,16 @@ const HomeScreen = () => {
             <div className="post-container">
                 <h2>Welcome to the Home Page!</h2>
                 {/*UserRole.RECRUITER || userRole == UserRole.CAREER_EXPERT*/}
-                {userRole === UserRole.REGULAR_USER  && (
                     <div className="create-post">
                         <h3>Create a New Post</h3>
                         <form onSubmit={handlePostCreate}>
                             <div className="form-group">
                                 <label htmlFor="userType">Post Type:</label>
-                                <select id="userType" value={postType} onChange={(e) => setPostType(e.target.value)} className="form-input">
-                                    <option value={"Informative"}>{'Informative'}</option>
+                                <select id="userType" value={newPostType} onChange={(e) => setNewPostType(e.target.value)} className="form-input">
+                                    <option value={PostType.COMMENT}>{PostType.COMMENT}</option>
+                                    {userRole === UserRole.CAREER_EXPERT && (
+                                        <option value={PostType.INFORMATIVE}>{PostType.INFORMATIVE}</option>
+                                    )}
                                 </select>
                             </div>
 
@@ -94,7 +99,6 @@ const HomeScreen = () => {
                             <button type="submit" className="btn btn-primary">Create Post</button>
                         </form>
                     </div>
-                    )}
 
                 <h3>Posts</h3>
                 {errorMessage && <p>{errorMessage}</p>}
@@ -104,6 +108,7 @@ const HomeScreen = () => {
                             <Post
                                 heading={post.heading}
                                 content={post.explanation}
+                                postType={post.type}
                                 sharedTime={post.date}
                                 authorId={post.userId}
                                 postId={post.postId}
