@@ -212,6 +212,15 @@ CREATE TABLE QualificationTest(
     FOREIGN KEY(company_id) REFERENCES company(id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (job_opening_id) REFERENCES  jobopening(job_opening_id) ON UPDATE CASCADE ON DELETE CASCADE);
 
+CREATE TABLE question(
+    question_id SERIAL NOT NULL,
+    qualification_test_id int NOT NULL,
+    th_question int NOT NULL,
+    content varchar(255) NOT NULL,
+    answer varchar(255),
+    PRIMARY KEY (question_id),
+    FOREIGN KEY (qualification_test_id) REFERENCES QualificationTest(test_id) ON UPDATE CASCADE ON DELETE CASCADE);
+
 CREATE VIEW post_owner_detail AS
 SELECT
     "User".id AS userId,

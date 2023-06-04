@@ -11,7 +11,9 @@ public class QuestionDTOMapper implements RowMapper<QuestionDTO> {
     @Override
     public QuestionDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
         //String content = rs.getString("")
-        /*TO BE IMPLEMENTED*/
-        return null;
+        int th_question = rs.getInt("th_question");
+        String content = rs.getString("content");
+        String answer = rs.getString("answer");
+        return new QuestionDTO(th_question ,content, answer);
     }
 }
