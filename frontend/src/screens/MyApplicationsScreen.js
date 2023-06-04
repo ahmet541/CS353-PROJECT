@@ -4,11 +4,11 @@ import axios from "axios";
 
 const MyApplicationsScreen = () => {
     const [applications, setApplications] = useState([{
-        jobOpeningId:1,
-        applicationStatus:"Not Accepted"
+        job_opening_id:1,
+        application_status:"Not Accepted"
     }, {
-        jobOpeningId:2,
-        applicationStatus:"Accepted"
+        job_opening_id:2,
+        application_status:"Accepted"
     }]);
 
     // Fetch applications data from API or database
@@ -28,13 +28,14 @@ const MyApplicationsScreen = () => {
                     <tr>
                         <th>Job Opening ID</th>
                         <th>Application Status</th>
+                        <th>Application Date</th>
                     </tr>
                     </thead>
                     <tbody>
                     {applications.map(application => (
-                        <tr key={application.id}>
-                            <td>{application.jobOpeningId}</td>
-                            <td>{application.applicationStatus}</td>
+                        <tr key={application.job_opening_id}>
+                            <td>{application.job_opening_id}</td>
+                            <td>{application.application_status ? "Accepted" : "Not Accepted"} </td>
                             <td>{application.applicationDate}</td>
                         </tr>
                     ))}
