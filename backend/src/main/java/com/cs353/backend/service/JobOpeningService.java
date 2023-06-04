@@ -46,7 +46,7 @@ public class JobOpeningService {
         return jobOpeningDTOList;
     }
 
-    public List<JobOpening> getJobOpeningsByFilter(JobOpeningDTO jobOpeningDTO) {
+    public List<JobOpeningDTO> getJobOpeningsByFilter(JobOpeningDTO jobOpeningDTO) {
         return jobOpeningDao.getJobOpeningsByFilter(jobOpeningDTO);
     }
 

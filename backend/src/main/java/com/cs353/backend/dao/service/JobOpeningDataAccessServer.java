@@ -4,6 +4,7 @@ import ch.qos.logback.core.net.SyslogOutputStream;
 import com.cs353.backend.Enum.EmploymentStatus;
 import com.cs353.backend.dao.JobOpeningDao;
 import com.cs353.backend.mapper.ApplicantMapper;
+import com.cs353.backend.mapper.JobOpeningDTOMapper;
 import com.cs353.backend.mapper.JobOpeningMapper;
 import com.cs353.backend.mapper.JobOppeningApplicationMapper;
 import com.cs353.backend.model.dto.ApplicantDTO;
@@ -46,14 +47,16 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
     @Override
     public List<JobOpeningDTO> getAllJobOpenings() {
         String sql = """
-                SELECT *
-                FROM jobopening
+                SELECT JO.*, OP.company_id, C.companyname
+                FROM jobopening JO
+                JOIN open_position OP ON JO.job_opening_id  = OP.job_opening_id 
+                JOIN company C ON C.id = OP.company_id
                 ORDER BY due_date
                 """;
-        List<JobOpening> jobOpeningList = jdbcTemplate.query(sql, new JobOpeningMapper());
-        List <JobOpeningDTO> jobOpeningDTOList = new ArrayList<>();
+        List<JobOpeningDTO> jobOpeningDTOList = jdbcTemplate.query(sql, new JobOpeningDTOMapper());
+        //List <JobOpeningDTO> jobOpeningDTOList = new ArrayList<>();
 
-        for (int i = 0; i < jobOpeningList.size(); i++){
+        /**for (int i = 0; i < jobOpeningList.size(); i++){
             JobOpeningDTO newJobOpeningDTO = new JobOpeningDTO();
             newJobOpeningDTO.setJobOpeningId(jobOpeningList.get(i).getJobOpeningID());
             newJobOpeningDTO.setLocation(jobOpeningList.get(i).getLocation());
@@ -65,48 +68,52 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
             System.out.println("checkpoint1");
             jobOpeningDTOList.add(newJobOpeningDTO);
             System.out.println("checkpoint2");
-        }
+        }*/
         return jobOpeningDTOList;
     }
 
     @Override
-    public List<JobOpening> getJobOpeningsByFilter(JobOpeningDTO jobOpeningDTO) {
-        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM jobopening WHERE 1=1");
+    public List<JobOpeningDTO> getJobOpeningsByFilter(JobOpeningDTO jobOpeningDTO) {
+        StringBuilder queryBuilder = new StringBuilder("" +
+                "SELECT JO.*, OP.company_id, C.companyname\n" +
+                "FROM jobopening JO\n" +
+                "JOIN open_position OP ON JO.job_opening_id  = OP.job_opening_id \n" +
+                "JOIN company C ON C.id = OP.company_id WHERE 1=1");
 
         List<Object> params = new ArrayList<>();
 
         if (jobOpeningDTO.getEmploymentStatus() != null && !jobOpeningDTO.getEmploymentStatus().isEmpty()) {
-            queryBuilder.append(" AND employment_status = ?");
+            queryBuilder.append(" AND JO.employment_status = ?");
             params.add(Enum.valueOf(EmploymentStatus.class, jobOpeningDTO.getEmploymentStatus().toUpperCase()).getValue());
         }
 
         if (jobOpeningDTO.getDueDate() != null) {
-            queryBuilder.append(" AND due_date = ?");
+            queryBuilder.append(" AND JO.due_date = ?");
             params.add(jobOpeningDTO.getDueDate());
         }
 
         if(jobOpeningDTO.getRolePro() != null && !jobOpeningDTO.getRolePro().isEmpty()) {
-            queryBuilder.append(" AND role_pro = ?");
+            queryBuilder.append(" AND JO.role_pro = ?");
             params.add(jobOpeningDTO.getRolePro());
         }
 
         if(jobOpeningDTO.getLocation() != null && !jobOpeningDTO.getLocation().isEmpty()) {
-            queryBuilder.append(" AND location = ?");
+            queryBuilder.append(" AND JO.location = ?");
             params.add(jobOpeningDTO.getLocation());
         }
 
         if(jobOpeningDTO.getWorkType() != null && !jobOpeningDTO.getWorkType().isEmpty()) {
-            queryBuilder.append(" AND work_type = ?");
+            queryBuilder.append(" AND JO.work_type = ?");
             params.add(jobOpeningDTO.getWorkType());
         }
 
         if(jobOpeningDTO.getMinDueDate() != null && jobOpeningDTO.getMaxDueDate() != null){
-            queryBuilder.append(" AND due_date between ? AND ?");
+            queryBuilder.append(" AND JO.due_date between ? AND ?");
             params.add(jobOpeningDTO.getMinDueDate());
             params.add(jobOpeningDTO.getMaxDueDate());
         }
 
-        return jdbcTemplate.query(queryBuilder.toString(), new JobOpeningMapper(), params.toArray());
+        return jdbcTemplate.query(queryBuilder.toString(), new JobOpeningDTOMapper(), params.toArray());
     }
 
     @Override

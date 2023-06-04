@@ -30,7 +30,7 @@ public class JobOpeningController {
     }
 
     @PostMapping("getJobOpeningsByFilter")
-    public List<JobOpening> getJobOpeningsByFilter(@Valid @RequestBody JobOpeningDTO jobOpeningDTO) {
+    public List<JobOpeningDTO> getJobOpeningsByFilter(@Valid @RequestBody JobOpeningDTO jobOpeningDTO) {
         return jobOpeningService.getJobOpeningsByFilter(jobOpeningDTO);
     }
 
