@@ -142,13 +142,14 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
     public boolean applyJobOpening(JobOpeningApplicationDTO jobOpeningApplicationDTO) {
         //If this method is executed, it is assumed that jobOpeningApplicationDTO's all properties are properly initialized.
         String sql = """
-                INSERT INTO application (user_id, job_opening_id, application_status, experience, skills, education_lvl, cv)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO application (user_id, job_opening_id, application_date, application_status, experience, skills, education_lvl, cv)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """;
 
-        return jdbcTemplate.update(sql, new JobOppeningApplicationMapper(),
+        return jdbcTemplate.update(sql,
                 jobOpeningApplicationDTO.getUserId(),
                 jobOpeningApplicationDTO.getJobOpeningId(),
+                jobOpeningApplicationDTO.getApplicationDate(),
                 jobOpeningApplicationDTO.getApplicationStatus(),
                 jobOpeningApplicationDTO.getExperience(),
                 jobOpeningApplicationDTO.getSkills(),

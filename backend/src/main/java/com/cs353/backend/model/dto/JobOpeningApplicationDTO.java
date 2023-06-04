@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 
 @Data
 @NoArgsConstructor
@@ -13,10 +15,10 @@ public class JobOpeningApplicationDTO {
     * TO BE IMPLEMENTED BY ERKIN AYDIN*/
     private int userId;
     private int jobOpeningId;
-    private String applicationStatus;
+    private Date applicationDate;
+    private int applicationStatus;
     private String experience;
     private String skills;
-    private String educationLvl;
+    private int educationLvl;
     private String cv;
-
 }

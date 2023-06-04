@@ -67,9 +67,14 @@ const ListJobOpeningsPage = () => {
 
     const handleApply = (jobOpeningId) => {
         axios.post('http://localhost:8080/jobopening/applyJobOpening/', {
-            job_opening_id: jobOpeningId,
-            user_id: sessionStorage.getItem("userId"),
-            applicationDate: Date.now()
+            jobOpeningId: jobOpeningId,
+            userId: sessionStorage.getItem("userId"),
+            applicationDate: Date.now(),
+            experience: "experience data",
+            applicationStatus: 0,
+            skills: "skills data",
+            educationLvl: 0,
+            cv: "cv data"
         }).then((response) => {
             console.log(response);
         }).catch((error) => {
