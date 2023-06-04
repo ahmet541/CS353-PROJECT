@@ -12,7 +12,7 @@ public interface JobOpeningDao {
     JobOpening createJobOpening(JobOpeningDTO jobOpening, int userId);
     List<JobOpeningDTO> getAllJobOpenings();
 
-    List<JobOpening> getJobOpeningsByFilter(JobOpeningDTO jobOpeningDTO);
+    List<JobOpeningDTO> getJobOpeningsByFilter(JobOpeningDTO jobOpeningDTO);
 
     void addJobField(String field, int jobOpeningId);
 

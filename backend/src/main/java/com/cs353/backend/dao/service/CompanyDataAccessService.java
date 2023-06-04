@@ -85,5 +85,18 @@ public class CompanyDataAccessService implements CompanyDao {
         return -1; // Error value
     }
 
+    @Override
+    public int countEmployees(int userid) {
+
+
+        String sql = """
+            SELECT COUNT(DISTINCT regular_user_id) AS distinctEmployeeCount
+            FROM employs
+            WHERE company_id = ?
+            """;
+
+
+        return jdbcTemplate.queryForObject(sql, Integer.class, userid);
+    }
 
 }

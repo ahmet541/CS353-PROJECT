@@ -15,4 +15,6 @@ public interface CompanyDao {
 
     void verifyRecruiter(int companyId, int recruiterId);
     int isRecruiterVerified(int userid);
+
+    int countEmployees(int userid);
 }

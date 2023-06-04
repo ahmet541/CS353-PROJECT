@@ -19,6 +19,7 @@ public class JobOpeningDTO {
     private String workType;
     private String field;
     private int companyId;
+    private String companyName;
     private LocalDateTime minDueDate;
     private LocalDateTime maxDueDate;
 

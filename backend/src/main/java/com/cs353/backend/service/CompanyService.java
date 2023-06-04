@@ -45,10 +45,7 @@ public class CompanyService {
     }
 
     public List<PostOwnerDTO> getAllEmployees(int userId) {
-        //TODO
-        // type should be PostOwnerDTO, do not bother with name, this DTO includes id,fullName, and avatar
-        // See same methods for getAllFollowers() getAllConnections()
-        return new ArrayList<>();
+        return employDao.getAllEmployees(userId);
     }
 
     public void update(int userId, Company company) {

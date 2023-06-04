@@ -19,5 +19,4 @@ public class JobOpening {
     private String rolePro;
     private String location;
     private String workType;
-
 }
