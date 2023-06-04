@@ -17,4 +17,6 @@ public interface PostDao {
     void like(int postId, int userId);
 
     void unlike(int postId, int userId);
+
+    void removePost(int postId);
 }

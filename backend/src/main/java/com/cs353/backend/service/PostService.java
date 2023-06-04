@@ -63,4 +63,8 @@ public class PostService {
         postExtraInfoDTO.setLikedByUser(postDao.isLikedPost(postId,userId));
         return postExtraInfoDTO;
     }
+
+    public void removePost(int postId) {
+        postDao.removePost(postId);
+    }
 }

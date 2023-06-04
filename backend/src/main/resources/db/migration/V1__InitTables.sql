@@ -119,8 +119,8 @@ CREATE TABLE Comment (
      user_id INT NOT NULL,
      context VARCHAR(255) NOT NULL,
      date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-     FOREIGN KEY (post_id) REFERENCES Post (post_id),
-     FOREIGN KEY (user_id) REFERENCES "User" (id)
+     FOREIGN KEY (post_id) REFERENCES Post (post_id) ON DELETE CASCADE,
+     FOREIGN KEY (user_id) REFERENCES "User" (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Post_Like (

@@ -32,6 +32,12 @@ public class PostController {
         return new ResponseEntity<>(newPost, HttpStatus.OK);
     }
 
+    @DeleteMapping("{postId}")
+    public ResponseEntity<String> remove(@PathVariable int postId) {
+        postService.removePost(postId);
+        return new ResponseEntity<>("Successfully Removed", HttpStatus.OK);
+    }
+
     @GetMapping("{postId}/getPostExtraInfo/{userId}")
     public ResponseEntity<PostExtraInfoDTO> getPostExtraInfo(@PathVariable int postId, @PathVariable int userId) {
         PostExtraInfoDTO postExtraInfo = postService.getPostExtraInfo(postId, userId);

@@ -101,4 +101,13 @@ public class PostDataAccessService implements PostDao {
                     """;
         jdbcTemplate.update(sql, userId, postId);
     }
+
+    @Override
+    public void removePost(int postId) {
+        String sql = """
+                    DELETE FROM post
+                    WHERE post_id = ? 
+                    """;
+        jdbcTemplate.update(sql, postId);
+    }
 }

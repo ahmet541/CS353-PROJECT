@@ -110,6 +110,7 @@ public class UserProfileService {
 
         try {
             RegularUser regularUser = regularUserService.getRegularUser(userId);
+            roles.add(UserRole.REGULAR_USER);
             editProfileDTO.setProfileDescription(regularUser.getProfileDescription());
             editProfileDTO.setBirthdate(regularUser.getBirthdate());
             editProfileDTO.setAddress(regularUser.getAddress());
@@ -118,7 +119,6 @@ public class UserProfileService {
             editProfileDTO.setLastName(regularUser.getLastName());
             editProfileDTO.setPhoneNumber(regularUser.getPhoneNumber());
             editProfileDTO.setCertificate_Skills(regularUserService.getCertificates(userId));
-            roles.add(UserRole.REGULAR_USER);
         }
         catch (Exception e){
             // this person may not be regularUser, it is okey
@@ -130,11 +130,11 @@ public class UserProfileService {
             if(company == null){
                 throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "");
             }
+            roles.add(UserRole.COMPANY);
             editProfileDTO.setProfileDescription(company.getProfileDescription());
             editProfileDTO.setCompanyName(company.getCompanyName());
             editProfileDTO.setCompanyType(company.getType());
             editProfileDTO.setEconomicScale(company.getEconomicScale());
-            roles.add(UserRole.COMPANY);
         }
         catch (Exception e){
             // This person may not be a company, it's okay
