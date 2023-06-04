@@ -3,19 +3,16 @@ import '../css/MyApplicationsScreen.css';
 import axios from "axios";
 
 const MyApplicationsScreen = () => {
-    const [applications, setApplications] = useState([{
-        job_opening_id:1,
-        application_status:"Not Accepted"
-    }, {
-        job_opening_id:2,
-        application_status:"Accepted"
-    }]);
+    const [applications, setApplications] = useState([]);
 
     // Fetch applications data from API or database
-    useEffect(() => {
+    useEffect( () => {
         // Example API call to fetch applications
         axios.get(`http://localhost:8080/regular-user/myApplications/${sessionStorage.getItem("userId")}`)
-            .then(response => setApplications(response.data))
+            .then(response => {
+                setApplications(response.data);
+                console.log(response.data)
+            })
             .catch(error => console.log(error));
     }, []);
 
@@ -27,16 +24,20 @@ const MyApplicationsScreen = () => {
                     <thead>
                     <tr>
                         <th>Job Opening ID</th>
+                        <th>Company Name</th>
+                        <th>Position</th>
                         <th>Application Status</th>
                         <th>Application Date</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {applications.map(application => (
-                        <tr key={application.job_opening_id}>
-                            <td>{application.job_opening_id}</td>
-                            <td>{application.application_status ? "Accepted" : "Not Accepted"} </td>
-                            <td>{application.applicationDate}</td>
+                    {applications && applications.map(application => (
+                        <tr key={application.applicationDTO.job_opening_id}>
+                            <td>{application.applicationDTO.job_opening_id}</td>
+                            <td>{application.jobOpeningDTO.companyName}</td>
+                            <td>{application.jobOpeningDTO.rolePro}</td>
+                            <td>{application.applicationDTO.application_status ? "Accepted" : "Not Accepted"} </td>
+                            <td>{application.applicationDTO.applicationDate}</td>
                         </tr>
                     ))}
                     </tbody>

@@ -1,6 +1,7 @@
 package com.cs353.backend.controller;
 
 import com.cs353.backend.model.dto.ApplicationDTO;
+import com.cs353.backend.model.dto.JobOpeningApplicantsDTO;
 import com.cs353.backend.model.entities.JobOpening;
 import com.cs353.backend.service.ApplicationService;
 import com.cs353.backend.service.JobOpeningService;
@@ -19,7 +20,7 @@ public class RecruiterController {
 
 
     @GetMapping("myJobOpenings/{recruiterId}")
-    public List<JobOpening> getMyJobOpenings(@PathVariable int recruiterId) {
+    public List<JobOpeningApplicantsDTO> getMyJobOpenings(@PathVariable int recruiterId) {
         return jobOpeningService.getMyJobOpenings(recruiterId);
     }
 
@@ -28,7 +29,7 @@ public class RecruiterController {
         return jobOpeningService.getApplicationsOfJobOpening(jobOpeningId);
     }
 
-    @PutMapping("hire/{jobOpeningId}/{userId}")
+    @PostMapping("hire/{jobOpeningId}/{userId}")
     public void setApplication(@PathVariable int jobOpeningId, @PathVariable int userId) {
         applicationService.hire(jobOpeningId, userId);
     }
