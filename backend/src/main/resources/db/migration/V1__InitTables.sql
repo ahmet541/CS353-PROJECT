@@ -206,8 +206,8 @@ CREATE TABLE QualificationTest(
     test_id SERIAL NOT NULL,
     company_id int NOT NULL,
     job_opening_id int NOT NULL,
-    instructions varchar(255) NOT NULL,
-    given_time timestamp NOT NULL,
+    instructions varchar(255),
+    given_time timestamp,
     PRIMARY KEY(test_id),
     FOREIGN KEY(company_id) REFERENCES company(id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (job_opening_id) REFERENCES  jobopening(job_opening_id) ON UPDATE CASCADE ON DELETE CASCADE);
