@@ -14,6 +14,7 @@ import ConnectionRequestScreen from "./screens/ConnectionRequestScreen";
 import MyApplicationsScreen from "./screens/MyApplicationsScreen";
 import MyAdvertsPage from "./screens/MyAdvertsScreen";
 import MyAdvertsScreen from "./screens/MyAdvertsScreen";
+import AdminScreen from "./screens/AdminScreen";
 // Import other screens/components
 
 function App() {
@@ -35,6 +36,8 @@ function App() {
             <Route path="/createadvert" element={<CreateJobAdvertScreen />} />
             <Route path="/myApplications/:userId" element={<MyApplicationsScreen />} />
             <Route path="/myAdverts/:userId" element={<MyAdvertsScreen />} />
+            <Route path="/admin" element={<AdminScreen />} />
+
             {/*<Route path="profile" element={<UserProfile />} />*/}
             {/*<Route path="home" element={<HomeScreen />} />*/}
         </Routes>

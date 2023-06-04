@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate , Link } from 'react-router-dom';
 import "../css/LoginScreen.css"
+import UserRole from "../Enum/UserRole";
 
 const LoginScreen = () => {
     const navigate = useNavigate();
@@ -24,7 +25,12 @@ const LoginScreen = () => {
             sessionStorage.setItem('userRole', role);
 
             // Redirect to home page
-            navigate('/home');
+            if (role == UserRole.ADMIN){
+                navigate('/admin');
+            }
+            else {
+                navigate('/home');
+            }
         } catch (error) {
             console.log(error);
             setError(error.response.data + ' Please try again.');

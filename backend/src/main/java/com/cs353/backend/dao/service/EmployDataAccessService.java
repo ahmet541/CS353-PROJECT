@@ -1,12 +1,15 @@
 package com.cs353.backend.dao.service;
 
 import com.cs353.backend.dao.EmployDao;
+import com.cs353.backend.mapper.PostOwnerDTOMapper;
 import com.cs353.backend.model.dto.EmployDTO;
+import com.cs353.backend.model.dto.PostOwnerDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 
 @Repository
 @AllArgsConstructor
@@ -57,7 +60,7 @@ public class EmployDataAccessService implements EmployDao {
     @Override
     public void deleteEmployeePermanent(int companyId, Integer userId) {
         String sql = """
-        Delete From employes 
+        Delete From employs 
         WHERE company_id = ? AND regular_user_id = ?
         """;
         jdbcTemplate.update(sql, companyId, userId);
@@ -73,5 +76,23 @@ public class EmployDataAccessService implements EmployDao {
             return  0;
         else
             return count;
+    }
+
+    @Override
+    public List<PostOwnerDTO> getAllEmployees(int userId) {
+        String sql = """
+            WITH employees AS (
+                SELECT regular_user_id as id
+                FROM employs
+                WHERE company_id = ?
+            )
+            SELECT P.userId, P.avatar, P.fullName
+            FROM post_owner_detail P
+            WHERE P.userId IN (SELECT * FROM employees);
+            """;
+
+        List<PostOwnerDTO> employees = jdbcTemplate.query(sql, new PostOwnerDTOMapper(), userId);
+        return employees;
+
     }
 }

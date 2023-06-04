@@ -39,7 +39,7 @@ public class UserProfileController {
     }
 
     @PostMapping("/{companyId}/verifyAsRecruiter/{recruiterId}")
-    public ResponseEntity<String> update(@PathVariable int companyId, @PathVariable  Integer recruiterId) {
+    public ResponseEntity<String> verify(@PathVariable int companyId, @PathVariable  Integer recruiterId) {
         try{
             userProfileService.verifyRecruiter(companyId, recruiterId);
             return new ResponseEntity<>("Company has a new recruiter now", HttpStatus.OK);
