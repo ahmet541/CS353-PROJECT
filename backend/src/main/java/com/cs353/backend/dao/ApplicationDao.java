@@ -14,4 +14,6 @@ public interface ApplicationDao {
     List<ApplicationDTO> getApplicationsOfJobOpening(int jobOpeningId);
 
     boolean applyJobOpening(ApplicationDTO applicationDTO);
+
+    void hire(int jobOpeningId, int userId);
 }

@@ -1,7 +1,8 @@
 package com.cs353.backend.controller;
-
 import com.cs353.backend.model.dto.ApplicationDTO;
 import com.cs353.backend.model.entities.Account;
+import com.cs353.backend.model.entities.JobOpening;
+import com.cs353.backend.model.entities.Pair;
 import com.cs353.backend.model.entities.RegularUser;
 import com.cs353.backend.service.AccountService;
 import com.cs353.backend.service.JobOpeningService;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,6 +22,7 @@ import java.util.List;
 public class RegularUserController {
 
     private RegularUserService regularUserService;
+    private  JobOpeningService jobOpeningService;
     //private JobOpeningService jobOpeningService;
 
     @GetMapping("getAll")
@@ -50,8 +53,18 @@ public class RegularUserController {
 //    }
 
     @GetMapping("myApplications/{userId}")
-    public List<ApplicationDTO> getMyApplications(@PathVariable int userId) {
-        return regularUserService.getMyApplications(userId);
+    public List<Pair> getMyApplications(@PathVariable int userId) {
+        List<Pair> pairs = new ArrayList<Pair>();
+
+        List< ApplicationDTO> appList = regularUserService.getMyApplications(userId);
+        for(ApplicationDTO app: appList){
+            Pair pair = new Pair();
+            pair.applicationDTO = app;
+            pair.jobOpeningDTO = jobOpeningService.getJobOpeningById(app.getJob_opening_id());
+            pairs.add(pair);
+        }
+        return pairs;
+
     }
 
 

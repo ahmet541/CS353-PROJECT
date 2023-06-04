@@ -60,4 +60,13 @@ public class ApplicationDataAccessService implements ApplicationDao {
                 applicationDTO.getCv()) > 0;
     }
 
+    @Override
+    public void hire(int jobOpeningId, int userId) {
+        String sql = """
+                UPDATE application SET application_status = 1
+                WHERE job_opening_id = ? AND user_id = ?
+                """;
+        jdbcTemplate.update(sql, jobOpeningId, userId);
+    }
+
 }

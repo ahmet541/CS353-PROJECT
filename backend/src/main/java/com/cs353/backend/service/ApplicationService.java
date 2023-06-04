@@ -15,4 +15,8 @@ public class ApplicationService {
     public boolean applyJobOpening(ApplicationDTO applicationDTO) {
         return applicationDao.applyJobOpening(applicationDTO);
     }
+
+    public void hire(int jobOpeningId, int userId) {
+        applicationDao.hire(jobOpeningId, userId);
+    }
 }
