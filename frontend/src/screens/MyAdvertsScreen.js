@@ -32,12 +32,14 @@ const MyAdvertsScreen = () => {
                         })
                         .catch((error) => {
                             // Handle errors
+                            console.error("içerdema");
                             console.error(error);
                         });
                 });
             })
             .catch((error) => {
                 // Handle errors
+                console.error("dışardama")
                 console.error(error);
             });
 
@@ -59,7 +61,7 @@ const MyAdvertsScreen = () => {
                                 <h3 className="job-opening-id">Job Opening ID: {jobOpening.jobOpeningId}</h3>
                                 <h4 className="applicants-heading">Applicants:</h4>
                                 <ul className="applicants-list">
-                                    {jobOpening.applicants.map(applicant => (
+                                    {jobOpening.applicants && jobOpening.applicants.map(applicant => (
                                         <li key={jobOpening.applicants.user_id} className="applicant-item">
                                             <span className="applicant-name">{applicant.fullName}</span>
                                             <button
