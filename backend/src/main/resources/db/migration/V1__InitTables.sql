@@ -201,6 +201,17 @@ CREATE TABLE job_field(
       FOREIGN KEY(field_name) REFERENCES Field(field_name) ON UPDATE CASCADE ON DELETE CASCADE,
       FOREIGN KEY(job_opening_id) REFERENCES JobOpening(job_opening_id) ON DELETE CASCADE);
 
+
+CREATE TABLE QualificationTest(
+    test_id SERIAL NOT NULL,
+    company_id int NOT NULL,
+    job_opening_id int NOT NULL,
+    instructions varchar(255) NOT NULL,
+    given_time timestamp NOT NULL,
+    PRIMARY KEY(test_id),
+    FOREIGN KEY(company_id) REFERENCES company(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (job_opening_id) REFERENCES  jobopening(job_opening_id) ON UPDATE CASCADE ON DELETE CASCADE);
+
 CREATE VIEW post_owner_detail AS
 SELECT
     "User".id AS userId,

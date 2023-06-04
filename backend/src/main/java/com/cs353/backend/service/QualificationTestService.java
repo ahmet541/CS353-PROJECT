@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class QualificationTestService {
     private final QualificationTestDataAccessService qualificationTestDataAccessService;
 
-    public boolean createQualificationTest(QualificationTestDTO qualificationTestDTO, int jobOpeningId) {
-        return qualificationTestDataAccessService.createQualificationTest(qualificationTestDTO, jobOpeningId);
+    public boolean createQualificationTest(QualificationTestDTO qualificationTestDTO) {
+        return qualificationTestDataAccessService.createQualificationTest(qualificationTestDTO);
     }
 }

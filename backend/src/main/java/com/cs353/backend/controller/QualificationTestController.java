@@ -14,8 +14,8 @@ import javax.validation.Valid;
 public class QualificationTestController {
     private QualificationTestService qualificationTestService;
 
-    @PostMapping("createQualificationTest/{jobOpeningId}")
-    public boolean createQualificationTest(@Valid @RequestBody QualificationTestDTO qualificationTestDTO, @PathVariable int jobOpeningId) {
-        return qualificationTestService.createQualificationTest(qualificationTestDTO, jobOpeningId);
+    @PostMapping("createQualificationTest")
+    public boolean createQualificationTest(@Valid @RequestBody QualificationTestDTO qualificationTestDTO) {
+        return qualificationTestService.createQualificationTest(qualificationTestDTO);
     }
 }
