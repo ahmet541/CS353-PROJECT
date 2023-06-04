@@ -1,6 +1,5 @@
 package com.cs353.backend.dao;
 
-import com.cs353.backend.model.dto.JobOpeningApplicantsDTO;
 import com.cs353.backend.model.dto.JobOpeningApplicationDTO;
 import com.cs353.backend.model.dto.JobOpeningDTO;
 import com.cs353.backend.model.entities.JobOpening;
@@ -19,7 +18,7 @@ public interface JobOpeningDao {
     //NOT TESTED
     boolean applyJobOpening(JobOpeningApplicationDTO jobOpeningApplicationDTO);
 
-    List<JobOpeningApplicantsDTO> getMyJobOpenings(int recruiterId);
+    List<JobOpening> getMyJobOpenings(int recruiterId);
 
     String getJobField(int jobOpeningId);
 }

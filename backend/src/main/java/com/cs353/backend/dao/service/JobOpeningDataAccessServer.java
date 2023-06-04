@@ -1,14 +1,10 @@
 package com.cs353.backend.dao.service;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.cs353.backend.Enum.EmploymentStatus;
 import com.cs353.backend.dao.JobOpeningDao;
-import com.cs353.backend.mapper.ApplicantMapper;
 import com.cs353.backend.mapper.JobOpeningDTOMapper;
 import com.cs353.backend.mapper.JobOpeningMapper;
 import com.cs353.backend.mapper.JobOppeningApplicationMapper;
-import com.cs353.backend.model.dto.ApplicantDTO;
-import com.cs353.backend.model.dto.JobOpeningApplicantsDTO;
 import com.cs353.backend.model.dto.JobOpeningApplicationDTO;
 import com.cs353.backend.model.dto.JobOpeningDTO;
 import com.cs353.backend.model.entities.JobOpening;
@@ -160,7 +156,7 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
                 jobOpeningApplicationDTO.getCv()) > 0;  //BEWARE of comparison!
     }
 
-    /*
+
     @Override
     public List<JobOpening> getMyJobOpenings(int recruiterId) {
         String sql = """
@@ -173,42 +169,41 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
         return jdbcTemplate.query(sql, new JobOpeningMapper(), recruiterId);
 
     }
-*/
 
-    @Override
-    public List<JobOpeningApplicantsDTO> getMyJobOpenings(int recruiterId) {
-        String sql = """
-                SELECT  JO.*
-                FROM jobopening JO
-                JOIN open_position OP ON OP.job_opening_id = JO.job_opening_id
-                Where OP.recruiter_id = ?
-                """;
-        List<JobOpening> jobOpenings = jdbcTemplate.query(sql, new JobOpeningMapper(), recruiterId);
-        String applicationSql = """
-                SELECT AP.*
-                FROM application AP
-                WHERE AP.job_opening_id = ?
-                """;
-        String applicantSql = """
-                SELECT RE.*
-                FROM regular_user RE
-                WHERE RE.id = ?
-                """;
-        List<JobOpeningApplicantsDTO> jobOpeningsAndApplicants = new ArrayList<>();
-        for (JobOpening jobOpening: jobOpenings) {
-            List<JobOpeningApplicationDTO> applications = jdbcTemplate.query(applicationSql, new JobOppeningApplicationMapper(),
-                    jobOpening.getJobOpeningID());
-            List<ApplicantDTO> applicants = new ArrayList<>();
-            for (JobOpeningApplicationDTO application: applications) {
-                ApplicantDTO applicant = jdbcTemplate.queryForObject(applicantSql, new ApplicantMapper(), application.getUserId());
-                applicants.add(applicant);
-            }
-
-            jobOpeningsAndApplicants.add(new JobOpeningApplicantsDTO(jobOpening, applicants));
-        }
-        return jobOpeningsAndApplicants;
-
-    }
+//    @Override
+//    public List<JobOpeningApplicantsDTO> getMyJobOpenings(int recruiterId) {
+//        String sql = """
+//                SELECT  JO.*
+//                FROM jobopening JO
+//                JOIN open_position OP ON OP.job_opening_id = JO.job_opening_id
+//                Where OP.recruiter_id = ?
+//                """;
+//        List<JobOpening> jobOpenings = jdbcTemplate.query(sql, new JobOpeningMapper(), recruiterId);
+//        String applicationSql = """
+//                SELECT AP.*
+//                FROM application AP
+//                WHERE AP.job_opening_id = ?
+//                """;
+//        String applicantSql = """
+//                SELECT RE.*
+//                FROM regular_user RE
+//                WHERE RE.id = ?
+//                """;
+//        List<JobOpeningApplicantsDTO> jobOpeningsAndApplicants = new ArrayList<>();
+//        for (JobOpening jobOpening: jobOpenings) {
+//            List<JobOpeningApplicationDTO> applications = jdbcTemplate.query(applicationSql, new JobOppeningApplicationMapper(),
+//                    jobOpening.getJobOpeningID());
+//            List<ApplicantDTO> applicants = new ArrayList<>();
+//            for (JobOpeningApplicationDTO application: applications) {
+//                ApplicantDTO applicant = jdbcTemplate.queryForObject(applicantSql, new ApplicantMapper(), application.getUserId());
+//                applicants.add(applicant);
+//            }
+//
+//            jobOpeningsAndApplicants.add(new JobOpeningApplicantsDTO(jobOpening, applicants));
+//        }
+//        return jobOpeningsAndApplicants;
+//
+//    }
     @Override
     public String getJobField(int jobOpeningId) {
 

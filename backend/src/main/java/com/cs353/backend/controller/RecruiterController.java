@@ -1,8 +1,6 @@
 package com.cs353.backend.controller;
 
-import com.cs353.backend.dao.ApplicationDao;
 import com.cs353.backend.model.dto.ApplicationDTO;
-import com.cs353.backend.model.dto.JobOpeningApplicantsDTO;
 import com.cs353.backend.model.entities.JobOpening;
 import com.cs353.backend.service.JobOpeningService;
 import lombok.AllArgsConstructor;
@@ -22,7 +20,7 @@ public class RecruiterController {
 
 
     @GetMapping("myJobOpenings/{recruiterId}")
-    public List<JobOpeningApplicantsDTO> getMyJobOpenings(@PathVariable int recruiterId) {
+    public List<JobOpening> getMyJobOpenings(@PathVariable int recruiterId) {
         return jobOpeningService.getMyJobOpenings(recruiterId);
     }
 
