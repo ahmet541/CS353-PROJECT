@@ -1,6 +1,5 @@
 package com.cs353.backend.mapper;
 
-import com.cs353.backend.model.dto.QuestionDTO;
 import com.cs353.backend.model.entities.Question;
 import org.springframework.jdbc.core.RowMapper;
 

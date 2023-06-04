@@ -1,7 +1,6 @@
 package com.cs353.backend.dao.service;
 
 import com.cs353.backend.dao.QuestionDao;
-import com.cs353.backend.mapper.QuestionDTOMapper;
 import com.cs353.backend.mapper.QuestionMapper;
 import com.cs353.backend.model.dto.QuestionDTO;
 import com.cs353.backend.model.dto.QuestionUpdateDTO;

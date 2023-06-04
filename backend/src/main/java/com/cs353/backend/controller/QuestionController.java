@@ -3,7 +3,6 @@ package com.cs353.backend.controller;
 import com.cs353.backend.model.dto.QuestionDTO;
 import com.cs353.backend.model.dto.QuestionUpdateDTO;
 import com.cs353.backend.model.entities.Question;
-import com.cs353.backend.service.QualificationTestService;
 import com.cs353.backend.service.QuestionService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
