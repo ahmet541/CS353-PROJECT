@@ -193,7 +193,6 @@ public class JobOpeningDataAccessServer implements JobOpeningDao{
                     jobOpening.getJobOpeningID());
             List<ApplicantDTO> applicants = new ArrayList<>();
             for (JobOpeningApplicationDTO application: applications) {
-                //THE QUERY WITH THE PROBLEM.!!!
                 ApplicantDTO applicant = jdbcTemplate.queryForObject(applicantSql, new ApplicantMapper(), application.getUserId());
                 applicants.add(applicant);
             }

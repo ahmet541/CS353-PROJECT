@@ -25,4 +25,5 @@ public class QualificationTestController {
         return qualificationTestService.getQualificationTests(job_opening_id);
 
     }
+
 }
