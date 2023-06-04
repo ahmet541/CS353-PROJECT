@@ -1,10 +1,13 @@
 package com.cs353.backend.dao.service;
 
 import com.cs353.backend.dao.QualificationTestDao;
+import com.cs353.backend.mapper.QualificationTestMapper;
 import com.cs353.backend.model.dto.QualificationTestDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 @AllArgsConstructor
@@ -30,5 +33,15 @@ public class QualificationTestDataAccessService implements QualificationTestDao 
                 qualificationTestDTO.getInstructions(),
                 qualificationTestDTO.getGiven_time()) > 0;
 
+    }
+
+    @Override
+    public List<QualificationTestDTO> getQualificationTests(int jobOpeningId) {
+        String sql = """
+                SELECT QT.*
+                FROM qualificationtest QT
+                WHERE QT.job_opening_id = ?
+                """;
+        return jdbcTemplate.query(sql, new QualificationTestMapper(), jobOpeningId);
     }
 }
