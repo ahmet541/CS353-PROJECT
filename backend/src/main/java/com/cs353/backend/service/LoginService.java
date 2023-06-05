@@ -2,11 +2,13 @@ package com.cs353.backend.service;
 
 import com.cs353.backend.Constants;
 import com.cs353.backend.Enum.UserRole;
+import com.cs353.backend.dao.service.AdminDataAccessService;
 import com.cs353.backend.mapper.GeneralMapper;
 import com.cs353.backend.model.dto.LoginDTO;
 import com.cs353.backend.model.dto.LoginResponseDTO;
 import com.cs353.backend.model.entities.Company;
 import com.cs353.backend.model.entities.RegularUser;
+import com.cs353.backend.model.entities.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ public class LoginService {
     private RegularUserService regularUserService;
     private CompanyService companyService;
     private GeneralMapper generalMapper;
+    private AdminDataAccessService adminService;
 
     public LoginResponseDTO authenticate( LoginDTO loginDTO) {
         return accountService.authenticate(loginDTO);
@@ -53,6 +56,12 @@ public class LoginService {
 
     public void initialBuild() {
         regularUserService.initialBuild();
+        User admin = new User();
+        admin.setEmail("admin");
+        admin.setPassword("pw");
+        int id = userService.createUser(admin);
+        admin.setId(id);
+        adminService.createAdmin(admin, "admin");
         //TODO for others
     }
 }

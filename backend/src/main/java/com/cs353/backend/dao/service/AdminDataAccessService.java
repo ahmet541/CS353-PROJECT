@@ -1,6 +1,7 @@
 package com.cs353.backend.dao.service;
 
 import com.cs353.backend.dao.AdminDao;
+import com.cs353.backend.model.entities.User;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -64,6 +65,9 @@ public class AdminDataAccessService implements AdminDao {
         });
     }
 
-
-
+    @Override
+    public void createAdmin(User admin, String name) {
+        String sql = "INSERT INTO admin (id,admin_name) VALUES (?, ?);";
+        jdbcTemplate.update(sql, admin.getId(), name);
+    }
 }
