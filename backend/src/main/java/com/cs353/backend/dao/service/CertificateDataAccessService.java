@@ -18,7 +18,7 @@ public class CertificateDataAccessService implements CertificateDao {
     @Override
     public void addCertificate(Certificate certificate) {
         String sql = """
-                INSERT INTO Certificate_Skills (certificate_name, content, user_id)
+                INSERT INTO Certificate_Skill (certificate_name, content, user_id)
                 Values(?,?,?);
                 """;
         jdbcTemplate.update(sql, certificate.getName(), certificate.getContent(), certificate.getUserId());
@@ -27,7 +27,7 @@ public class CertificateDataAccessService implements CertificateDao {
     @Override
     public void removeCertificate(Certificate certificate) {
         String sql = """
-        DELETE FROM Certificate_Skills 
+        DELETE FROM Certificate_Skill 
         WHERE user_id = ? AND certificate_name = ?
         """;
         jdbcTemplate.update(sql, certificate.getUserId(), certificate.getName());
@@ -35,7 +35,7 @@ public class CertificateDataAccessService implements CertificateDao {
 
     @Override
     public List<Certificate> getCertificates(int userId) {
-        String sql = "SELECT user_id, certificate_name, content FROM Certificate_Skills WHERE user_id = ?";
+        String sql = "SELECT user_id, certificate_name, content FROM Certificate_Skill WHERE user_id = ?";
         return jdbcTemplate.query(sql, new CertificateMapper(),userId);
 
     }
